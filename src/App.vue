@@ -22,10 +22,10 @@ import { RouterView } from 'vue-router'
 }
 
 :root {
-  --primary-color: #667eea;
-  --secondary-color: #764ba2;
-  --accent-color: #ff6b6b;
-  --text-color: #333;
+  --primary-color: #1a365d;
+  --secondary-color: #2c5282;
+  --accent-color: #c53030;
+  --text-color: #4a5568;
   --light-bg: #f8f9fa;
 }
 </style>
