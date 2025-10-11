@@ -1,11 +1,60 @@
 <script setup lang="ts">
 // Testimonials section component with carousel functionality
+
+import { onMounted, onUnmounted } from 'vue'
+
+let startX = 0
+let currentTestimonial = 1
+
+function handleTouchStart(e: TouchEvent) {
+  startX = e.touches[0].clientX
+}
+
+function handleTouchEnd(e: TouchEvent) {
+  if (!startX) return
+
+  const endX = e.changedTouches[0].clientX
+  const diffX = startX - endX
+
+  // Minimum swipe distance (30px)
+  if (Math.abs(diffX) < 30) return
+
+  if (diffX > 0) {
+    // Swipe left - next testimonial
+    currentTestimonial = currentTestimonial >= 4 ? 1 : currentTestimonial + 1
+  } else {
+    // Swipe right - previous testimonial
+    currentTestimonial = currentTestimonial <= 1 ? 4 : currentTestimonial - 1
+  }
+
+  // Update radio button
+  const radio = document.getElementById(`testimonial${currentTestimonial}`) as HTMLInputElement
+  if (radio) radio.checked = true
+
+  startX = 0
+}
+
+onMounted(() => {
+  const carousel = document.querySelector('.testimonials-carousel')
+  if (carousel) {
+    carousel.addEventListener('touchstart', handleTouchStart)
+    carousel.addEventListener('touchend', handleTouchEnd)
+  }
+})
+
+onUnmounted(() => {
+  const carousel = document.querySelector('.testimonials-carousel')
+  if (carousel) {
+    carousel.removeEventListener('touchstart', handleTouchStart)
+    carousel.removeEventListener('touchend', handleTouchEnd)
+  }
+})
 </script>
 
 <template>
   <section class="testimonials fade-in-section">
     <div class="container">
-      <h2>Što kažu naši klijenti</h2>
+      <h2>Što kažu naši klijenti?</h2>
       <!-- Carousel radio buttons -->
       <input type="radio" id="testimonial1" name="testimonial" checked>
       <input type="radio" id="testimonial2" name="testimonial">
@@ -62,7 +111,7 @@
 <style scoped>
 .testimonials {
   padding: 6rem 2rem;
-  background-color: white;
+  background-color: #f5f5f5;
 }
 
 .testimonials h2 {
@@ -79,6 +128,10 @@
   overflow: hidden;
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  /* Touch-friendly improvements */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: pan-y; /* Allow vertical scrolling but prevent horizontal */
+  background: white;
 }
 
 .testimonial-card {
@@ -221,7 +274,9 @@ input[type="radio"] {
 @media (max-width: 768px) {
   .testimonials {
     padding: 4rem 1rem;
+    background-color: #f5f5f5;
   }
+
 
   .testimonials h2 {
     font-size: 2rem;
@@ -230,6 +285,8 @@ input[type="radio"] {
   .testimonial-card {
     padding: 2rem 1.5rem;
     min-height: 250px;
+    /* Better touch targets on mobile */
+    cursor: default;
   }
 
   .testimonial-content p {
@@ -240,6 +297,19 @@ input[type="radio"] {
     font-size: 3rem;
     top: -0.5rem;
     left: -0.5rem;
+  }
+
+  /* Make carousel more touch-friendly on mobile */
+  .testimonials-carousel {
+    /* Better mobile spacing - don't extend too far */
+    margin: 0 -0.25rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+  }
+
+  .carousel-indicators {
+    margin-top: 1.5rem;
   }
 }
 </style>

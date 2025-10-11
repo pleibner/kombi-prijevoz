@@ -90,6 +90,8 @@
   height: 30px;
   background: transparent;
   z-index: 1;
+  border-top: 4px solid #e0e0e0;
+  border-bottom: 4px solid #e0e0e0;
 }
 
 .road-line {
@@ -100,10 +102,8 @@
   height: 4px;
   background: repeating-linear-gradient(
     to right,
-    rgba(255, 255, 255, 0.8) 0px,
-    rgba(255, 255, 255, 0.8) 20px,
-    transparent 20px,
-    transparent 40px
+    #e0e0e0 0px 2.5vw,
+    transparent 2.5vw 5vw
   );
   transform: translateY(-50%);
   animation: moveLine 1.5s linear infinite;
@@ -114,7 +114,7 @@
     background-position: 0px 0px;
   }
   100% {
-    background-position: 40px 0px;
+    background-position: 5vw 0px;
   }
 }
 

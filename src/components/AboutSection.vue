@@ -39,6 +39,7 @@
 <style scoped>
 .about {
   padding: 6rem 2rem;
+  background-color: white;
 }
 
 .about h2 {
@@ -82,6 +83,13 @@
   padding: 2rem;
   background: var(--light-bg);
   border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.stat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
 .stat-number {
@@ -101,6 +109,7 @@
 @media (max-width: 768px) {
   .about {
     padding: 4rem 1rem;
+    background-color: white;
   }
 
   .about h2 {
@@ -122,6 +131,12 @@
 
   .stat {
     padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .stat:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
   }
 
   .stat-number {
