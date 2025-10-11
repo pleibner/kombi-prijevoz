@@ -13,8 +13,11 @@
           <span>+385 98 915 6061</span>
         </div>
         <div class="contact-item">
-          <span class="contact-icon">✉️</span>
-          <span>info@kombiprijevoz.hr</span>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+       alt="WhatsApp" width="24" height="24">
+          <a href="https://wa.me/385989156061" target="_blank" rel="noopener noreferrer" class="contact-link">
+            WhatsApp
+          </a>
         </div>
         <div class="contact-item">
           <span class="contact-icon">📍</span>
@@ -71,6 +74,18 @@
   font-size: 1.3rem;
 }
 
+.contact-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
 .contact-btn {
   font-size: 1.2rem;
   padding: 1.2rem 3rem;
@@ -114,6 +129,10 @@
     flex-direction: column;
     gap: 1rem;
     align-items: center;
+  }
+
+  .contact-link {
+    font-size: 1rem;
   }
 
   .contact-btn {
