@@ -20,15 +20,15 @@
         <div class="about-stats">
           <div class="stat">
             <span class="stat-number">1000+</span>
-            <span class="stat-label">Zadovoljnih klijenata</span>
+            <span class="stat-label">zadovoljnih klijenata</span>
           </div>
           <div class="stat">
             <span class="stat-number">20+</span>
-            <span class="stat-label">Godina iskustva</span>
+            <span class="stat-label">godina iskustva</span>
           </div>
           <div class="stat">
             <span class="stat-number">365</span>
-            <span class="stat-label">Dostupnost</span>
+            <span class="stat-label">dana u godini</span>
           </div>
         </div>
       </div>
