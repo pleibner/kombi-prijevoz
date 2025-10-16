@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import RemarkItem from '@/components/RemarkItem.vue'
+import ButtonPrimary from '@/components/ButtonPrimary.vue'
 
 // Hero section component with dynamic animations and interactive elements
 const isVisible = ref(false)
@@ -138,7 +139,7 @@ onMounted(() => {
 
         <!-- Call to action -->
         <div class="cta-section">
-          <button class="btn-primary">Kontaktirajte nas</button>
+          <ButtonPrimary button-class="hero-btn" show-ripple>Kontaktirajte nas</ButtonPrimary>
           </div>
 
             </div>
@@ -399,42 +400,6 @@ onMounted(() => {
   flex-wrap: wrap;
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.6);
-}
-
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-}
-
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
-}
 
 .hero-remarks {
   margin: 2rem 0;
@@ -861,11 +826,6 @@ onMounted(() => {
   flex: 1;
 }
 
-.hero-content {
-  text-align: center;
-  position: relative;
-}
-
 .hero-title {
   margin-bottom: 1.5rem;
   font-weight: bold;
@@ -911,17 +871,6 @@ onMounted(() => {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   font-weight: 500;
   letter-spacing: 0.5px;
-}
-
-.hero-remarks {
-  margin-bottom: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: flex-start;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 /* Enhanced Statistics Banner */
@@ -999,71 +948,6 @@ onMounted(() => {
   margin-bottom: 1.5rem;
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-  color: white;
-  padding: 1.2rem 2.5rem;
-  border: none;
-  border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
-}
-
-.btn-primary:hover {
-  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 12px 35px rgba(239, 68, 68, 0.6);
-}
-
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(10px);
-}
-
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: white;
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
-}
-
-.btn-ripple {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.6);
-  transform: translate(-50%, -50%);
-  animation: none;
-  pointer-events: none;
-}
-
-@keyframes ripple {
-  to {
-    width: 300px;
-    height: 300px;
-    opacity: 0;
-  }
-}
 
 .cta-subtitle {
   text-align: center;
@@ -1165,13 +1049,6 @@ onMounted(() => {
     align-items: center;
   }
 
-  .btn-primary,
-  .btn-secondary {
-    width: 100%;
-    max-width: 300px;
-  }
-
-
   .hero-remarks {
     gap: 0.6rem;
   }
@@ -1201,12 +1078,6 @@ onMounted(() => {
     flex-direction: column;
     gap: 1rem;
     padding: 0 1rem;
-  }
-
-  .btn-primary,
-  .btn-secondary {
-    padding: 1rem 2rem;
-    font-size: 1rem;
   }
 
   .cta-subtitle {
@@ -1263,13 +1134,6 @@ onMounted(() => {
 
   .service-item {
     padding: 0.5rem 0.8rem;
-  }
-
-
-  .btn-primary,
-  .btn-secondary {
-    padding: 0.9rem 1.8rem;
-    font-size: 0.9rem;
   }
 
 

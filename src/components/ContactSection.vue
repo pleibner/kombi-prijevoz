@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import ButtonPrimary from '@/components/ButtonPrimary.vue'
+
 // Contact section component
 </script>
 
@@ -24,7 +26,7 @@
           <span>Crnčićeva 41a, Zagreb</span>
         </div>
       </div>
-      <button class="btn-primary contact-btn">Pošaljite upit</button>
+      <ButtonPrimary button-class="contact-btn">Pošaljite upit</ButtonPrimary>
     </div>
   </section>
 </template>
@@ -86,27 +88,6 @@
   text-decoration: underline;
 }
 
-.contact-btn {
-  font-size: 1.2rem;
-  padding: 1.2rem 3rem;
-}
-
-.btn-primary {
-  background-color: var(--accent-color);
-  color: white;
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-  background-color: #a02828;
-  transform: translateY(-2px);
-}
 
 /* Responsivnost */
 @media (max-width: 768px) {
@@ -135,9 +116,5 @@
     font-size: 1rem;
   }
 
-  .contact-btn {
-    font-size: 1.1rem;
-    padding: 1rem 2rem;
-  }
 }
 </style>
