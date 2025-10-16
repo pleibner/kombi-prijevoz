@@ -2,19 +2,11 @@
 import { ref, onMounted } from 'vue'
 import RemarkItem from '@/components/RemarkItem.vue'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
+import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
+import RoadAnimation from '@/components/RoadAnimation.vue'
 
 // Hero section component with dynamic animations and interactive elements
 const isVisible = ref(false)
-const mousePosition = ref({ x: 0, y: 0 })
-
-const handleMouseMove = (e: MouseEvent) => {
-  const hero = e.currentTarget as HTMLElement
-  const rect = hero.getBoundingClientRect()
-  mousePosition.value = {
-    x: e.clientX - rect.left,
-    y: e.clientY - rect.top
-  }
-}
 
 
 onMounted(() => {
@@ -27,78 +19,10 @@ onMounted(() => {
 <template>
   <section
     class="hero"
-    @mousemove="handleMouseMove"
     :class="{ 'hero-visible': isVisible }"
   >
-    <!-- Map background with roads and vehicles -->
-    <div class="map-background">
-      <!-- Road Network -->
-      <svg class="road-network" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
-        <!-- Main roads -->
-        <path class="road main-road-1" d="M100,200 L900,200" stroke-width="8" fill="none"/>
-        <path class="road main-road-2" d="M200,100 L200,900" stroke-width="8" fill="none"/>
-        <path class="road main-road-3" d="M300,300 L700,300" stroke-width="6" fill="none"/>
-        <path class="road main-road-4" d="M400,150 L400,850" stroke-width="6" fill="none"/>
-        <path class="road connecting-road-1" d="M200,200 L300,300" stroke-width="4" fill="none"/>
-        <path class="road connecting-road-2" d="M400,200 L400,300" stroke-width="4" fill="none"/>
-        <path class="road connecting-road-3" d="M200,400 L400,400" stroke-width="4" fill="none"/>
-
-        <!-- Vehicles on roads -->
-        <g class="moving-vehicles">
-          <g class="vehicle-on-road vehicle-1">
-            <rect x="150" y="190" width="24" height="14" fill="#ef4444" rx="2"/>
-            <circle cx="156" cy="207" r="3.5" fill="#1f2937"/>
-            <circle cx="168" cy="207" r="3.5" fill="#1f2937"/>
-            <!-- Headlights -->
-            <circle cx="150" cy="195" r="1.5" fill="#fbbf24"/>
-          </g>
-          <g class="vehicle-on-road vehicle-2">
-            <rect x="390" y="130" width="24" height="14" fill="#3b82f6" rx="2"/>
-            <circle cx="396" cy="145" r="3.5" fill="#1f2937"/>
-            <circle cx="408" cy="145" r="3.5" fill="#1f2937"/>
-            <circle cx="390" cy="135" r="1.5" fill="#fbbf24"/>
-          </g>
-          <g class="vehicle-on-road vehicle-3">
-            <rect x="280" y="290" width="24" height="14" fill="#10b981" rx="2"/>
-            <circle cx="286" cy="305" r="3.5" fill="#1f2937"/>
-            <circle cx="298" cy="305" r="3.5" fill="#1f2937"/>
-            <circle cx="280" cy="295" r="1.5" fill="#fbbf24"/>
-          </g>
-          <g class="vehicle-on-road vehicle-4">
-            <rect x="500" y="200" width="24" height="14" fill="#f59e0b" rx="2"/>
-            <circle cx="506" cy="215" r="3.5" fill="#1f2937"/>
-            <circle cx="518" cy="215" r="3.5" fill="#1f2937"/>
-            <circle cx="500" cy="205" r="1.5" fill="#fbbf24"/>
-          </g>
-          <g class="vehicle-on-road vehicle-5">
-            <rect x="100" y="400" width="24" height="14" fill="#8b5cf6" rx="2"/>
-            <circle cx="106" cy="415" r="3.5" fill="#1f2937"/>
-            <circle cx="118" cy="415" r="3.5" fill="#1f2937"/>
-            <circle cx="100" cy="405" r="1.5" fill="#fbbf24"/>
-          </g>
-          <g class="vehicle-on-road vehicle-6">
-            <rect x="650" y="100" width="24" height="14" fill="#ec4899" rx="2"/>
-            <circle cx="656" cy="115" r="3.5" fill="#1f2937"/>
-            <circle cx="668" cy="115" r="3.5" fill="#1f2937"/>
-            <circle cx="650" cy="105" r="1.5" fill="#fbbf24"/>
-          </g>
-        </g>
-
-        <!-- Road intersections and markers -->
-        <g class="road-features">
-          <circle cx="200" cy="200" r="8" fill="none" stroke="#ef4444" stroke-width="2" opacity="0.6"/>
-          <circle cx="400" cy="300" r="6" fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.4"/>
-          <circle cx="300" cy="150" r="5" fill="none" stroke="#10b981" stroke-width="1" opacity="0.5"/>
-        </g>
-      </svg>
-
-      <!-- Road markers and intersections -->
-      <div class="road-markers">
-        <div class="marker marker-1"></div>
-        <div class="marker marker-2"></div>
-        <div class="marker marker-3"></div>
-        </div>
-      </div>
+    <!-- Road Network Background -->
+    <RoadNetworkBackground />
 
     <!-- Main Content -->
     <div class="hero-container">
@@ -145,15 +69,8 @@ onMounted(() => {
             </div>
           </div>
 
-    <!-- Enhanced Road animation with parallax -->
-    <div class="road-animation" :style="{ transform: `translateY(${mousePosition.y * 0.02}px)` }">
-      <div class="road-line"></div>
-      <div class="road-cars">
-        <div class="car car-1">🚛</div>
-        <div class="car car-2">🚚</div>
-        <div class="car car-3">📦</div>
-    </div>
-    </div>
+    <!-- Road Animation -->
+    <RoadAnimation />
 
   </section>
 </template>
@@ -182,60 +99,10 @@ onMounted(() => {
   animation: slideInFromRight 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
-.hero-visible .map-background {
-  animation: mapFadeIn 2s ease-out forwards;
-}
 
-/* Map Background with Roads and Vehicles */
-.map-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  opacity: 0;
-  z-index: 1;
-}
 
-.road-network {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.6;
-}
 
-.road {
-  stroke: rgba(255, 255, 255, 0.8);
-  stroke-linecap: round;
-  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
-  animation: roadPulse 4s ease-in-out infinite;
-}
 
-.main-road-1 { animation-delay: 0s; }
-.main-road-2 { animation-delay: 1s; }
-.main-road-3 { animation-delay: 2s; }
-.main-road-4 { animation-delay: 3s; }
-
-@keyframes roadPulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 0.9; }
-}
-
-/* Enhanced Vehicle Movement */
-.moving-vehicles {
-  animation: vehiclesFlow 12s linear infinite;
-}
-
-@keyframes vehiclesFlow {
-  0% { transform: translateX(0) translateY(0); }
-  25% { transform: translateX(30px) translateY(2px); }
-  50% { transform: translateX(60px) translateY(-1px); }
-  75% { transform: translateX(90px) translateY(1px); }
-  100% { transform: translateX(120px) translateY(0); }
-}
 
 
 /* Road features animation */
@@ -435,89 +302,6 @@ onMounted(() => {
   }
 }
 
-/* Enhanced Road Animation */
-.road-animation {
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  right: 0;
-  height: 40px;
-  background: transparent;
-  z-index: 5;
-  border-top: 3px solid rgba(255, 255, 255, 0.3);
-  border-bottom: 3px solid rgba(255, 255, 255, 0.3);
-  transition: transform 0.1s ease-out;
-}
-
-.road-line {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: repeating-linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0.8) 0px 3vw,
-    rgba(239, 68, 68, 0.6) 3vw 3.5vw,
-    transparent 3.5vw 6vw
-  );
-  transform: translateY(-50%);
-  animation: moveLine 2s linear infinite;
-}
-
-@keyframes moveLine {
-  0% {
-    background-position: 0px 0px;
-  }
-  100% {
-    background-position: 6vw 0px;
-  }
-}
-
-.road-cars {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 20px;
-  transform: translateY(-50%);
-}
-
-.car {
-  position: absolute;
-  font-size: 1.5rem;
-  animation: driveAcross 8s linear infinite;
-  opacity: 0.8;
-}
-
-.car-1 {
-  animation-delay: 0s;
-}
-
-.car-2 {
-  animation-delay: 2.5s;
-}
-
-.car-3 {
-  animation-delay: 5s;
-}
-
-@keyframes driveAcross {
-  0% {
-    left: -10%;
-    transform: scale(0.8);
-  }
-  10% {
-    transform: scale(1);
-  }
-  90% {
-    transform: scale(1);
-  }
-  100% {
-    left: 110%;
-    transform: scale(0.8);
-  }
-}
 
 .hero-left {
   flex: 1;
@@ -1102,21 +886,6 @@ onMounted(() => {
     opacity: 0.2;
   }
 
-  /* Road animation mobile */
-  .road-animation {
-    height: 30px;
-    border-top-width: 2px;
-    border-bottom-width: 2px;
-    bottom: 5px;
-  }
-
-  .road-line {
-    height: 3px;
-  }
-
-  .car {
-    font-size: 1.2rem;
-  }
 }
 
 @media (max-width: 480px) {
