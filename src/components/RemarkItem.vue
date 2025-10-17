@@ -2,18 +2,26 @@
 // Props for the remark item component
 interface Props {
   text: string
+  icon?: string
   delay?: number
+  reverse?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  delay: 0
+  icon: '✓',
+  delay: 0,
+  reverse: false
 })
 </script>
 
 <template>
-  <div class="remark-item" :style="{ animationDelay: `${props.delay}s` }">
-    <span class="checkmark">✓</span>
-    <span>{{ text }}</span>
+  <div
+    class="remark-item"
+    :class="{ 'reverse': props.reverse }"
+    :style="{ animationDelay: `${props.delay}s` }"
+  >
+    <span class="checkmark">{{ props.icon }}</span>
+    <span class="text-content">{{ text }}</span>
   </div>
 </template>
 
@@ -25,7 +33,7 @@ const props = withDefaults(defineProps<Props>(), {
   margin-bottom: 0.5rem;
   font-size: 1rem;
   opacity: 0;
-  transform: translateY(20px) scale(0.9);
+  transform: translateX(30px) scale(0.9);
   animation: remarkSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   background: rgba(255, 255, 255, 0.05);
   padding: 0.75rem 1.25rem;
@@ -33,12 +41,26 @@ const props = withDefaults(defineProps<Props>(), {
   border-left: 4px solid #ef4444;
   transition: all 0.3s ease;
   backdrop-filter: blur(5px);
+  width: 100%;
+  max-width: 250px;
+}
+
+.remark-item.reverse {
+  border-left: none;
+  border-right: 4px solid #ef4444;
+  flex-direction: row-reverse;
+  text-align: right;
+  transform: translateX(-30px) scale(0.9);
 }
 
 .remark-item:hover {
   background: rgba(255, 255, 255, 0.1);
   transform: translateX(5px) scale(1.02);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.remark-item.reverse:hover {
+  transform: translateX(-5px) scale(1.02);
 }
 
 .checkmark {
@@ -64,7 +86,7 @@ const props = withDefaults(defineProps<Props>(), {
 @keyframes remarkSlideIn {
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateX(0) scale(1);
   }
 }
 
@@ -74,6 +96,7 @@ const props = withDefaults(defineProps<Props>(), {
     font-size: 0.95rem;
     padding: 0.6rem 1rem;
     margin-bottom: 0.6rem;
+    max-width: 200px;
   }
 }
 
@@ -81,6 +104,7 @@ const props = withDefaults(defineProps<Props>(), {
   .remark-item {
     padding: 0.5rem 0.8rem;
     font-size: 0.9rem;
+    max-width: 180px;
   }
 }
 </style>
