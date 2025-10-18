@@ -7,13 +7,13 @@ let startX = 0
 let currentTestimonial = 1
 
 function handleTouchStart(e: TouchEvent) {
-  startX = e.touches[0].clientX
+  startX = e.touches[0]?.clientX || 0
 }
 
 function handleTouchEnd(e: TouchEvent) {
   if (!startX) return
 
-  const endX = e.changedTouches[0].clientX
+  const endX = e.changedTouches[0]?.clientX || 0
   const diffX = startX - endX
 
   // Minimum swipe distance (30px)
@@ -37,16 +37,16 @@ function handleTouchEnd(e: TouchEvent) {
 onMounted(() => {
   const carousel = document.querySelector('.testimonials-carousel')
   if (carousel) {
-    carousel.addEventListener('touchstart', handleTouchStart)
-    carousel.addEventListener('touchend', handleTouchEnd)
+    carousel.addEventListener('touchstart', handleTouchStart as EventListener)
+    carousel.addEventListener('touchend', handleTouchEnd as EventListener)
   }
 })
 
 onUnmounted(() => {
   const carousel = document.querySelector('.testimonials-carousel')
   if (carousel) {
-    carousel.removeEventListener('touchstart', handleTouchStart)
-    carousel.removeEventListener('touchend', handleTouchEnd)
+    carousel.removeEventListener('touchstart', handleTouchStart as EventListener)
+    carousel.removeEventListener('touchend', handleTouchEnd as EventListener)
   }
 })
 </script>
