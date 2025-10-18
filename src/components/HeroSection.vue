@@ -2,7 +2,6 @@
 import RemarkItem from '@/components/RemarkItem.vue'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
 import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
-import RoadAnimation from '@/components/RoadAnimation.vue'
 
 // Hero section component with dynamic animations and interactive elements
 </script>
@@ -67,11 +66,7 @@ import RoadAnimation from '@/components/RoadAnimation.vue'
 
             </div>
           </div>
-
-    <!-- Road Animation -->
-    <RoadAnimation />
-
-  </section>
+</section>
 </template>
 
 <style scoped>
@@ -187,9 +182,6 @@ import RoadAnimation from '@/components/RoadAnimation.vue'
   align-items: flex-start;
 }
 
-
-
-
 .cta-section {
   display: flex;
   gap: 1rem;
@@ -197,16 +189,6 @@ import RoadAnimation from '@/components/RoadAnimation.vue'
   margin: 2.5rem 0;
   flex-wrap: wrap;
 }
-
-
-
-
-
-
-
-
-
-
 
 /* Enhanced Responsive Design */
 @media (max-width: 768px) {
