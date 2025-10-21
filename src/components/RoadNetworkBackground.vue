@@ -90,23 +90,23 @@
       
       <!-- Vehicles on roads -->
       <g class="moving-vehicles">
-        <Vehicle :x="0" :y="0" color="#ef4444" vehicle-class="vehicle-1" />
-        <Vehicle :x="0" :y="0" color="#3b82f6" vehicle-class="vehicle-2" />
-        <!--Vehicle :x="0" :y="0" color="#10b981" vehicle-class="vehicle-3" />
-        <Vehicle :x="500" :y="200" color="#f59e0b" vehicle-class="vehicle-4" />
-        <Vehicle :x="100" :y="400" color="#8b5cf6" vehicle-class="vehicle-5" />
-        <Vehicle :x="650" :y="100" color="#ec4899" vehicle-class="vehicle-6" />
-        <Vehicle :x="450" :y="490" color="#06b6d4" vehicle-class="vehicle-7" />
-        <Vehicle :x="580" :y="690" color="#84cc16" vehicle-class="vehicle-8" />
-        <Vehicle :x="120" :y="690" color="#f97316" vehicle-class="vehicle-9" />
-        <Vehicle :x="780" :y="240" color="#a855f7" vehicle-class="vehicle-10" / -->
+        <AnimatedVehicle :x="0" :y="0" color="#ef4444" vehicle-class="vehicle-1" />
+        <AnimatedVehicle :x="0" :y="0" color="#3b82f6" vehicle-class="vehicle-2" />
+        <!--AnimatedVehicle :x="0" :y="0" color="#10b981" vehicle-class="vehicle-3" />
+        <AnimatedVehicle :x="500" :y="200" color="#f59e0b" vehicle-class="vehicle-4" />
+        <AnimatedVehicle :x="100" :y="400" color="#8b5cf6" vehicle-class="vehicle-5" />
+        <AnimatedVehicle :x="650" :y="100" color="#ec4899" vehicle-class="vehicle-6" />
+        <AnimatedVehicle :x="450" :y="490" color="#06b6d4" vehicle-class="vehicle-7" />
+        <AnimatedVehicle :x="580" :y="690" color="#84cc16" vehicle-class="vehicle-8" />
+        <AnimatedVehicle :x="120" :y="690" color="#f97316" vehicle-class="vehicle-9" />
+        <AnimatedVehicle :x="780" :y="240" color="#a855f7" vehicle-class="vehicle-10" / -->
       </g>
     </svg>
   </div>
 </template>
 
 <script setup lang="ts">
-import Vehicle from '@/components/Vehicle.vue'
+import AnimatedVehicle from '@/components/AnimatedVehicle.vue'
 
 // Road network background component with animated roads and vehicles
 </script>
