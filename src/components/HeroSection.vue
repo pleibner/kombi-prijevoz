@@ -203,7 +203,9 @@ import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
   }
 
   .company-name {
-    font-size: clamp(2.5rem, 12vw, 4rem);
+    font-size: clamp(2.2rem, 10vw, 3.5rem);
+    margin-bottom: 0.5rem;
+    line-height: 1.05;
   }
 
   .company-tagline {
@@ -252,7 +254,9 @@ import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
   }
 
   .company-name {
-    font-size: clamp(2rem, 15vw, 3rem);
+    font-size: clamp(1.8rem, 12vw, 2.5rem);
+    margin-bottom: 0.3rem;
+    line-height: 1.0;
   }
 
   .company-tagline {
