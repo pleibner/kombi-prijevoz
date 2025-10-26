@@ -3,9 +3,9 @@
 </script>
 
 <template>
-  <section class="services fade-in-section">
+  <section class="services fade-in-section" aria-labelledby="services-heading">
     <div class="container">
-      <h2>Naše usluge</h2>
+      <h2 id="services-heading">Naše usluge</h2>
       <div class="services-grid">
         <div class="service-card">
           <div class="service-icon">🚛</div>

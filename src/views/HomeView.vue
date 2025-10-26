@@ -40,6 +40,75 @@ onUnmounted(() => {
 </script>
 
 <template>
+  <!-- JSON-LD Structured Data for Local Business -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Kombi Prijevoz",
+    "description": "Profesionalne usluge prijevoza - brzi transport, selidbe i dostava po najnižoj cijeni",
+    "url": "https://pleibner.github.io/kombi-prijevoz/",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Zagreb",
+      "addressRegion": "HR-21",
+      "addressCountry": "HR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "45.8150",
+      "longitude": "15.9819"
+    },
+    "areaServed": {
+      "@type": "City",
+      "name": "Zagreb"
+    },
+    "serviceArea": {
+      "@type": "GeoCircle",
+      "geoMidpoint": {
+        "@type": "GeoCoordinates",
+        "latitude": "45.8150",
+        "longitude": "15.9819"
+      },
+      "geoRadius": "50000"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Prijevoz usluge",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Transport robe",
+            "description": "Siguran i efikasan transport svih vrsta robe diljem zemlje"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Selidbe",
+            "description": "Kompletne usluge selidbe stanova, kuća i ureda"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Dostava",
+            "description": "Brza i pouzdana dostava paketa, dokumenata i robe"
+          }
+        }
+      ]
+    },
+    "priceRange": "€€",
+    "paymentAccepted": "Cash, Credit Card, Bank Transfer",
+    "currenciesAccepted": "EUR",
+    "openingHours": "Mo-Su 08:00-20:00"
+  }
+  </script>
+
   <div class="home">
     <HeroSection />
     <ServicesSection />
