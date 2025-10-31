@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pleibner.github.io/kombi-prijevoz/sitemap.xml
+Sitemap: https://kombi-transport.com/sitemap.xml

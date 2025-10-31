@@ -18,7 +18,7 @@ import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
         <div class="brand-section">
           <h1 class="company-name" id="main-heading">
             <span class="name-main">Kombi</span>
-            <span class="name-accent">Prijevoz</span>
+            <span class="name-accent">Transport</span>
           </h1>
           <p class="company-tagline">Najpouzdaniji prijevoz po najnižoj cijeni</p>
             </div>
