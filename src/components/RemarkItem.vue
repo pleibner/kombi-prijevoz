@@ -42,7 +42,6 @@ const props = withDefaults(defineProps<Props>(), {
   transition: all 0.3s ease;
   backdrop-filter: blur(5px);
   width: 100%;
-  max-width: 250px;
 }
 
 .remark-item.reverse {
@@ -96,7 +95,6 @@ const props = withDefaults(defineProps<Props>(), {
     font-size: 0.95rem;
     padding: 0.6rem 1rem;
     margin-bottom: 0.6rem;
-    max-width: 200px;
   }
 }
 
@@ -104,7 +102,6 @@ const props = withDefaults(defineProps<Props>(), {
   .remark-item {
     padding: 0.5rem 0.8rem;
     font-size: 0.9rem;
-    max-width: 180px;
   }
 }
 </style>

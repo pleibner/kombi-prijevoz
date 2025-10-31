@@ -50,6 +50,9 @@ import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
           <!-- Vertical Separator -->
           <div class="vertical-separator"></div>
 
+          <!-- Horizontal Separator for mobile -->
+          <div class="horizontal-separator"></div>
+
           <!-- Remarks -->
           <div class="hero-remarks">
             <RemarkItem text="Profesionalna usluga" :delay="0.3" />
@@ -88,16 +91,6 @@ import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
   50% { background-position: 100% 50%; }
 }
 
-
-
-
-
-
-
-
-
-
-
 /* Main Content Styles */
 .hero-container {
   position: relative;
@@ -127,6 +120,7 @@ import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
   font-weight: 800;
   margin-bottom: 1rem;
   line-height: 1.1;
+  width: 100%;
 }
 
 .name-main {
@@ -149,7 +143,7 @@ import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
 
 .services-remarks-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-start;
   gap: 2rem;
   margin: 2rem 0;
@@ -159,7 +153,6 @@ import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
 }
 
 .services-preview {
-  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -174,8 +167,17 @@ import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
   align-self: center;
 }
 
+.horizontal-separator {
+  display: none;
+  height: 2px;
+  width: 200px;
+  background: linear-gradient(to right, rgba(239, 68, 68, 0.3) 0%, rgba(239, 68, 68, 0.8) 50%, rgba(239, 68, 68, 0.3) 100%);
+  border-radius: 1px;
+  align-self: center;
+  margin: 0.5rem 0;
+}
+
 .hero-remarks {
-  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -203,7 +205,7 @@ import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
   }
 
   .company-name {
-    font-size: clamp(2.2rem, 10vw, 3.5rem);
+    font-size: clamp(1.8rem, 8vw, 3rem);
     margin-bottom: 0.5rem;
     line-height: 1.05;
   }
@@ -227,7 +229,10 @@ import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
     display: none;
   }
 
-
+  .horizontal-separator {
+    display: block;
+    width: 150px; /* Smaller width for mobile */
+  }
 
   .cta-section {
     flex-direction: column;
@@ -243,9 +248,6 @@ import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
   .road-network {
     opacity: 0.4;
   }
-
-
-
 }
 
 @media (max-width: 480px) {
@@ -254,7 +256,7 @@ import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
   }
 
   .company-name {
-    font-size: clamp(1.8rem, 12vw, 2.5rem);
+    font-size: clamp(1.5rem, 10vw, 2.2rem);
     margin-bottom: 0.3rem;
     line-height: 1.0;
   }
@@ -267,10 +269,16 @@ import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
     gap: 1rem;
   }
 
-
-
   .hero-remarks {
     gap: 0.4rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .company-name {
+    font-size: clamp(1.3rem, 9vw, 2rem);
+    margin-bottom: 0.2rem;
+    line-height: 1.0;
   }
 }
 </style>

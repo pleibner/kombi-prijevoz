@@ -1,7 +1,7 @@
 <template>
   <div class="map-background">
     <!-- Road Network -->
-    <svg class="road-network" viewBox="0 0 2000 1000" xmlns="http://www.w3.org/2000/svg">
+    <svg class="road-network" viewBox="0 0 2000 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
       <path class="road main-road-1" d="M200,600 L1600,600" stroke-width="12" fill="none"/> <!-- Klaićeva, Hebrangova, Boškovićeva -->
       <path class="road main-road-2" d="M100,800 L1400,800" stroke-width="12" fill="none"/> <!-- Pavla Hatza -->
       <path class="road main-road-3" d="M200,200 L200,600" stroke-width="12" fill="none"/> <!-- Frankopanska -->
@@ -92,14 +92,13 @@
       <g class="moving-vehicles">
         <AnimatedVehicle :x="0" :y="0" color="#ef4444" vehicle-class="vehicle-1" />
         <AnimatedVehicle :x="0" :y="0" color="#3b82f6" vehicle-class="vehicle-2" />
-        <!--AnimatedVehicle :x="0" :y="0" color="#10b981" vehicle-class="vehicle-3" />
         <AnimatedVehicle :x="500" :y="200" color="#f59e0b" vehicle-class="vehicle-4" />
         <AnimatedVehicle :x="100" :y="400" color="#8b5cf6" vehicle-class="vehicle-5" />
         <AnimatedVehicle :x="650" :y="100" color="#ec4899" vehicle-class="vehicle-6" />
         <AnimatedVehicle :x="450" :y="490" color="#06b6d4" vehicle-class="vehicle-7" />
         <AnimatedVehicle :x="580" :y="690" color="#84cc16" vehicle-class="vehicle-8" />
         <AnimatedVehicle :x="120" :y="690" color="#f97316" vehicle-class="vehicle-9" />
-        <AnimatedVehicle :x="780" :y="240" color="#a855f7" vehicle-class="vehicle-10" / -->
+        <AnimatedVehicle :x="780" :y="240" color="#a855f7" vehicle-class="vehicle-10" />
       </g>
     </svg>
   </div>
@@ -127,11 +126,37 @@ import AnimatedVehicle from '@/components/AnimatedVehicle.vue'
 
 .road-network {
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
   opacity: 0.6;
-  overflow-x:hidden;
+}
+
+/* Desktop: Full width, centered, overflow from top */
+@media (min-width: 769px) {
+  .road-network {
+    width: 100vw;
+    height: auto;
+    min-height: 100vh;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Mobile: Full height, centered horizontally, overflow hidden */
+@media (max-width: 768px) {
+  .road-network {
+    width: auto;
+    height: 100vh;
+    min-width: 100vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 .road {
