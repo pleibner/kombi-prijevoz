@@ -320,7 +320,7 @@ const submitForm = async () => {
             <h2>Detalji prijevoza</h2>
   
             <div class="form-group">
-              <label for="datumVrijeme">Datum i vrijeme *</label>
+              <label for="datumVrijeme">Datum i vrijeme</label>
               <input
                 id="datumVrijeme"
                 v-model="form.datumVrijeme"
@@ -332,7 +332,7 @@ const submitForm = async () => {
   
             <div class="form-row">
               <div class="form-group">
-                <label for="lokacijaPreuzimanja">Lokacija preuzimanja *</label>
+                <label for="lokacijaPreuzimanja">Lokacija preuzimanja</label>
                 <input
                   id="lokacijaPreuzimanja"
                   v-model="form.lokacijaPreuzimanja"
@@ -343,7 +343,7 @@ const submitForm = async () => {
               </div>
   
               <div class="form-group">
-                <label for="lokacijaIsporuke">Lokacija isporuke *</label>
+                <label for="lokacijaIsporuke">Lokacija isporuke</label>
                 <input
                   id="lokacijaIsporuke"
                   v-model="form.lokacijaIsporuke"
@@ -356,7 +356,7 @@ const submitForm = async () => {
   
             <div class="form-row">
               <div class="form-group">
-                <label for="liftPreuzimanja-da">Ima lift? *</label>
+                <label for="liftPreuzimanja-da">Ima lift?</label>
                 <div class="radio-group">
                   <div class="radio-option">
                     <input
@@ -383,7 +383,7 @@ const submitForm = async () => {
               </div>
   
               <div class="form-group">
-                <label for="liftIsporuke-da">Ima lift? *</label>
+                <label for="liftIsporuke-da">Ima lift?</label>
                 <div class="radio-group">
                   <div class="radio-option">
                     <input
@@ -411,7 +411,7 @@ const submitForm = async () => {
             </div>
   
             <div class="form-group">
-              <label for="popisStvari">Popis stvari s dimenzijama *</label>
+              <label for="popisStvari">Popis stvari s dimenzijama</label>
               <textarea
                 id="popisStvari"
                 v-model="form.popisStvari"
