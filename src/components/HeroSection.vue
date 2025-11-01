@@ -1,7 +1,14 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import RemarkItem from '@/components/RemarkItem.vue'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
 import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
+
+const router = useRouter()
+
+const navigateToContact = () => {
+  router.push('/kontakt')
+}
 
 // Hero section component with dynamic animations and interactive elements
 </script>
@@ -64,7 +71,7 @@ import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
 
         <!-- Call to action -->
         <div class="cta-section">
-          <ButtonPrimary button-class="hero-btn" show-ripple>Kontaktirajte nas</ButtonPrimary>
+          <ButtonPrimary button-class="hero-btn" show-ripple @click="navigateToContact">Kontaktirajte nas</ButtonPrimary>
           </div>
 
             </div>

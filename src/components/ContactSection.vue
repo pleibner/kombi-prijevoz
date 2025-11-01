@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
+
+const router = useRouter()
+
+const navigateToContact = () => {
+  router.push('/kontakt')
+}
 
 // Contact section component
 </script>
@@ -26,7 +33,7 @@ import ButtonPrimary from '@/components/ButtonPrimary.vue'
           <span>Crnčićeva 41a, Zagreb</span>
         </div>
       </div>
-      <ButtonPrimary button-class="contact-btn">Pošaljite upit</ButtonPrimary>
+      <ButtonPrimary button-class="contact-btn" @click="navigateToContact">Pošaljite upit</ButtonPrimary>
     </div>
   </section>
 </template>
