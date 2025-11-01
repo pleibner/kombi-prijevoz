@@ -232,7 +232,7 @@ const submitForm = async () => {
             </div>
   
             <div class="form-row">
-              <div class="form-group">
+              <div class="form-group flex-1">
                 <label for="email">E-mail adresa *</label>
                 <input
                   id="email"
@@ -245,7 +245,7 @@ const submitForm = async () => {
                 <span v-if="errors.email" class="error-message">{{ errors.email }}</span>
               </div>
   
-              <div class="form-group">
+              <div class="form-group flex-1">
                 <label for="telefon">Broj telefona *</label>
                 <input
                   id="telefon"
@@ -275,7 +275,7 @@ const submitForm = async () => {
           <!-- Company Information (shown when checkbox is checked) -->
           <div v-if="form.trebamR1Racun" class="company-fields">
             <div class="form-row">
-              <div class="form-group">
+              <div class="form-group flex-1">
                 <label for="nazivFirme">Naziv firme *</label>
                 <input
                   id="nazivFirme"
@@ -287,7 +287,7 @@ const submitForm = async () => {
                 <span v-if="errors.nazivFirme" class="error-message">{{ errors.nazivFirme }}</span>
               </div>
 
-              <div class="form-group">
+              <div class="form-group flex-1">
                 <label for="oibFirme">OIB firme *</label>
                 <input
                   id="oibFirme"
@@ -331,7 +331,7 @@ const submitForm = async () => {
             </div>
   
             <div class="form-row">
-              <div class="form-group">
+              <div class="form-group flex-1">
                 <label for="lokacijaPreuzimanja">Lokacija preuzimanja</label>
                 <input
                   id="lokacijaPreuzimanja"
@@ -341,20 +341,7 @@ const submitForm = async () => {
                 />
                 <span v-if="errors.lokacijaPreuzimanja" class="error-message">{{ errors.lokacijaPreuzimanja }}</span>
               </div>
-  
-              <div class="form-group">
-                <label for="lokacijaIsporuke">Lokacija isporuke</label>
-                <input
-                  id="lokacijaIsporuke"
-                  v-model="form.lokacijaIsporuke"
-                  type="text"
-                  :class="{ 'error': errors.lokacijaIsporuke }"
-                />
-                <span v-if="errors.lokacijaIsporuke" class="error-message">{{ errors.lokacijaIsporuke }}</span>
-              </div>
-            </div>
-  
-            <div class="form-row">
+
               <div class="form-group">
                 <label for="liftPreuzimanja-da">Ima lift?</label>
                 <div class="radio-group">
@@ -381,7 +368,20 @@ const submitForm = async () => {
                 </div>
                 <span v-if="errors.liftPreuzimanja" class="error-message">{{ errors.liftPreuzimanja }}</span>
               </div>
-  
+            </div>
+
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label for="lokacijaIsporuke">Lokacija isporuke</label>
+                <input
+                  id="lokacijaIsporuke"
+                  v-model="form.lokacijaIsporuke"
+                  type="text"
+                  :class="{ 'error': errors.lokacijaIsporuke }"
+                />
+                <span v-if="errors.lokacijaIsporuke" class="error-message">{{ errors.lokacijaIsporuke }}</span>
+              </div>
+
               <div class="form-group">
                 <label for="liftIsporuke-da">Ima lift?</label>
                 <div class="radio-group">
@@ -559,9 +559,12 @@ h1 {
 }
 
 .form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  display: flex;
+  column-gap: 1.5rem;
+}
+
+.form-group.flex-1 {
+  flex: 1;
 }
 
 .form-group {
@@ -625,10 +628,6 @@ label.radio-text {
 }
 
 /* Checkbox styling */
-.checkbox-group {
-  margin-bottom: 1.5rem;
-}
-
 .checkbox-label {
   display: flex;
   align-items: center;
@@ -733,16 +732,6 @@ label.radio-text {
     font-size: 2rem;
   }
 
-  .form-row {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .radio-group {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
   .form-section h2 {
     font-size: 1.3rem;
   }
@@ -759,6 +748,10 @@ label.radio-text {
 
   .form-section {
     padding-bottom: 1.5rem;
+  }
+
+  .form-row {
+    flex-direction: column;
   }
 }
 </style>
