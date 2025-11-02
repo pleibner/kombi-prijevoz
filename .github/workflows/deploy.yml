@@ -22,6 +22,8 @@ jobs:
       VITE_EMAILJS_TEMPLATE_ID: ${{ vars.VITE_EMAILJS_TEMPLATE_ID }}
       VITE_EMAILJS_PUBLIC_KEY: ${{ vars.VITE_EMAILJS_PUBLIC_KEY }}
       VITE_AUTOMATIC_EMAIL_RECEIVER: ${{ vars.VITE_AUTOMATIC_EMAIL_RECEIVER }}
+      VITE_TRACKING_SERVICE_URL: ${{ vars.VITE_TRACKING_SERVICE_URL }}
+      VITE_TRACKING_ENABLED: ${{ vars.VITE_TRACKING_ENABLED }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
