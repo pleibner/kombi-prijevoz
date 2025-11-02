@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Services section component
 </script>
 
 <template>
@@ -75,7 +74,6 @@
   line-height: 1.6;
 }
 
-/* Responsivnost */
 @media (max-width: 768px) {
   .services {
     padding: 4rem 1rem;

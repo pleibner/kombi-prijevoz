@@ -10,11 +10,9 @@
 </template>
 
 <script setup lang="ts">
-// Road animation component
 </script>
 
 <style scoped>
-/* Enhanced Road Animation */
 .road-animation {
   position: absolute;
   bottom: 10px;
@@ -98,9 +96,7 @@
   }
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
-  /* Road animation mobile */
   .road-animation {
     height: 30px;
     border-top-width: 2px;

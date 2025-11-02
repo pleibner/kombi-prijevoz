@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Props for the remark item component
 interface Props {
   text: string
   icon?: string
@@ -89,7 +88,6 @@ const props = withDefaults(defineProps<Props>(), {
   }
 }
 
-/* Responsive styles */
 @media (max-width: 768px) {
   .remark-item {
     font-size: 0.95rem;

@@ -9,7 +9,6 @@ import ContactSection from '@/components/ContactSection.vue'
 let observer: IntersectionObserver | null = null
 
 onMounted(() => {
-  // Create intersection observer for fade-in animations
   observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -19,12 +18,11 @@ onMounted(() => {
       })
     },
     {
-      threshold: 0.1, // Trigger when 10% of element is visible
-      rootMargin: '0px 0px -50px 0px' // Trigger slightly before element enters viewport
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
     }
   )
 
-  // Observe all fade-in sections
   const fadeSections = document.querySelectorAll('.fade-in-section')
   fadeSections.forEach((section) => {
     observer?.observe(section)
@@ -32,7 +30,6 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  // Clean up observer
   observer?.disconnect()
 })
 </script>
@@ -52,14 +49,12 @@ onUnmounted(() => {
   width: 100%;
 }
 
-/* Global container styles for consistency */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
 }
 
-/* Fade-in animation for sections */
 .fade-in-section {
   opacity: 0;
   transform: translateY(50px);
@@ -71,7 +66,6 @@ onUnmounted(() => {
   transform: translateY(0);
 }
 
-/* Responsivnost */
 @media (max-width: 768px) {
   .container {
     padding: 0 1rem;

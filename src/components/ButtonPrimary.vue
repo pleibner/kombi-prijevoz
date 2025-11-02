@@ -5,7 +5,6 @@
     @click="$emit('click')"
   >
     <slot>{{ text }}</slot>
-    <!-- Ripple effect -->
     <div class="btn-ripple" v-if="showRipple"></div>
   </button>
 </template>
@@ -65,7 +64,6 @@ defineEmits<{
   }
 }
 
-/* Enhanced styling for hero section */
 .btn-primary.hero-btn {
   background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   color: white;
@@ -89,7 +87,6 @@ defineEmits<{
   box-shadow: 0 12px 35px rgba(239, 68, 68, 0.6);
 }
 
-/* Contact section styling */
 .btn-primary.contact-btn {
   background-color: #ef4444;
   color: white;
@@ -107,7 +104,6 @@ defineEmits<{
   transform: translateY(-2px);
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
   .btn-primary {
     padding: 1rem 2rem;

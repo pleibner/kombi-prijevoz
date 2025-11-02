@@ -3,7 +3,6 @@
     <rect :x="x" :y="y" width="24" height="14" :fill="color" rx="2"/>
     <circle :cx="x + 6" :cy="y + 17" r="3.5" fill="#1f2937"/>
     <circle :cx="x + 18" :cy="y + 17" r="3.5" fill="#1f2937"/>
-    <!-- Headlights -->
     <circle :cx="x" :cy="y + 5" r="1.5" fill="#fbbf24"/>
   </g>
 </template>
@@ -15,6 +14,4 @@ defineProps<{
   color: string
   vehicleClass?: string
 }>()
-
-// Vehicle component for road network background
 </script>

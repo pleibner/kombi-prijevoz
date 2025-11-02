@@ -1,6 +1,5 @@
 <template>
   <div class="map-background">
-    <!-- Road Network -->
     <svg class="road-network" viewBox="0 0 2000 1000" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg">
       <path class="road main-road-1" d="M200,400 L1600,400" stroke-width="12" fill="none"/> <!-- Klaićeva, Hebrangova, Boškovićeva -->
       <path class="road main-road-2" d="M100,600 L1400,600" stroke-width="12" fill="none"/> <!-- Pavla Hatza -->
@@ -88,7 +87,6 @@
       <path class="road tertiary-road-45" d="M712,100 L712,50 Q680,20 650,0" stroke-width="4" fill="none"/> <!-- Radićeva -->
       <path class="road tertiary-road-46" d="M500,100 L500,0" stroke-width="4" fill="none"/> <!-- Tomićeva -->
       
-      <!-- Vehicles on roads -->
       <g class="moving-vehicles">
         <AnimatedVehicle :x="0" :y="0" color="#ef4444" vehicle-class="vehicle-1" />
         <AnimatedVehicle :x="0" :y="0" color="#3b82f6" vehicle-class="vehicle-2" />
@@ -108,11 +106,9 @@
 <script setup lang="ts">
 import AnimatedVehicle from '@/components/AnimatedVehicle.vue'
 
-// Road network background component with animated roads and vehicles
 </script>
 
 <style scoped>
-/* Map Background with Roads and Vehicles */
 .map-background {
   position: absolute;
   top: 0;
@@ -136,7 +132,6 @@ import AnimatedVehicle from '@/components/AnimatedVehicle.vue'
   opacity: 0.6;
 }
 
-/* Desktop: Full width, centered, overflow from top */
 @media (min-width: 769px) {
   .road-network {
     width: 100vw;
@@ -148,7 +143,6 @@ import AnimatedVehicle from '@/components/AnimatedVehicle.vue'
   }
 }
 
-/* Mobile: Full height, centered horizontally, overflow hidden */
 @media (max-width: 768px) {
   .road-network {
     width: auto;
@@ -166,7 +160,6 @@ import AnimatedVehicle from '@/components/AnimatedVehicle.vue'
   filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
 }
 
-/* Enhanced Vehicle Movement */
 .moving-vehicles {
   animation: vehiclesFlow 12s linear infinite;
 }
@@ -217,7 +210,6 @@ import AnimatedVehicle from '@/components/AnimatedVehicle.vue'
   100% { transform: translateX(0px) translateY(100px); } /* Back to Ilica start */
 }
 
-/* Road features animation */
 .road-features {
   animation: roadFeaturesPulse 8s ease-in-out infinite;
 }
@@ -227,14 +219,12 @@ import AnimatedVehicle from '@/components/AnimatedVehicle.vue'
   50% { opacity: 0.8; transform: scale(1.1); }
 }
 
-/* Enhanced road pulsing - individual delays already set above */
 
 @keyframes roadPulse {
   0%, 100% { opacity: 0.6; stroke-width: 8; }
   50% { opacity: 0.9; stroke-width: 10; }
 }
 
-/* Road markers instead of floating icons */
 .road-markers {
   position: absolute;
   top: 0;
@@ -309,9 +299,7 @@ import AnimatedVehicle from '@/components/AnimatedVehicle.vue'
   }
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
-  /* Adjust map background for mobile */
   .road-network {
     opacity: 0.4;
   }

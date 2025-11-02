@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// About section component with company information and statistics
 </script>
 
 <template>
@@ -105,7 +104,6 @@
   font-size: 1.1rem;
 }
 
-/* Responsivnost */
 @media (max-width: 768px) {
   .about {
     padding: 4rem 1rem;
