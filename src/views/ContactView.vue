@@ -3,16 +3,15 @@ import { ref, reactive, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
 import emailjs from '@emailjs/browser'
+import { trackingService } from '@/utils/tracking'
 
 const router = useRouter()
 
-// Scroll to top when component is mounted
 onMounted(async () => {
   await nextTick()
   window.scrollTo(0, 0)
 })
 
-// Form data
 const form = reactive({
   ime: '',
   email: '',
@@ -31,7 +30,6 @@ const form = reactive({
   adresaFirme: ''
 })
 
-// Form validation
 const errors = reactive({
   ime: '',
   email: '',
@@ -54,10 +52,9 @@ const submitMessage = ref('')
 const submitError = ref('')
 const isFormSubmitted = ref(false)
 
-// Field validation functions
 const validateName = () => {
   errors.ime = '';
-  if (!form.ime.trim()) {
+  if (form.ime.trim().length === 0) {
     errors.ime = 'Upišite ime.';
     return false;
   }
@@ -78,17 +75,16 @@ const validateEmail = () => {
 
 const validatePhone = () => {
   errors.telefon = '';
-  if (!form.telefon.trim()) {
-    errors.telefon = 'Upišite broj telefona.';
-    return false;
-  } else {
-    // Allow spaces and dashes anywhere in the phone number
+  if (form.telefon.trim().length > 0) {
     const cleaned = form.telefon.trim().replace(/[\s-/]/g, '');
-    // After removing spaces/dashes, validate the core number
+    
     if (!/^(\+\d{1,4})?\d{6,14}$/.test(cleaned)) {
       errors.telefon = 'Upišite valjani broj telefona.';
       return false;
     }
+  } else {
+    errors.telefon = 'Upišite broj telefona.';
+    return false;
   }
   return true;
 };
@@ -124,17 +120,14 @@ const validateCompanyOIB = () => {
   return true;
 };
 
-// Validation function
 const validateForm = () => {
   let isValid = true
 
-  // Validate required fields
   if (!validateName()) isValid = false
   if (!validateEmail()) isValid = false
   if (!validatePhone()) isValid = false
   if (!validatePayment()) isValid = false
 
-  // Validate company fields if R1 invoice is requested
   if (form.trebamR1Racun) {
     if (!validateCompanyName()) isValid = false
     if (!validateCompanyOIB()) isValid = false
@@ -143,10 +136,8 @@ const validateForm = () => {
   return isValid
 }
 
-// Initialize EmailJS
 emailjs.init({publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY});
 
-// Submit form
 const submitForm = async () => {
   if (!validateForm()) {
     return
@@ -157,19 +148,18 @@ const submitForm = async () => {
   submitMessage.value = ''
 
   try {
-    // Prepare email template parameters
     const templateParams = {
       ime: form.ime,
       email: form.email,
       telefon: form.telefon,
       datum_vrijeme: form.datumVrijeme,
       lokacija_preuzimanja: form.lokacijaPreuzimanja,
-      lift_preuzimanja: form.liftPreuzimanja === 'da' ? 'Da' : 'Ne',
+      lift_preuzimanja: form.liftPreuzimanja,
       lokacija_isporuke: form.lokacijaIsporuke,
-      lift_isporuke: form.liftIsporuke === 'da' ? 'Da' : 'Ne',
+      lift_isporuke: form.liftIsporuke,
       popis_stvari: form.popisStvari,
       placanje: form.placanje === 'gotovina' ? 'Gotovina' : 'Internet bankarstvo',
-      komentar: form.komentar || 'Nema dodatnih komentara',
+      komentar: form.komentar,
       r1_racun: form.trebamR1Racun ? 'Da' : 'Ne',
       naziv_firme: form.nazivFirme,
       oib_firme: form.oibFirme,
@@ -178,7 +168,19 @@ const submitForm = async () => {
       reply_to: form.email
     }
 
-    // Send email using EmailJS
+    trackingService.trackFormSubmit('contact_form_submit', {
+      has_company_info: form.trebamR1Racun,
+      has_company_address: !!form.adresaFirme.trim(),
+      has_pickup_location: !!form.lokacijaPreuzimanja.trim(),
+      has_pickup_lift: !!form.liftPreuzimanja,
+      has_delivery_location: !!form.lokacijaIsporuke.trim(),
+      has_delivery_lift: !!form.liftIsporuke,
+      has_items_list: !!form.popisStvari.trim(),
+      payment_method: form.placanje,
+      has_date_time: !!form.datumVrijeme.trim(),
+      has_comments: !!form.komentar.trim()
+    })
+
     await emailjs.send(
       import.meta.env.VITE_EMAILJS_SERVICE_ID,
       import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
@@ -188,6 +190,7 @@ const submitForm = async () => {
     isFormSubmitted.value = true
   } catch (error: unknown) {
     console.error('Form submission error:', error)
+    trackingService.trackError('contact_form_submit_error', error)
     submitError.value = 'Došlo je do greške prilikom slanja upita. Molimo pokušajte ponovno ili nas kontaktirajte direktno.'
   } finally {
     isSubmitting.value = false
@@ -198,10 +201,10 @@ const submitForm = async () => {
 <template>
   <div class="contact-view">
     <div class="container">
-      <button @click="router.back()" class="back-button" aria-label="Go back">
-        ← Natrag
+      <button @click="router.back()" class="back-button">
+        ← Natrag na početnu stranicu
       </button>
-      <!-- Thank you message after successful submission -->
+      
       <div v-if="isFormSubmitted" class="thank-you-message">
         <div class="thank-you-content">
           <h2>Hvala Vam što ste nas kontaktirali!</h2>
@@ -209,13 +212,11 @@ const submitForm = async () => {
         </div>
       </div>
 
-      <!-- Contact form (only show if not submitted) -->
       <template v-else>
         <h1>Kontaktirajte nas</h1>
         <p class="subtitle">Ispunite obrazac za besplatnu procjenu i ugovaranje Vašeg prijevoza</p>
         <form @submit.prevent="submitForm" class="contact-form">
   
-          <!-- Personal Information -->
           <div class="form-section">
             <h2>Osobni podaci</h2>
   
@@ -259,7 +260,6 @@ const submitForm = async () => {
             </div>
           </div>
 
-          <!-- R1 Invoice Checkbox -->
           <div class="form-group checkbox-group">
             <label class="checkbox-label">
               <input
@@ -272,7 +272,6 @@ const submitForm = async () => {
             </label>
           </div>
 
-          <!-- Company Information (shown when checkbox is checked) -->
           <div v-if="form.trebamR1Racun" class="company-fields">
             <div class="form-row">
               <div class="form-group flex-1">
@@ -315,7 +314,6 @@ const submitForm = async () => {
           </div>
         </div>
   
-          <!-- Transport Details -->
           <div class="form-section">
             <h2>Detalji prijevoza</h2>
   
@@ -463,7 +461,6 @@ const submitForm = async () => {
           </div>
   
   
-          <!-- Submit Button -->
           <div class="form-actions">
             <ButtonPrimary
               button-class="submit-btn"
@@ -474,7 +471,6 @@ const submitForm = async () => {
             </ButtonPrimary>
           </div>
   
-          <!-- Messages -->
           <div v-if="submitMessage" class="success-message">
             {{ submitMessage }}
           </div>
@@ -627,7 +623,6 @@ label.radio-text {
   margin: 0;
 }
 
-/* Checkbox styling */
 .checkbox-label {
   display: flex;
   align-items: center;
@@ -718,7 +713,6 @@ label.radio-text {
   transform: none !important;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .contact-view {
     padding: 2rem 1rem;

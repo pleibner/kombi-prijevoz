@@ -3,25 +3,22 @@ import { useRouter } from 'vue-router'
 import RemarkItem from '@/components/RemarkItem.vue'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
 import RoadNetworkBackground from '@/components/RoadNetworkBackground.vue'
+import { trackingService } from '@/utils/tracking'
 
 const router = useRouter()
 
 const navigateToContact = () => {
+  trackingService.trackClick('hero_contact_button_click')
   router.push('/kontakt')
 }
-
-// Hero section component with dynamic animations and interactive elements
 </script>
 
 <template>
   <section class="hero">
-    <!-- Road Network Background -->
     <RoadNetworkBackground />
 
-    <!-- Main Content -->
     <div class="hero-container">
         <div class="hero-content">
-        <!-- Company branding -->
         <div class="brand-section">
           <h1 class="company-name" id="main-heading">
             <span class="name-main">Kombi</span>
@@ -30,9 +27,7 @@ const navigateToContact = () => {
           <p class="company-tagline">Najpouzdaniji prijevoz po najnižoj cijeni</p>
             </div>
 
-        <!-- Services and Remarks in Two Columns -->
         <div class="services-remarks-container">
-          <!-- Key services -->
           <div class="services-preview">
             <RemarkItem
               icon="🚚"
@@ -54,13 +49,10 @@ const navigateToContact = () => {
             />
             </div>
 
-          <!-- Vertical Separator -->
           <div class="vertical-separator"></div>
 
-          <!-- Horizontal Separator for mobile -->
           <div class="horizontal-separator"></div>
 
-          <!-- Remarks -->
           <div class="hero-remarks">
             <RemarkItem text="Profesionalna usluga" :delay="0.3" />
             <RemarkItem text="Konkurentne cijene" :delay="0.5" />
@@ -69,7 +61,6 @@ const navigateToContact = () => {
             </div>
             </div>
 
-        <!-- Call to action -->
         <div class="cta-section">
           <ButtonPrimary button-class="hero-btn" show-ripple @click="navigateToContact">Kontaktirajte nas</ButtonPrimary>
           </div>
@@ -98,7 +89,6 @@ const navigateToContact = () => {
   50% { background-position: 100% 50%; }
 }
 
-/* Main Content Styles */
 .hero-container {
   position: relative;
   z-index: 10;
@@ -199,7 +189,6 @@ const navigateToContact = () => {
   flex-wrap: wrap;
 }
 
-/* Enhanced Responsive Design */
 @media (max-width: 768px) {
   .hero {
     padding: 2rem 1rem;
@@ -238,7 +227,7 @@ const navigateToContact = () => {
 
   .horizontal-separator {
     display: block;
-    width: 150px; /* Smaller width for mobile */
+    width: 150px;
   }
 
   .cta-section {
@@ -251,7 +240,6 @@ const navigateToContact = () => {
     align-items: center;
   }
 
-  /* Adjust map background for mobile */
   .road-network {
     opacity: 0.4;
   }

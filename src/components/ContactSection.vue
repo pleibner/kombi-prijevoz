@@ -1,14 +1,22 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
+import { trackingService } from '@/utils/tracking'
 
 const router = useRouter()
 
 const navigateToContact = () => {
+  trackingService.trackClick('contact_section_contact_button_click')
   router.push('/kontakt')
 }
 
-// Contact section component
+const trackWhatsAppClick = () => {
+  trackingService.trackClick('whatsapp_button_click')
+}
+
+const trackPhoneFocus = () => {
+  trackingService.trackClick('phone_number_focus')
+}
 </script>
 
 <template>
@@ -19,12 +27,18 @@ const navigateToContact = () => {
       <div class="contact-info">
         <div class="contact-item">
           <span class="contact-icon">📞</span>
-          <span>+385 98 915 6061</span>
+          <input
+            type="text"
+            value="+385 98 915 6061"
+            readonly
+            class="phone-input"
+            @focus="trackPhoneFocus"
+          />
         </div>
         <div class="contact-item">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
        alt="WhatsApp" width="24" height="24">
-          <a href="https://wa.me/385989156061" target="_blank" rel="noopener noreferrer" class="contact-link">
+          <a href="https://wa.me/385989156061" target="_blank" rel="noopener noreferrer" class="contact-link" @click="trackWhatsAppClick">
             WhatsApp
           </a>
         </div>
@@ -83,6 +97,27 @@ const navigateToContact = () => {
   font-size: 1.3rem;
 }
 
+.phone-input {
+  border: none;
+  background: transparent;
+  font-size: 1.1rem;
+  color: #555;
+  font-family: inherit;
+  outline: none;
+  cursor: text;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  min-width: 120px;
+}
+
+.phone-input:focus {
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 4px;
+  padding: 2px 4px;
+  margin: -2px -4px;
+}
+
 .contact-link {
   color: var(--primary-color);
   text-decoration: none;
@@ -95,8 +130,6 @@ const navigateToContact = () => {
   text-decoration: underline;
 }
 
-
-/* Responsivnost */
 @media (max-width: 768px) {
   .contact {
     padding: 4rem 1rem;
