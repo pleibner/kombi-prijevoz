@@ -19,7 +19,7 @@
     </div>
 
     <template #footer>
-      <ServicesSection />
+      <ServicesSection :show-title="false" custom-padding="2rem 2rem" centered />
     </template>
   </ServiceLayout>
 </template>
