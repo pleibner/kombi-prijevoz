@@ -29,24 +29,30 @@ const navigateToContact = () => {
 
         <div class="services-remarks-container">
           <div class="services-preview">
-            <RemarkItem
-              icon="🚚"
-              text="Brzi transport"
-              :reverse="true"
-              :delay="0.1"
-            />
-            <RemarkItem
-              icon="🏠"
-              text="Selidbe"
-              :reverse="true"
-              :delay="0.2"
-            />
-            <RemarkItem
-              icon="📦"
-              text="Dostava"
-              :reverse="true"
-              :delay="0.3"
-            />
+            <router-link to="/kombi-prijevoz" class="service-link">
+              <RemarkItem
+                icon="🚚"
+                text="Transport robe"
+                :reverse="true"
+                :delay="0.1"
+              />
+            </router-link>
+            <router-link to="/kombi-selidbe" class="service-link">
+              <RemarkItem
+                icon="🏠"
+                text="Selidbe"
+                :reverse="true"
+                :delay="0.2"
+              />
+            </router-link>
+            <router-link to="/kombi-dostava" class="service-link">
+              <RemarkItem
+                icon="📦"
+                text="Dostava"
+                :reverse="true"
+                :delay="0.3"
+              />
+            </router-link>
             </div>
 
           <div class="vertical-separator"></div>
@@ -154,6 +160,13 @@ const navigateToContact = () => {
   flex-direction: column;
   gap: 1rem;
   align-items: flex-end;
+}
+
+.service-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
 }
 
 .vertical-separator {

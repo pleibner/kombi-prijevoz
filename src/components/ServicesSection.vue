@@ -6,21 +6,27 @@
     <div class="container">
       <h2 id="services-heading">Naše usluge</h2>
       <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon">🚛</div>
-          <h3>Transport robe</h3>
-          <p>Siguran i efikasan transport svih vrsta robe diljem zemlje. Koristimo moderno vozilo i profesionalnu opremu za siguran prijevoz vaših stvari.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🏠</div>
-          <h3>Selidbe</h3>
-          <p>Kompletne usluge selidbe stanova, kuća i ureda. Naš tim brine o svakom detalju kako bi vaša selidba protekla glatko i bez stresa.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">📦</div>
-          <h3>Dostava</h3>
-          <p>Brza i pouzdana dostava paketa, dokumenata i robe. Fleksibilni rasporedi dostave prilagođeni vašim potrebama.</p>
-        </div>
+        <router-link to="/kombi-prijevoz" class="service-link">
+          <div class="service-card">
+            <div class="service-icon">🚛</div>
+            <h3>Transport robe</h3>
+            <p>Siguran i efikasan transport svih vrsta robe diljem zemlje. Koristimo moderno vozilo i profesionalnu opremu za siguran prijevoz vaših stvari.</p>
+          </div>
+        </router-link>
+        <router-link to="/kombi-selidbe" class="service-link">
+          <div class="service-card">
+            <div class="service-icon">🏠</div>
+            <h3>Selidbe</h3>
+            <p>Kompletne usluge selidbe stanova, kuća i ureda. Naš tim brine o svakom detalju kako bi vaša selidba protekla glatko i bez stresa.</p>
+          </div>
+        </router-link>
+        <router-link to="/kombi-dostava" class="service-link">
+          <div class="service-card">
+            <div class="service-icon">📦</div>
+            <h3>Dostava</h3>
+            <p>Brza i pouzdana dostava paketa, dokumenata i robe. Fleksibilni rasporedi dostave prilagođeni vašim potrebama.</p>
+          </div>
+        </router-link>
       </div>
     </div>
   </section>
@@ -43,6 +49,13 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+}
+
+.service-link {
+  text-decoration: none;
+  color: inherit;
+  display: contents;
+  width: 100%;
 }
 
 .service-card {

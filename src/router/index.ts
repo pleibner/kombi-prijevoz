@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ContactView from '../views/ContactView.vue'
+import KombiPrijevozView from '../views/KombiPrijevozView.vue'
+import KombiSelidbeView from '../views/KombiSelidbeView.vue'
+import KombiDostavaView from '../views/KombiDostavaView.vue'
 import { trackingService } from '../utils/tracking'
 
 const router = createRouter({
@@ -15,6 +18,21 @@ const router = createRouter({
       path: '/kontakt',
       name: 'kontakt',
       component: ContactView,
+    },
+    {
+      path: '/kombi-prijevoz',
+      name: 'kombi-prijevoz',
+      component: KombiPrijevozView,
+    },
+    {
+      path: '/kombi-selidbe',
+      name: 'kombi-selidbe',
+      component: KombiSelidbeView,
+    },
+    {
+      path: '/kombi-dostava',
+      name: 'kombi-dostava',
+      component: KombiDostavaView,
     },
   ],
 })
