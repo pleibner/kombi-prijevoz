@@ -11,8 +11,8 @@ import CardGrid from './CardGrid.vue';
         <ServiceCard
           to="/kombi-prijevoz"
           icon="🚛"
-          title="Transport robe"
-          description="Siguran i efikasan transport svih vrsta robe diljem zemlje. Koristimo moderno vozilo i profesionalnu opremu za siguran prijevoz vaših stvari."
+          title="Prijevoz robe"
+          description="Siguran i efikasan prijevoz svih vrsta robe diljem zemlje. Koristimo moderna vozila i profesionalnu opremu za siguran prijevoz vaših stvari."
         />
         <ServiceCard
           to="/kombi-selidbe"

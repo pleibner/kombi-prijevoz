@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ContactView from '../views/ContactView.vue'
 import KombiPrijevozView from '../views/KombiPrijevozView.vue'
+import KombiPrijevozZagrebView from '../views/KombiPrijevozZagrebView.vue'
 import KombiSelidbeView from '../views/KombiSelidbeView.vue'
 import KombiDostavaView from '../views/KombiDostavaView.vue'
 import { trackingService } from '../utils/tracking'
@@ -23,6 +24,11 @@ const router = createRouter({
       path: '/kombi-prijevoz',
       name: 'kombi-prijevoz',
       component: KombiPrijevozView,
+    },
+    {
+      path: '/kombi-prijevoz-zagreb',
+      name: 'kombi-prijevoz-zagreb',
+      component: KombiPrijevozZagrebView,
     },
     {
       path: '/kombi-selidbe',

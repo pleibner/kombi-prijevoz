@@ -21,7 +21,7 @@
     <template #footer>
       <CardGrid centered>
         <ServiceCard
-          to="/podrucje-djelovanja"
+          to="/kombi-prijevoz-zagreb"
           icon="🗺️"
           title="Gdje god treba"
           description="Po Zagrebu prevozimo svaki dan, a po potrebi vozimo i po cijeloj Hrvatskoj – čak i na otoke. Brzi, pouzdani i uvijek na vrijeme."

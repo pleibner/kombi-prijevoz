@@ -32,7 +32,7 @@ const navigateToContact = () => {
             <router-link to="/kombi-prijevoz" class="service-link">
               <RemarkItem
                 icon="🚚"
-                text="Transport robe"
+                text="Prijevoz robe"
                 :reverse="true"
                 :delay="0.1"
               />
