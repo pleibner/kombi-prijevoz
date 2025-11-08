@@ -27,7 +27,7 @@
           description="Selidba doma poseban je trenutak za vašu obitelj. Prepustite je stručnjacima i uživajte u novom početku, bez stresa."
         />
         <ServiceCard
-          to="/selidba-ureda"
+          to="/selidbe-ureda"
           icon="🏢"
           title="Selidba ureda"
           description="Selimo urede svih veličina. Vi se fokusirajte na posao – mi ćemo se pobrinuti da sutra jednostavno uključite računalo i nastavite gdje ste stali."
