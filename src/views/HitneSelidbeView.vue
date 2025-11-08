@@ -14,7 +14,7 @@
       </p>
 
       <p>
-        Ne dopustite da vam neočekivane okolnosti pokvare planove za novi početak. Bez obzira na to koliko je situacija hitna, možete računati na našu pouzdanost i profesionalizam. Jer kada vam je najpotrebnija, mi smo uvijek samo jedan poziv daleko.
+        Ne dopustite da vam neočekivane okolnosti pokvare planove za novi početak. Bez obzira na to koliko je situacija hitna, možete računati na našu pouzdanost i profesionalizam. Kad vam je najpotrebnije, jedan poziv nas dijeli od vas.
       </p>
     </div>
 
