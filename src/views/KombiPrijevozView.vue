@@ -27,7 +27,7 @@
           description="Po Zagrebu prevozimo svaki dan, a po potrebi vozimo i po cijeloj Hrvatskoj – čak i na otoke. Brzi, pouzdani i uvijek na vrijeme."
         />
         <ServiceCard
-          to="/cijene"
+          to="/povoljan-kombi-prijevoz"
           icon="💰"
           title="Pristupačne cijene"
           description="Zahvaljujući pažljivom planiranju i optimizaciji ruta, nudimo konkurentne cijene bez gubitka na kvaliteti usluge. Kod nas su pouzdanost i pristupačnost na istoj adresi."

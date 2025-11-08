@@ -1,13 +1,25 @@
 <script setup lang="ts">
 import ServiceCard from './ServiceCard.vue';
 import CardGrid from './CardGrid.vue';
+
+interface Props {
+  showTitle?: boolean;
+  customPadding?: string;
+  centered?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  showTitle: true,
+  customPadding: undefined,
+  centered: false,
+});
 </script>
 
 <template>
-  <section class="services fade-in-section" aria-labelledby="services-heading">
+  <section class="services fade-in-section" :aria-labelledby="props.showTitle ? 'services-heading' : undefined" :style="{ padding: props.customPadding || undefined }">
     <div class="container">
-      <h2 id="services-heading">Naše usluge</h2>
-      <CardGrid>
+      <h2 v-if="props.showTitle" id="services-heading">Naše usluge</h2>
+      <CardGrid :centered="props.centered">
         <ServiceCard
           to="/kombi-prijevoz"
           icon="🚛"
@@ -26,6 +38,7 @@ import CardGrid from './CardGrid.vue';
           title="Dostava"
           description="Brza i pouzdana dostava paketa, dokumenata i robe. Fleksibilni rasporedi dostave prilagođeni vašim potrebama."
         />
+        <slot></slot>
       </CardGrid>
     </div>
   </section>
@@ -33,8 +46,11 @@ import CardGrid from './CardGrid.vue';
 
 <style scoped>
 .services {
-  padding: 6rem 2rem;
   background-color: var(--light-bg);
+}
+
+.services:not([style]) {
+  padding: 6rem 2rem;
 }
 
 .services h2 {
@@ -45,7 +61,7 @@ import CardGrid from './CardGrid.vue';
 }
 
 @media (max-width: 768px) {
-  .services {
+  .services:not([style]) {
     padding: 4rem 1rem;
   }
 
