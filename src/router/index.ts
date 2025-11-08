@@ -9,6 +9,7 @@ import PovoljanKombiPrijevozView from '../views/PovoljanKombiPrijevozView.vue'
 import SpecijalniPrijevozView from '../views/SpecijalniPrijevozView.vue'
 import SelidbeStanovaIKucaView from '../views/SelidbeStanovaIKucaView.vue'
 import SelidbeUredaView from '../views/SelidbeUredaView.vue'
+import HitneSelidbeView from '../views/HitneSelidbeView.vue'
 import { trackingService } from '../utils/tracking'
 
 const router = createRouter({
@@ -63,6 +64,11 @@ const router = createRouter({
       path: '/selidbe-ureda',
       name: 'selidbe-ureda',
       component: SelidbeUredaView,
+    },
+    {
+      path: '/hitne-selidbe',
+      name: 'hitne-selidbe',
+      component: HitneSelidbeView,
     },
   ],
 })

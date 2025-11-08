@@ -33,7 +33,7 @@
           description="Selimo urede svih veličina. Vi se fokusirajte na posao – mi ćemo se pobrinuti da sutra jednostavno uključite računalo i nastavite gdje ste stali."
         />
         <ServiceCard
-          to="/hitne-usluge"
+          to="/hitne-selidbe"
           icon="🚨"
           title="Hitne situacije"
           description="Auto vam se pokvario baš na dan selidbe? Dogovoreni prijevoz nije se pojavio? Bez brige – mi smo uvijek dostupni, samo nas nazovite i stižemo odmah."
