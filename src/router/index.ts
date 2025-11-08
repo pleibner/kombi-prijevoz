@@ -7,6 +7,7 @@ import KombiSelidbeView from '../views/KombiSelidbeView.vue'
 import KombiDostavaView from '../views/KombiDostavaView.vue'
 import PovoljanKombiPrijevozView from '../views/PovoljanKombiPrijevozView.vue'
 import SpecijalniPrijevozView from '../views/SpecijalniPrijevozView.vue'
+import SelidbeStanovaIKucaView from '../views/SelidbeStanovaIKucaView.vue'
 import { trackingService } from '../utils/tracking'
 
 const router = createRouter({
@@ -51,6 +52,11 @@ const router = createRouter({
       path: '/specijalni-prijevoz',
       name: 'specijalni-prijevoz',
       component: SpecijalniPrijevozView,
+    },
+    {
+      path: '/selidbe-stanova-i-kuca',
+      name: 'selidbe-stanova-i-kuca',
+      component: SelidbeStanovaIKucaView,
     },
   ],
 })

@@ -21,7 +21,7 @@
     <template #footer>
       <CardGrid centered>
         <ServiceCard
-          to="/selidba-doma"
+          to="/selidbe-stanova-i-kuca"
           icon="🏠"
           title="Selidba doma"
           description="Selidba doma poseban je trenutak za vašu obitelj. Prepustite je stručnjacima i uživajte u novom početku, bez stresa."
