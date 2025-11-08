@@ -2,21 +2,19 @@
   <ServiceLayout title="Kombi selidbe" :animate-title="true">
     <div class="content">
       <p>
-        Selidba je uvijek važna prekretnica u životu - bilo da se radi o obiteljskoj selidbi u novi dom
-        ili preseljenju ureda u moderne prostore. To je trenutak pun uzbuđenja, ali i potencijalnih
-        izazova koji mogu pretvoriti radost u stres.
+        Selidba je važna prekretnica u životu – bilo da se radi o obiteljskoj selidbi u novi dom ili preseljenju ureda u moderne prostore. To je trenutak pun uzbuđenja, ali i potencijalnih izazova koji lako mogu pretvoriti radost u stres.
       </p>
 
       <p>
-        Za izbjegavanje neželjenih posljedica i očuvanje mentalnog mira, uvijek je najbolje potražiti
-        podršku iskusnih profesionalaca. Naša ekipa razumije koliko je selidba emocionalno zahtjevna
-        i brine se o svim logističkim detaljima umjesto vas.
+        Kako biste izbjegli neugodne situacije i osigurali da sve teče glatko, prepustite posao iskusnim profesionalcima. Naša ekipa razumije koliko selidba može biti zahtjevna i brine se o svim detaljima umjesto vas.
       </p>
 
       <p>
-        Bolje je platiti nekome da nosi težak kauč nego kasnije plaćati kiropraktičara zbog povreda
-        leđa. Naš pristup je preventivan - koristimo specijaliziranu opremu i tehnike koje čuvaju vaše
-        zdravlje i imovinu. Svaka selidba je jedinstvena prilika da pokažemo zašto smo lideri u branši.
+        Bolje je platiti nekome da nosi težak kauč nego kasnije kiropraktičara zbog bolnih leđa. Naš pristup je jednostavan i siguran, koristimo provjerenu opremu, stručno planiranje i brigu koja štedi i vaše zdravlje i vašu imovinu.
+      </p>
+
+      <p>
+        Svaka selidba je posebna, a naš tim posjeduje iskustvo i kreativna rješenja za sigurno premještanje teških, zahtjevnih i vrijednih predmeta – čak i tamo gdje je prostor ograničen. Obratite nam se s povjerenjem.
       </p>
     </div>
 
@@ -37,8 +35,8 @@
         <ServiceCard
           to="/hitne-usluge"
           icon="🚨"
-          title="Hitne usluge"
-          description="Neočekivana selidba? Hitna dostava? Kad zatreba spas u zadnji čas – samo nas nazovite i stižemo odmah!"
+          title="Hitne situacije"
+          description="Auto vam se pokvario baš na dan selidbe? Dogovoreni prijevoz nije se pojavio? Bez brige – mi smo uvijek dostupni, samo nas nazovite i stižemo odmah."
         />
       </CardGrid>
     </template>

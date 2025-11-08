@@ -2,28 +2,19 @@
   <ServiceLayout title="Kombi prijevoz" :animate-title="true">
     <div class="content">
       <p>
-        Kada je u pitanju prijevoz robe, važno je povjeriti posao profesionalcima koji razumiju
-        vrijednost vašeg tereta. Svaka pošiljka za nas je jedinstvena i zaslužuje pažnju koju
-        bismo posvetili vlastitoj robi.
+        Kada je riječ o prijevozu robe, važno je posao povjeriti profesionalcima koji razumiju vrijednost vaših pošiljki. Svaka pošiljka za nas je jedinstvena i dobiva pažnju koju bismo posvetili vlastitoj imovini.
       </p>
 
       <p>
-        S preko 30 godina iskustva u prijevozu robe, izgradili smo reputaciju pouzdanosti i
-        profesionalnosti kojoj možete vjerovati. Naši vozači nisu samo stručnjaci za upravljanje
-        vozilima - oni su majstori pažljivog rukovanja robom svih vrsta i veličina.
+        S preko 30 godina iskustva izgradili smo reputaciju pouzdanosti i stručnosti kojoj možete vjerovati. Naša ekipa profesionalaca brine o svemu – oni su majstori pažljivog rukovanja robom svih vrsta i veličina.
       </p>
 
       <p>
-        Bez obzira radi li se o osjetljivoj elektronici, vrijednom namještaju ili industrijskoj
-        opremi, naš pristup je uvijek isti: maksimalna briga i pažnja. Koristimo specijalizirana
-        vozila i opremu koja osigurava da vaša roba stigne na odredište u istom stanju u kojem
-        ste je predali.
+        Bez obzira radi li se o osjetljivoj elektronici, vrijednom namještaju ili industrijskoj opremi, naš pristup je uvijek isti: maksimalna briga i pažnja. Koristimo specijalizirana vozila i opremu koja osigurava da vaša roba stigne na odredište u istom stanju u kojem je preuzeta.
       </p>
 
       <p>
-        Naša predanost kvaliteti ogleda se u svakom detalju - od pažljivog utovara i učvršćivanja
-        tereta, preko optimalnog planiranja ruta, do pravovremene isporuke. Za nas, svaki
-        prijevoz je prilika da potvrdimo zašto smo lideri u svojoj branši.
+        Naša predanost kvaliteti vidi se u svakom detalju – od pažljivog učvršćivanja, preko optimalnog planiranja ruta, do pravovremene isporuke. Svaki prijevoz za nas je prilika da pokažemo zašto smo lideri u području profesionalnog prijevoza.
       </p>
     </div>
 
@@ -32,20 +23,20 @@
         <ServiceCard
           to="/podrucje-djelovanja"
           icon="🗺️"
-          title="Područje djelovanja"
-          description="Najjači smo u Zagrebu, ali vozimo po cijeloj Hrvatskoj. Naša mreža pokriva sve županije s brzom i pouzdanom dostavom."
+          title="Gdje god treba"
+          description="Po Zagrebu prevozimo svaki dan, a po potrebi vozimo i po cijeloj Hrvatskoj – čak i na otoke. Brzi, pouzdani i uvijek na vrijeme."
         />
         <ServiceCard
           to="/cijene"
           icon="💰"
           title="Pristupačne cijene"
-          description="Najjeftiniji smo jer optimiziramo rute i radimo učinkovito. Dajte da vam objasnimo zašto naša konkurentnost ne ugrožava kvalitetu."
+          description="Zahvaljujući pažljivom planiranju i optimizaciji ruta, nudimo konkurentne cijene bez gubitka na kvaliteti usluge. Kod nas su pouzdanost i pristupačnost na istoj adresi."
         />
         <ServiceCard
           to="/specijalni-prijevoz"
           icon="🎹"
           title="Specijalni prijevoz"
-          description="Dostava klavira kroz prozor? Može! Specijalizirani smo za izazovne prijevoze gdje drugi odustaju."
+          description="Klavir kroz prozor? Može! Specijalizirani smo za zahtjevne prijevoze – ondje gdje drugi odustaju, mi pronalazimo rješenje."
         />
       </CardGrid>
     </template>

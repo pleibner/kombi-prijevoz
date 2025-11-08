@@ -23,7 +23,7 @@ const trackPhoneFocus = () => {
   <section class="contact fade-in-section">
     <div class="container">
       <h2>Kontaktirajte nas</h2>
-      <p>Spremni smo pomoći vam s vašim prijevozom, selidbom ili dostavom. Kontaktirajte nas za besplatnu procjenu.</p>
+      <p>Spremni smo pomoći vam s prijevozom, selidbom ili dostavom. Javite nam se za besplatnu procjenu.</p>
       <div class="contact-info">
         <div class="contact-item">
           <span class="contact-icon">📞</span>
