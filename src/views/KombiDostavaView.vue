@@ -12,27 +12,31 @@
       <p>
         Fleksibilnost je naša snaga – dostupni smo kad god vam zatreba. Radimo vikendom, praznicima i izvan uobičajenog radnog vremena, prilagođavajući se vašem rasporedu.
       </p>
+
+      <p>
+        Posebno smo ponosni na našu sposobnost dostave u manje pristupačne dijelove grada. Dok obična vozila nemaju dozvolu pristupa u centar, mi koristimo specijalizirana vozila koja mogu stići do svake adrese, osiguravajući da vaša pošiljka stigne bez problema.
+      </p>
     </div>
 
     <template #footer>
       <CardGrid centered>
         <ServiceCard
-          to="/dostava-iz-trgovina"
-          icon="🛒"
-          title="Dostava iz trgovina"
-          description="Veće narudžbe iz IKEA-e, Bauhausa, Peveca i drugih trgovina dostavljamo direktno na vašu kućnu adresu. Bez gužve na parkingu i nošenja teških paketa."
+          to="/dostava-namjestaja"
+          icon="🪑"
+          title="Dostava namještaja"
+          description="Veći komadi namještaja iz IKEA-e, Lesnine, Harvey Normana i drugih trgovina dostavljamo direktno na vašu kućnu adresu. Bez gužve na parkingu i nošenja teškog namještaja."
+        />
+        <ServiceCard
+          to="/dostava-bijele-tehnike"
+          icon="❄️"
+          title="Dostava bijele tehnike"
+          description="Frižidere, perilice, štednjake i drugu bijelu tehniku iz Pevexa, Big Banga, Elipsa i drugih trgovina dostavljamo direktno do vaših vrata. Uključujući i postavljanje."
         />
         <ServiceCard
           to="/ponavljajuce-dostave"
           icon="🔄"
           title="Ponavljajuće dostave"
           description="Mjesečna dostava materijala ili proizvoda u trgovine i tvrtke. Redovite isporuke prema dogovorenom rasporedu, uvijek na vrijeme i bez iznenađenja."
-        />
-        <ServiceCard
-          to="/dostava-centar"
-          icon="🏛️"
-          title="Dostava u centar"
-          description="Specijalizirani smo za dostavu u povijesnu jezgru grada gdje obična vozila nemaju pristup. Kombi vozila s posebnim dozvolama osiguravaju da vaša pošiljka stigne bez problema."
         />
       </CardGrid>
     </template>
