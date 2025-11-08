@@ -1,31 +1,32 @@
 <script setup lang="ts">
 import ServiceCard from './ServiceCard.vue';
+import CardGrid from './CardGrid.vue';
 </script>
 
 <template>
   <section class="services fade-in-section" aria-labelledby="services-heading">
     <div class="container">
       <h2 id="services-heading">Naše usluge</h2>
-      <div class="services-grid">
+      <CardGrid>
         <ServiceCard
+          to="/kombi-prijevoz"
           icon="🚛"
           title="Transport robe"
           description="Siguran i efikasan transport svih vrsta robe diljem zemlje. Koristimo moderno vozilo i profesionalnu opremu za siguran prijevoz vaših stvari."
-          link="/kombi-prijevoz"
         />
         <ServiceCard
+          to="/kombi-selidbe"
           icon="🏠"
           title="Selidbe"
           description="Kompletne usluge selidbe stanova, kuća i ureda. Naš tim brine o svakom detalju kako bi vaša selidba protekla glatko i bez stresa."
-          link="/kombi-selidbe"
         />
         <ServiceCard
+          to="/kombi-dostava"
           icon="📦"
           title="Dostava"
           description="Brza i pouzdana dostava paketa, dokumenata i robe. Fleksibilni rasporedi dostave prilagođeni vašim potrebama."
-          link="/kombi-dostava"
         />
-      </div>
+      </CardGrid>
     </div>
   </section>
 </template>
@@ -43,12 +44,6 @@ import ServiceCard from './ServiceCard.vue';
   color: var(--text-color);
 }
 
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
-
 @media (max-width: 768px) {
   .services {
     padding: 4rem 1rem;
@@ -56,10 +51,6 @@ import ServiceCard from './ServiceCard.vue';
 
   .services h2 {
     font-size: 2rem;
-  }
-
-  .services-grid {
-    grid-template-columns: 1fr;
   }
 }
 </style>
