@@ -1,6 +1,5 @@
 <template>
   <div class="service-layout">
-    <!-- Header -->
     <header class="service-header">
       <div class="header-background"></div>
       <div class="header-content">
@@ -21,17 +20,14 @@
       </div>
     </header>
 
-    <!-- Main Content -->
     <main class="service-content">
       <slot></slot>
     </main>
 
-    <!-- Footer -->
     <footer class="service-footer">
       <slot name="footer"></slot>
     </footer>
 
-    <!-- Contact Section -->
     <ContactSection />
   </div>
 </template>
@@ -50,7 +46,9 @@ defineProps<{
 const router = useRouter()
 
 const navigateToContact = () => {
-  trackingService.trackClick('service_layout_contact_button_click')
+  trackingService.trackClick('service_layout_contact_button_click', {
+    page: router.currentRoute.value.name || router.currentRoute.value.path
+  })
   router.push('/kontakt')
 }
 </script>
