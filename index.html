@@ -96,10 +96,22 @@
         "openingHours": "Mo-Su 08:00-20:00"
       }
     </script>
-    <script type="module" crossorigin src="/assets/index-CkBYd1sj.js"></script>
+    <script type="module" crossorigin src="/assets/index-ChEFY21Y.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-PCImA6OR.css">
   </head>
   <body>
     <div id="app"></div>
+    <script type="text/javascript">
+      // Handle redirect from 404.html
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectPath = urlParams.get('redirect');
+      if (redirectPath) {
+        // Remove the redirect parameter and update the URL
+        const cleanUrl = window.location.pathname + window.location.hash;
+        window.history.replaceState(null, null, cleanUrl);
+        // Store the original path for the router to handle
+        window.__SPA_REDIRECT__ = redirectPath;
+      }
+    </script>
   </body>
 </html>
