@@ -1,20 +1,21 @@
-import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './router/index'
 import './styles/global.css'
+import { ViteSSG } from 'vite-ssg'
 
-const app = createApp(App)
+export const createApp = ViteSSG(App, { routes: router.options.routes }, async ({ router }) => {
+  if (!import.meta.env.SSR) {
+    // Lazy import tracking service only when not in SSR mode
+    const { trackingService } = await import('./utils/tracking')
 
-app.use(router)
+    router.isReady().then(() => {
+      trackingService.trackPageView(
+        (router.currentRoute.value.name as string) || router.currentRoute.value.path,
+      )
+    })
 
-router.isReady().then(() => {
-  const currentRoute = router.currentRoute.value
-  if (currentRoute.name) {
-    // Import the updateMetaTags function
-    import('./router/index').then(({ updateMetaTags }) => {
-      updateMetaTags(currentRoute.name as string)
+    router.afterEach((to) => {
+      trackingService.trackPageView((to.name as string) || to.path)
     })
   }
 })
-
-app.mount('#app')

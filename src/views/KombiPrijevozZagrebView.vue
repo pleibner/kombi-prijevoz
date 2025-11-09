@@ -25,8 +25,38 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
+import { useHead } from '@unhead/vue'
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServicesSection from '@/components/ServicesSection.vue'
+
+onMounted(() => {
+  window.scrollTo(0, 0)
+})
+
+useHead({
+  title: 'Kombi prijevoz Zagreb - Lokalni transport',
+  meta: [
+    {
+      name: 'description',
+      content: 'Specijalizirani kombi prijevoz unutar Zagreba. Brza dostava i transport za sve vaše potrebe.'
+    },
+    {
+      property: 'og:title',
+      content: 'Kombi prijevoz Zagreb - Lokalni transport'
+    },
+    {
+      property: 'og:description',
+      content: 'Specijalizirani kombi prijevoz unutar Zagreba. Brza dostava i transport za sve vaše potrebe.'
+    }
+  ],
+  link: [
+    {
+      rel: 'canonical',
+      href: 'https://kombi-transport.com/kombi-prijevoz-zagreb'
+    }
+  ]
+})
 </script>
 
 <style scoped>

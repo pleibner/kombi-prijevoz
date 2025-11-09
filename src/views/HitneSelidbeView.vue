@@ -25,8 +25,38 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
+import { useHead } from '@unhead/vue'
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServicesSection from '@/components/ServicesSection.vue'
+
+onMounted(() => {
+  window.scrollTo(0, 0)
+})
+
+useHead({
+  title: 'Hitne selidbe - Urgentni transport Zagreb',
+  meta: [
+    {
+      name: 'description',
+      content: 'Hitne selidbe i urgentni prijevoz u Zagrebu. Brza reakcija i profesionalna usluga.'
+    },
+    {
+      property: 'og:title',
+      content: 'Hitne selidbe - Urgentni transport Zagreb'
+    },
+    {
+      property: 'og:description',
+      content: 'Hitne selidbe i urgentni prijevoz u Zagrebu. Brza reakcija i profesionalna usluga.'
+    }
+  ],
+  link: [
+    {
+      rel: 'canonical',
+      href: 'https://kombi-transport.com/hitne-selidbe'
+    }
+  ]
+})
 </script>
 
 <style scoped>

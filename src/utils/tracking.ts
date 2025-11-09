@@ -15,7 +15,8 @@ class TrackingService {
     const trackingEnabled = import.meta.env.VITE_TRACKING_ENABLED === 'true'
     this.isConfigured = !!this.baseUrl && trackingEnabled
 
-    if (!this.isConfigured) {
+    // Only warn in browser environment, not during SSR/SSG builds
+    if (!this.isConfigured && typeof window !== 'undefined') {
       console.warn('Tracking is not available.')
     }
   }

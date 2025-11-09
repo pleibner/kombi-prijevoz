@@ -25,8 +25,38 @@
 </template>
 
 <script setup lang="ts">
+import { useHead } from '@unhead/vue'
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServicesSection from '@/components/ServicesSection.vue'
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  window.scrollTo(0, 0)
+})
+
+useHead({
+  title: 'Selidbe stanova i kuća - Kombi transport Zagreb',
+  meta: [
+    {
+      name: 'description',
+      content: 'Profesionalne selidbe stanova i kuća s kombijem. Potpuna usluga selidbe u Zagrebu.'
+    },
+    {
+      property: 'og:title',
+      content: 'Selidbe stanova i kuća - Kombi transport Zagreb'
+    },
+    {
+      property: 'og:description',
+      content: 'Profesionalne selidbe stanova i kuća s kombijem. Potpuna usluga selidbe u Zagrebu.'
+    }
+  ],
+  link: [
+    {
+      rel: 'canonical',
+      href: 'https://kombi-transport.com/selidbe-stanova-i-kuca'
+    }
+  ]
+})
 </script>
 
 <style scoped>

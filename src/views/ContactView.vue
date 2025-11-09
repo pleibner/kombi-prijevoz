@@ -1,10 +1,35 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
+import { useHead } from '@unhead/vue'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
 import ContactInfo from '@/components/ContactInfo.vue'
 import emailjs from '@emailjs/browser'
 import { trackingService } from '@/utils/tracking'
+
+useHead({
+  title: 'Kontakt - Kombi Transport Zagreb',
+  meta: [
+    {
+      name: 'description',
+      content: 'Kontaktirajte Kombi Transport za besplatnu procjenu prijevoza, selidbi i dostave. Zagreb i okolno područje.'
+    },
+    {
+      property: 'og:title',
+      content: 'Kontakt - Kombi Transport Zagreb'
+    },
+    {
+      property: 'og:description',
+      content: 'Kontaktirajte Kombi Transport za besplatnu procjenu prijevoza, selidbi i dostave. Zagreb i okolno područje.'
+    }
+  ],
+  link: [
+    {
+      rel: 'canonical',
+      href: 'https://kombi-transport.com/kontakt'
+    }
+  ]
+})
 
 const router = useRouter()
 

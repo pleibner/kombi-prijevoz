@@ -25,8 +25,38 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
+import { useHead } from '@unhead/vue'
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServicesSection from '@/components/ServicesSection.vue'
+
+onMounted(() => {
+  window.scrollTo(0, 0)
+})
+
+useHead({
+  title: 'Dostava namještaja - Transport pokućstva Zagreb',
+  meta: [
+    {
+      name: 'description',
+      content: 'Dostava namještaja i pokućstva s kombijem. Siguran transport vašeg namještaja u Zagrebu.'
+    },
+    {
+      property: 'og:title',
+      content: 'Dostava namještaja - Transport pokućstva Zagreb'
+    },
+    {
+      property: 'og:description',
+      content: 'Dostava namještaja i pokućstva s kombijem. Siguran transport vašeg namještaja u Zagrebu.'
+    }
+  ],
+  link: [
+    {
+      rel: 'canonical',
+      href: 'https://kombi-transport.com/dostava-namjestaja'
+    }
+  ]
+})
 </script>
 
 <style scoped>

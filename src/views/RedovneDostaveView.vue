@@ -25,8 +25,38 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
+import { useHead } from '@unhead/vue'
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServicesSection from '@/components/ServicesSection.vue'
+
+onMounted(() => {
+  window.scrollTo(0, 0)
+})
+
+useHead({
+  title: 'Redovne dostave - Redoviti transport Zagreb',
+  meta: [
+    {
+      name: 'description',
+      content: 'Redovne dostave i transport usluge u Zagrebu. Pouzdane usluge za redovite potrebe.'
+    },
+    {
+      property: 'og:title',
+      content: 'Redovne dostave - Redoviti transport Zagreb'
+    },
+    {
+      property: 'og:description',
+      content: 'Redovne dostave i transport usluge u Zagrebu. Pouzdane usluge za redovite potrebe.'
+    }
+  ],
+  link: [
+    {
+      rel: 'canonical',
+      href: 'https://kombi-transport.com/redovne-dostave'
+    }
+  ]
+})
 </script>
 
 <style scoped>

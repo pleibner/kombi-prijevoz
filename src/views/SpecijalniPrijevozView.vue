@@ -25,8 +25,38 @@
 </template>
 
 <script setup lang="ts">
+import { useHead } from '@unhead/vue'
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServicesSection from '@/components/ServicesSection.vue'
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  window.scrollTo(0, 0)
+})
+
+useHead({
+  title: 'Specijalni prijevoz - Transport posebnih tereta',
+  meta: [
+    {
+      name: 'description',
+      content: 'Specijalizirani prijevoz posebnih tereta i robe. Profesionalne usluge transporta u Zagrebu.'
+    },
+    {
+      property: 'og:title',
+      content: 'Specijalni prijevoz - Transport posebnih tereta'
+    },
+    {
+      property: 'og:description',
+      content: 'Specijalizirani prijevoz posebnih tereta i robe. Profesionalne usluge transporta u Zagrebu.'
+    }
+  ],
+  link: [
+    {
+      rel: 'canonical',
+      href: 'https://kombi-transport.com/specijalni-prijevoz'
+    }
+  ]
+})
 </script>
 
 <style scoped>
