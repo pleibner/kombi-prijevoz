@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kombi-transport.com/sitemap.xml
