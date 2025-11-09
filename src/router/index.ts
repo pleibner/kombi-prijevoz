@@ -10,6 +10,7 @@ import SpecijalniPrijevozView from '../views/SpecijalniPrijevozView.vue'
 import SelidbeStanovaIKucaView from '../views/SelidbeStanovaIKucaView.vue'
 import SelidbeUredaView from '../views/SelidbeUredaView.vue'
 import HitneSelidbeView from '../views/HitneSelidbeView.vue'
+import DostavaNamjestajaView from '../views/DostavaNamjestajaView.vue'
 import { trackingService } from '../utils/tracking'
 
 const router = createRouter({
@@ -69,6 +70,11 @@ const router = createRouter({
       path: '/hitne-selidbe',
       name: 'hitne-selidbe',
       component: HitneSelidbeView,
+    },
+    {
+      path: '/dostava-namjestaja',
+      name: 'dostava-namjestaja',
+      component: DostavaNamjestajaView,
     },
   ],
 })
