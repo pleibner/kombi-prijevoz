@@ -13,6 +13,7 @@ import HitneSelidbeView from '../views/HitneSelidbeView.vue'
 import DostavaNamjestajaView from '../views/DostavaNamjestajaView.vue'
 import DostavaBijeleTehnikeView from '../views/DostavaBijeleTehnikeView.vue'
 import RedovneDostaveView from '../views/RedovneDostaveView.vue'
+import NotFoundView from '../views/NotFoundView.vue'
 
 const router = createRouter({
   history: import.meta.env.SSR
@@ -88,6 +89,11 @@ const router = createRouter({
       path: '/redovne-dostave',
       name: 'redovne-dostave',
       component: RedovneDostaveView,
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: NotFoundView,
     },
   ],
   scrollBehavior() {
