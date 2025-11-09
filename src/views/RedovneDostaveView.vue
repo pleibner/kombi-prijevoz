@@ -1,5 +1,5 @@
 <template>
-  <ServiceLayout title="Ponavljajuće dostave" :animate-title="true">
+  <ServiceLayout title="Redovne dostave" :animate-title="true">
     <div class="content">
       <p>
         Za tvrtke koje ovise o redovitim dostavama robe, materijala ili proizvoda, pravilna logistika je ključna za nesmetan rad. Bilo da vodite trgovinu, restoran, proizvodno poduzeće ili bilo koju drugu tvrtku koja zahtijeva periodične isporuke, mi vam nudimo kompletnu uslugu ponavljajućih dostava.
@@ -14,7 +14,7 @@
       </p>
 
       <p>
-        Prepustite nam brigu o vašim ponavljajućim dostavama i fokusirajte se na svoje temeljne poslovne aktivnosti. Kontaktirajte nas da dogovorimo personalizirani plan dostava koji će odgovarati vašim specifičnim potrebama i osigurati kontinuirani tok robe u vašem poslovanju.
+        Prepustite nam brigu o vašim redovnim dostavama i fokusirajte se na svoje temeljne poslovne aktivnosti. Kontaktirajte nas da dogovorimo personalizirani plan dostava koji će odgovarati vašim specifičnim potrebama i osigurati kontinuirani tijek robe u vašem poslovanju.
       </p>
     </div>
 

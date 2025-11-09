@@ -33,9 +33,9 @@
           description="Frižidere, perilice, štednjake i drugu bijelu tehniku iz Pevexa, Big Banga, Elipsa i drugih trgovina dostavljamo direktno do vaših vrata. Uključujući i postavljanje."
         />
         <ServiceCard
-          to="/ponavljajuce-dostave"
+          to="/redovne-dostave"
           icon="🔄"
-          title="Ponavljajuće dostave"
+          title="Redovne dostave"
           description="Mjesečna dostava materijala ili proizvoda u trgovine i tvrtke. Redovite isporuke prema dogovorenom rasporedu, uvijek na vrijeme i bez iznenađenja."
         />
       </CardGrid>
