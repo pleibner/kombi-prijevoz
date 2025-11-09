@@ -17,6 +17,10 @@ const trackWhatsAppClick = () => {
 const trackPhoneFocus = () => {
   trackingService.trackClick('phone_number_focus')
 }
+
+const trackFacebookClick = () => {
+  trackingService.trackClick('facebook_button_click')
+}
 </script>
 
 <template>
@@ -36,10 +40,15 @@ const trackPhoneFocus = () => {
           />
         </div>
         <div class="contact-item">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-       alt="WhatsApp" width="24" height="24">
-          <a href="https://wa.me/385989156061" target="_blank" rel="noopener noreferrer" class="contact-link" @click="trackWhatsAppClick">
-            WhatsApp
+          <a href="https://wa.me/385989156061" target="_blank" rel="noopener noreferrer" class="contact-link whatsapp-link" @click="trackWhatsAppClick">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+         alt="WhatsApp" width="24" height="24">
+          </a>
+        </div>
+        <div class="contact-item">
+          <a href="https://www.facebook.com/share/1CT2LKegvb/" target="_blank" rel="noopener noreferrer" class="contact-link facebook-link" @click="trackFacebookClick">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+         alt="Facebook" width="24" height="24">
           </a>
         </div>
         <div class="contact-item">
@@ -128,6 +137,23 @@ const trackPhoneFocus = () => {
 .contact-link:hover {
   color: var(--accent-color);
   text-decoration: underline;
+}
+
+.whatsapp-link img {
+  width: 32px;
+  height: 32px;
+  transition: opacity 0.3s ease;
+}
+
+.facebook-link img {
+  width: 24px;
+  height: 24px;
+  transition: opacity 0.3s ease;
+}
+
+.whatsapp-link:hover img,
+.facebook-link:hover img {
+  opacity: 0.8;
 }
 
 @media (max-width: 768px) {
