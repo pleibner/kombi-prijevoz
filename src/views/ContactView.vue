@@ -2,6 +2,7 @@
 import { ref, reactive, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
+import ContactInfo from '@/components/ContactInfo.vue'
 import emailjs from '@emailjs/browser'
 import { trackingService } from '@/utils/tracking'
 
@@ -202,7 +203,7 @@ const submitForm = async () => {
   <div class="contact-view">
     <div class="container">
       <button @click="router.back()" class="back-button">
-        ← Natrag na početnu stranicu
+        ← Natrag na prethodnu stranicu
       </button>
       
       <div v-if="isFormSubmitted" class="thank-you-message">
@@ -214,7 +215,10 @@ const submitForm = async () => {
 
       <template v-else>
         <h1>Kontaktirajte nas</h1>
-        <p class="subtitle">Ispunite obrazac za besplatnu procjenu i ugovaranje Vašeg prijevoza</p>
+        <div class="contact-info-wrapper">
+          <ContactInfo />
+        </div>
+        <p class="subtitle">Ili ispunite obrazac pa ćemo mi kontaktirati Vas, u najkraćem mogućem roku.</p>
         <form @submit.prevent="submitForm" class="contact-form">
   
           <div class="form-section">
@@ -487,7 +491,9 @@ const submitForm = async () => {
 .contact-view {
   min-height: 100vh;
   padding: 4rem 2rem;
-  background: var(--light-bg, #f9f9f9);
+  background: linear-gradient(135deg, #001a44 0%, #1a365d 50%, #2c5282 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 12s ease-in-out infinite;
 }
 
 .container {
@@ -523,6 +529,14 @@ h1 {
   color: var(--text-color, #333);
   margin-bottom: 0.5rem;
   font-size: 2.5rem;
+}
+
+.contact-info-wrapper {
+  background: var(--light-bg, #f9f9f9);
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 2rem 0;
+  border: 1px solid #e1e5e9;
 }
 
 .subtitle {
@@ -729,6 +743,11 @@ label.radio-text {
   .form-section h2 {
     font-size: 1.3rem;
   }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 @media (max-width: 480px) {
