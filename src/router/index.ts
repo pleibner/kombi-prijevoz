@@ -12,6 +12,7 @@ import SelidbeUredaView from '../views/SelidbeUredaView.vue'
 import HitneSelidbeView from '../views/HitneSelidbeView.vue'
 import DostavaNamjestajaView from '../views/DostavaNamjestajaView.vue'
 import DostavaBijeleTehnikeView from '../views/DostavaBijeleTehnikeView.vue'
+import PonavljajuceDostaveView from '../views/PonavljajuceDostaveView.vue'
 import { trackingService } from '../utils/tracking'
 
 const router = createRouter({
@@ -81,6 +82,11 @@ const router = createRouter({
       path: '/dostava-bijele-tehnike',
       name: 'dostava-bijele-tehnike',
       component: DostavaBijeleTehnikeView,
+    },
+    {
+      path: '/ponavljajuce-dostave',
+      name: 'ponavljajuce-dostave',
+      component: PonavljajuceDostaveView,
     },
   ],
 })
