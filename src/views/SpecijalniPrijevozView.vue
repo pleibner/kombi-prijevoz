@@ -6,7 +6,7 @@
       </p>
 
       <p>
-        Zamislite koncertni klavir koji se pažljivo izvlači kroz prozor višekatnice uz pomoć specijalizirane dizalice, ili vrijedne umjetnine vrijedne milijuna koje zahtijevaju klimatski kontrolirane uvjete transporta. Naši stručnjaci su uspješno izveli prijevoz sefova težine preko tone, glomaznih industrijskih strojeva i osjetljivih medicinskih aparata.
+        Zamislite koncertni klavir koji se pažljivo izvlači kroz prozor višekatnice uz pomoć specijalizirane dizalice, ili vrijedne umjetnine neprocjenjive vrijednosti koje zahtijevaju klimatski kontrolirane uvjete transporta. Naši stručnjaci su uspješno izveli prijevoz sefova težine preko tone, glomaznih industrijskih strojeva i osjetljivih medicinskih aparata.
       </p>
 
       <p>
