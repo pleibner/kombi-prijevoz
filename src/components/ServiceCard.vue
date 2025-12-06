@@ -22,7 +22,8 @@ defineProps<{
 .service-card-link {
   text-decoration: none;
   transition: transform 0.3s ease;
-  display: block;
+  display: flex;
+  flex-direction: column;
   height: 100%;
 }
 

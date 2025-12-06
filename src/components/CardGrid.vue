@@ -25,7 +25,9 @@ defineProps<{
 }
 
 .card-grid.scrollable {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(300px, 350px);
   overflow-x: auto;
   scroll-behavior: smooth;
   gap: 2rem;
@@ -51,18 +53,6 @@ defineProps<{
   background: #555;
 }
 
-.card-grid.scrollable > :deep(*) {
-  flex: 0 0 calc(33.333% - 1.333rem);
-  min-width: 300px;
-  max-width: 350px;
-}
-
-@media (max-width: 1024px) {
-  .card-grid.scrollable > :deep(*) {
-    flex: 0 0 calc(50% - 1rem);
-  }
-}
-
 @media (max-width: 768px) {
   .card-grid {
     grid-template-columns: 1fr;
@@ -70,12 +60,14 @@ defineProps<{
   }
 
   .card-grid.scrollable {
+    grid-auto-columns: 50vw;
     gap: 1.5rem;
   }
 
   .card-grid.scrollable > :deep(*) {
-    flex: 0 0 calc(100% - 2rem);
-    min-width: 280px;
+    width: 50vw;
+    min-width: 50vw;
+    max-width: 50vw;
   }
 }
 </style>
