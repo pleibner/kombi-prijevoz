@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<Props>(), {
   <section class="services fade-in-section" :aria-labelledby="props.showTitle ? 'services-heading' : undefined" :style="{ padding: props.customPadding || undefined }">
     <div class="container">
       <h2 v-if="props.showTitle" id="services-heading">Naše usluge</h2>
-      <CardGrid :centered="props.centered">
+      <CardGrid :centered="props.centered" :scrollable="true">
         <ServiceCard
           to="/kombi-prijevoz"
           icon="🚛"
@@ -37,6 +37,12 @@ const props = withDefaults(defineProps<Props>(), {
           icon="📦"
           title="Dostava"
           description="Brza i pouzdana dostava paketa, dokumenata i robe. Fleksibilni rasporedi dostave prilagođeni vašim potrebama."
+        />
+        <ServiceCard
+          to="/odvoz-otpada"
+          icon="♻️"
+          title="Odvoz otpada"
+          description="Profesionalan odvoz glomaznog otpada, starog namještaja i šute. Brzo rješenje za sve vaše potrebe zbrinjavanja otpada."
         />
         <slot></slot>
       </CardGrid>

@@ -53,6 +53,14 @@ const navigateToContact = () => {
                 :delay="0.3"
               />
             </router-link>
+            <router-link to="/odvoz-otpada" class="service-link">
+              <RemarkItem
+                icon="♻️"
+                text="Odvoz otpada"
+                :reverse="true"
+                :delay="0.4"
+              />
+            </router-link>
             </div>
 
           <div class="vertical-separator"></div>

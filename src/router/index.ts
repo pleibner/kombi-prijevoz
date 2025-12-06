@@ -13,6 +13,10 @@ import HitneSelidbeView from '../views/HitneSelidbeView.vue'
 import DostavaNamjestajaView from '../views/DostavaNamjestajaView.vue'
 import DostavaBijeleTehnikeView from '../views/DostavaBijeleTehnikeView.vue'
 import RedovneDostaveView from '../views/RedovneDostaveView.vue'
+import OdvozOtpadaView from '../views/OdvozOtpadaView.vue'
+import OdvozGlomaznogOtpadaView from '../views/OdvozGlomaznogOtpadaView.vue'
+import OdvozStarogNamjestajaView from '../views/OdvozStarogNamjestajaView.vue'
+import OdvozSuteView from '../views/OdvozSuteView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
 
 const router = createRouter({
@@ -89,6 +93,26 @@ const router = createRouter({
       path: '/redovne-dostave',
       name: 'redovne-dostave',
       component: RedovneDostaveView,
+    },
+    {
+      path: '/odvoz-otpada',
+      name: 'odvoz-otpada',
+      component: OdvozOtpadaView,
+    },
+    {
+      path: '/odvoz-glomaznog-otpada',
+      name: 'odvoz-glomaznog-otpada',
+      component: OdvozGlomaznogOtpadaView,
+    },
+    {
+      path: '/odvoz-starog-namjestaja',
+      name: 'odvoz-starog-namjestaja',
+      component: OdvozStarogNamjestajaView,
+    },
+    {
+      path: '/odvoz-sute',
+      name: 'odvoz-sute',
+      component: OdvozSuteView,
     },
     {
       path: '/404',
