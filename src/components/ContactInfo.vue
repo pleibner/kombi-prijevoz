@@ -20,7 +20,7 @@ const trackFacebookClick = () => {
       <span class="contact-icon">📞</span>
       <input
         type="text"
-        value="+385 98 915 6061"
+        value="+385 92 137 2554"
         readonly
         class="phone-input"
         @focus="trackPhoneFocus"
