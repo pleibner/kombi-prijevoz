@@ -18,7 +18,10 @@ const navigateToContact = () => {
       <h2>Kontaktirajte nas</h2>
       <p>Spremni smo vam pomoći s prijevozom, selidbom ili dostavom. Javite nam se za besplatnu procjenu.</p>
       <ContactInfo class="contact-info-spacing"/>
-      <ButtonPrimary button-class="contact-btn" @click="navigateToContact">Pošaljite upit</ButtonPrimary>
+      <div class="contact-actions">
+        <ButtonPrimary button-class="contact-btn" @click="navigateToContact">Pošaljite upit</ButtonPrimary>
+        <router-link to="/kako-do-nas" class="map-link">📍 Kako do nas?</router-link>
+      </div>
     </div>
   </section>
 </template>
@@ -50,6 +53,30 @@ const navigateToContact = () => {
 
 .contact-info-spacing {
   margin-bottom: 3rem;
+}
+
+.contact-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.map-link {
+  color: var(--primary-color, #ef4444);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 2px solid transparent;
+}
+
+.map-link:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: var(--primary-color, #ef4444);
+  transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {

@@ -77,7 +77,8 @@ const navigateToContact = () => {
 
         <div class="cta-section">
           <ButtonPrimary button-class="hero-btn" show-ripple @click="navigateToContact">Kontaktirajte nas</ButtonPrimary>
-          </div>
+          <router-link to="/kako-do-nas" class="hero-map-link">📍 Kako do nas?</router-link>
+        </div>
 
             </div>
           </div>
@@ -204,10 +205,31 @@ const navigateToContact = () => {
 
 .cta-section {
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
   justify-content: center;
+  align-items: center;
   margin: 2.5rem 0;
   flex-wrap: wrap;
+}
+
+.hero-map-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(5px);
+}
+
+.hero-map-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 768px) {

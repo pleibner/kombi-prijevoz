@@ -18,6 +18,7 @@ import OdvozGlomaznogOtpadaView from '../views/OdvozGlomaznogOtpadaView.vue'
 import OdvozStarogNamjestajaView from '../views/OdvozStarogNamjestajaView.vue'
 import OdvozSuteView from '../views/OdvozSuteView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
+import HowToReachUsView from '../views/HowToReachUsView.vue'
 
 const router = createRouter({
   history: import.meta.env.SSR
@@ -113,6 +114,11 @@ const router = createRouter({
       path: '/odvoz-sute',
       name: 'odvoz-sute',
       component: OdvozSuteView,
+    },
+    {
+      path: '/kako-do-nas',
+      name: 'kako-do-nas',
+      component: HowToReachUsView,
     },
     {
       path: '/404',
