@@ -40,7 +40,7 @@ const trackFacebookClick = () => {
     </div>
     <div class="contact-item">
       <span class="contact-icon">📍</span>
-      <span>Crnčićeva 41a, Zagreb</span>
+      <span>Trg Ivana Kukuljevića 5, Zagreb</span>
     </div>
   </div>
 </template>
