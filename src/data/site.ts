@@ -8,9 +8,14 @@ export const site = {
   phoneDisplay: '092 137 2554',
   phoneE164,
   phoneHref: `tel:${phoneE164}`,
+  email: 'kombi-transport@outlook.com',
   // WhatsApp is reachable only through the icon link; the number itself is never rendered.
   whatsappHref: 'https://wa.me/385989156061',
-  facebookHref: 'https://www.facebook.com/share/1CT2LKegvb/',
+  facebookHref: 'https://www.facebook.com/people/Jeftini-kombi-prijevozi/61583285771211/',
+  // Google Business Profile: the share link for visitors, the knowledge-graph URL for schema.org.
+  googleProfileHref: 'https://share.google/ZqbJczqibGey1FhTT',
+  googleEntityUrl: 'https://www.google.com/search?kgmid=/g/11yswkg7cz',
+  foundingDate: '1995-11-15',
   street: 'Trg Ivana Kukuljevića 5',
   postalCode,
   locality,

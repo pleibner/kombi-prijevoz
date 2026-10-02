@@ -35,7 +35,7 @@ onMounted(() => {
       <div class="how-to-reach-us__grid">
         <div class="card how-to-reach-us__card">
           <h2>Naša lokacija</h2>
-          <ContactInfo show-facebook />
+          <ContactInfo show-facebook show-google />
         </div>
         <div class="how-to-reach-us__map">
           <iframe

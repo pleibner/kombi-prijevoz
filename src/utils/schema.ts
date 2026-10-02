@@ -47,6 +47,10 @@ export const businessSchema = {
       logo: `${site.url}/favicon.png`,
       image: `${site.url}/og-image.png`,
       telephone: site.phoneE164,
+      email: site.email,
+      foundingDate: site.foundingDate,
+      sameAs: [site.facebookHref, site.googleEntityUrl],
+      hasMap: site.googleProfileHref,
       address: {
         '@type': 'PostalAddress',
         streetAddress: site.street,

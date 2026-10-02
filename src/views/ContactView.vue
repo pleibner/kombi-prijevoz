@@ -252,7 +252,7 @@ const submitForm = async () => {
           <aside class="contact-aside">
             <div class="card contact-aside__card">
               <h2>Radije razgovor?</h2>
-              <ContactInfo show-facebook />
+              <ContactInfo show-facebook show-google />
             </div>
             <div class="contact-aside__help">
               <h2>Što nam pomaže za točnu ponudu</h2>

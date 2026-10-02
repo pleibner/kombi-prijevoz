@@ -10,7 +10,7 @@ const reasons: { icon: IconName; title: string; text: string }[] = [
   {
     icon: 'users',
     title: 'Profesionalizam i iskustvo',
-    text: `Više od ${site.yearsExperience} godina u prijevozu, selidbama i dostavi. Svakom zadatku pristupamo s punom pažnjom.`,
+    text: `Od ${site.foundingDate.slice(0, 4)}. godine u prijevozu, selidbama i dostavi. Svakom zadatku pristupamo s punom pažnjom.`,
   },
   {
     icon: 'shield',

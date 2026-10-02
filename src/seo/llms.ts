@@ -5,6 +5,7 @@ import { servicePages } from '../data/services'
 import { serviceAreas, site } from '../data/site'
 
 const absolute = (path: string) => `${site.url}${path}`
+const [foundedYear, foundedMonth, foundedDay] = site.foundingDate.split('-').map(Number)
 
 /** llms.txt (https://llmstxt.org): a plain-markdown summary of the business for AI assistants. */
 export function buildLlmsTxt() {
@@ -14,6 +15,7 @@ export function buildLlmsTxt() {
     `> ${site.description} Radimo ${site.hoursShort}, a hitne prijevoze i selidbe 0–24, i praznicima, bez nadoplate. Više od ${site.yearsExperience} godina iskustva.`,
     '',
     `- Telefon: ${site.phoneDisplay} (${site.phoneE164})`,
+    `- E-mail: ${site.email}`,
     `- Adresa: ${site.street}, ${site.city}`,
     `- Radno vrijeme: ${site.hours}`,
     '- Hitno: u Zagrebu stižemo u roku od sat vremena ako imamo slobodan kombi',
@@ -22,6 +24,9 @@ export function buildLlmsTxt() {
     `- Područje rada: ${serviceAreas.join(', ')}; najčešće do ${site.serviceRadiusKm} km od Zagreba, po dogovoru cijela Hrvatska`,
     `- Upit i besplatna procjena: ${absolute('/kontakt')}`,
     `- Lokacija i karta: ${absolute('/kako-do-nas')}`,
+    `- Osnovano: ${foundedDay}. ${foundedMonth}. ${foundedYear}.`,
+    `- Facebook: ${site.facebookHref}`,
+    `- Google profil: ${site.googleProfileHref}`,
     '',
     '## Cijene',
     '',

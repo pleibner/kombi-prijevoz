@@ -27,6 +27,8 @@ const moreLinks = [
 const trackWhatsApp = () => trackingService.trackClick('footer_whatsapp_click')
 const trackFacebook = () => trackingService.trackClick('footer_facebook_click')
 const trackPhone = () => trackingService.trackClick('footer_phone_click')
+const trackEmail = () => trackingService.trackClick('footer_email_click')
+const trackGoogle = () => trackingService.trackClick('footer_google_click')
 </script>
 
 <template>
@@ -70,6 +72,10 @@ const trackPhone = () => trackingService.trackClick('footer_phone_click')
             <AppIcon name="whatsapp" :size="18" />
             WhatsApp
           </a>
+          <a :href="`mailto:${site.email}`" @click="trackEmail">
+            <AppIcon name="mail" :size="18" :stroke-width="2" />
+            {{ site.email }}
+          </a>
           <a
             :href="site.facebookHref"
             target="_blank"
@@ -78,6 +84,15 @@ const trackPhone = () => trackingService.trackClick('footer_phone_click')
           >
             <AppIcon name="facebook" :size="18" />
             Facebook
+          </a>
+          <a
+            :href="site.googleProfileHref"
+            target="_blank"
+            rel="noopener noreferrer"
+            @click="trackGoogle"
+          >
+            <AppIcon name="star" :size="18" :stroke-width="2" />
+            Google recenzije
           </a>
           <RouterLink to="/kako-do-nas">
             <AppIcon name="pin" :size="18" :stroke-width="2" />
