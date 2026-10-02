@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, nextTick } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { useHead } from '@unhead/vue'
+import emailjs from '@emailjs/browser'
+import AppIcon from '@/components/AppIcon.vue'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
 import ContactInfo from '@/components/ContactInfo.vue'
-import emailjs from '@emailjs/browser'
 import { trackingService } from '@/utils/tracking'
 
 useHead({
@@ -12,37 +13,35 @@ useHead({
   meta: [
     {
       name: 'description',
-      content: 'Kontaktirajte Kombi Transport za besplatnu procjenu prijevoza, selidbi i dostave. Zagreb i okolno područje.'
+      content:
+        'Kontaktirajte Kombi Transport za besplatnu procjenu prijevoza, selidbi i dostave. Zagreb i okolno područje.',
     },
     {
       property: 'og:title',
-      content: 'Kontakt - Kombi Transport Zagreb'
+      content: 'Kontakt - Kombi Transport Zagreb',
     },
     {
       property: 'og:description',
-      content: 'Kontaktirajte Kombi Transport za besplatnu procjenu prijevoza, selidbi i dostave. Zagreb i okolno područje.'
-    }
+      content:
+        'Kontaktirajte Kombi Transport za besplatnu procjenu prijevoza, selidbi i dostave. Zagreb i okolno područje.',
+    },
   ],
   link: [
     {
       rel: 'canonical',
-      href: 'https://kombi-transport.com/kontakt'
-    }
-  ]
+      href: 'https://kombi-transport.com/kontakt',
+    },
+  ],
 })
 
-const router = useRouter()
-
-onMounted(async () => {
-  await nextTick()
-  window.scrollTo(0, 0)
-})
+const route = useRoute()
 
 const form = reactive({
   ime: '',
   email: '',
   telefon: '',
-  datumVrijeme: '',
+  datum: '',
+  vrijeme: '',
   lokacijaPreuzimanja: '',
   liftPreuzimanja: '',
   lokacijaIsporuke: '',
@@ -53,98 +52,113 @@ const form = reactive({
   trebamR1Racun: false,
   nazivFirme: '',
   oibFirme: '',
-  adresaFirme: ''
+  adresaFirme: '',
 })
 
 const errors = reactive({
   ime: '',
   email: '',
   telefon: '',
-  datumVrijeme: '',
-  lokacijaPreuzimanja: '',
-  liftPreuzimanja: '',
-  lokacijaIsporuke: '',
-  liftIsporuke: '',
-  popisStvari: '',
   placanje: '',
-  komentar: '',
   nazivFirme: '',
   oibFirme: '',
-  adresaFirme: ''
 })
 
 const isSubmitting = ref(false)
-const submitMessage = ref('')
 const submitError = ref('')
 const isFormSubmitted = ref(false)
 
+const helpItems = [
+  'Adrese preuzimanja i isporuke',
+  'Kat i ima li lift',
+  'Popis većih stvari s okvirnim dimenzijama',
+  'Željeni datum i vrijeme',
+]
+
+const queryString = (value: unknown) => (typeof value === 'string' ? value : '')
+
+onMounted(async () => {
+  await nextTick()
+  window.scrollTo(0, 0)
+
+  // Prefill from the homepage quick-quote card
+  const from = queryString(route.query.od)
+  const to = queryString(route.query.do)
+  const what = queryString(route.query.sto)
+  const when = queryString(route.query.kad)
+
+  if (from) form.lokacijaPreuzimanja = from
+  if (to) form.lokacijaIsporuke = to
+  if (when) form.datum = when
+  if (what) form.komentar = `Vrsta prijevoza: ${what}`
+})
+
 const validateName = () => {
-  errors.ime = '';
+  errors.ime = ''
   if (form.ime.trim().length === 0) {
-    errors.ime = 'Upišite ime.';
-    return false;
+    errors.ime = 'Upišite ime.'
+    return false
   }
-  return true;
-};
+  return true
+}
 
 const validateEmail = () => {
-  errors.email = '';
+  errors.email = ''
   if (!form.email.trim()) {
-    errors.email = 'Upišite e-mail adresu.';
-    return false;
+    errors.email = 'Upišite e-mail adresu.'
+    return false
   } else if (!/\S+@\S+\.\S+/.test(form.email)) {
-    errors.email = 'Unesite valjanu e-mail adresu.';
-    return false;
+    errors.email = 'Unesite valjanu e-mail adresu.'
+    return false
   }
-  return true;
-};
+  return true
+}
 
 const validatePhone = () => {
-  errors.telefon = '';
+  errors.telefon = ''
   if (form.telefon.trim().length > 0) {
-    const cleaned = form.telefon.trim().replace(/[\s-/]/g, '');
-    
+    const cleaned = form.telefon.trim().replace(/[\s-/]/g, '')
+
     if (!/^(\+\d{1,4})?\d{6,14}$/.test(cleaned)) {
-      errors.telefon = 'Upišite valjani broj telefona.';
-      return false;
+      errors.telefon = 'Upišite valjani broj telefona.'
+      return false
     }
   } else {
-    errors.telefon = 'Upišite broj telefona.';
-    return false;
+    errors.telefon = 'Upišite broj telefona.'
+    return false
   }
-  return true;
-};
-
+  return true
+}
 
 const validatePayment = () => {
-  errors.placanje = '';
+  errors.placanje = ''
   if (!form.placanje) {
-    errors.placanje = 'Odaberite način plaćanja.';
-    return false;
+    errors.placanje = 'Odaberite način plaćanja.'
+    return false
   }
-  return true;
-};
+  return true
+}
 
 const validateCompanyName = () => {
-  errors.nazivFirme = '';
+  errors.nazivFirme = ''
   if (form.trebamR1Racun && !form.nazivFirme.trim()) {
-    errors.nazivFirme = 'Upišite naziv firme.';
-    return false;
+    errors.nazivFirme = 'Upišite naziv firme.'
+    return false
   }
-  return true;
-};
+  return true
+}
 
 const validateCompanyOIB = () => {
-  errors.oibFirme = '';
+  errors.oibFirme = ''
   if (form.trebamR1Racun && !form.oibFirme.trim()) {
-    errors.oibFirme = 'Upišite OIB firme.';
-    return false;
+    errors.oibFirme = 'Upišite OIB firme.'
+    return false
   } else if (form.trebamR1Racun && form.oibFirme.trim() && !/^\d{11}$/.test(form.oibFirme.trim())) {
-    errors.oibFirme = 'OIB mora imati 11 znamenki.';
-    return false;
+    errors.oibFirme = 'OIB mora imati 11 znamenki.'
+    return false
   }
-  return true;
-};
+  return true
+}
 
 const validateForm = () => {
   let isValid = true
@@ -162,7 +176,7 @@ const validateForm = () => {
   return isValid
 }
 
-emailjs.init({publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY});
+emailjs.init({ publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY })
 
 const submitForm = async () => {
   if (!validateForm()) {
@@ -171,14 +185,13 @@ const submitForm = async () => {
 
   isSubmitting.value = true
   submitError.value = ''
-  submitMessage.value = ''
 
   try {
     const templateParams = {
       ime: form.ime,
       email: form.email,
       telefon: form.telefon,
-      datum_vrijeme: form.datumVrijeme,
+      datum_vrijeme: [form.datum, form.vrijeme].filter(Boolean).join(' '),
       lokacija_preuzimanja: form.lokacijaPreuzimanja,
       lift_preuzimanja: form.liftPreuzimanja,
       lokacija_isporuke: form.lokacijaIsporuke,
@@ -191,7 +204,7 @@ const submitForm = async () => {
       oib_firme: form.oibFirme,
       adresa_firme: form.adresaFirme,
       send_to: import.meta.env.VITE_AUTOMATIC_EMAIL_RECEIVER,
-      reply_to: form.email
+      reply_to: form.email,
     }
 
     trackingService.trackFormSubmit('contact_form_submit', {
@@ -203,21 +216,23 @@ const submitForm = async () => {
       has_delivery_lift: !!form.liftIsporuke,
       has_items_list: !!form.popisStvari.trim(),
       payment_method: form.placanje,
-      has_date_time: !!form.datumVrijeme.trim(),
-      has_comments: !!form.komentar.trim()
+      has_date_time: !!form.datum,
+      has_comments: !!form.komentar.trim(),
     })
 
     await emailjs.send(
       import.meta.env.VITE_EMAILJS_SERVICE_ID,
       import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-      templateParams
+      templateParams,
     )
 
     isFormSubmitted.value = true
+    window.scrollTo(0, 0)
   } catch (error: unknown) {
     console.error('Form submission error:', error)
     trackingService.trackError('contact_form_submit_error', error)
-    submitError.value = 'Došlo je do greške prilikom slanja upita. Molimo pokušajte ponovno ili nas kontaktirajte direktno.'
+    submitError.value =
+      'Došlo je do greške prilikom slanja upita. Molimo pokušajte ponovno ili nas kontaktirajte direktno.'
   } finally {
     isSubmitting.value = false
   }
@@ -226,570 +241,589 @@ const submitForm = async () => {
 
 <template>
   <div class="contact-view">
-    <div class="container">
-      <button @click="router.back()" class="back-button">
-        ← Natrag na prethodnu stranicu
-      </button>
-      
-      <div v-if="isFormSubmitted" class="thank-you-message">
-        <div class="thank-you-content">
-          <h2>Hvala Vam što ste nas kontaktirali!</h2>
-          <p>Uskoro ćemo Vam se javiti s ponudom.</p>
-        </div>
+    <div class="container contact-view__inner">
+      <nav class="breadcrumb" aria-label="Putanja">
+        <RouterLink to="/">Početna</RouterLink>
+        <span aria-hidden="true">/</span>
+        <strong>Zatraži ponudu</strong>
+      </nav>
+
+      <div v-if="isFormSubmitted" class="card thank-you">
+        <span class="thank-you__icon"><AppIcon name="check" :size="28" :stroke-width="2.5" /></span>
+        <h1>Hvala Vam što ste nas kontaktirali!</h1>
+        <p>Uskoro ćemo Vam se javiti s ponudom.</p>
+        <RouterLink to="/" class="btn btn-secondary">Natrag na početnu</RouterLink>
       </div>
 
       <template v-else>
-        <h1>Kontaktirajte nas</h1>
-        <div class="contact-info-wrapper">
-          <ContactInfo />
+        <div class="contact-view__heading">
+          <p class="eyebrow">Zatraži ponudu</p>
+          <h1>Recite nam što prevozimo. Mi javimo cijenu i termin.</h1>
+          <p class="lead">
+            Obvezna su samo tri polja. Sve ostalo nam pomaže da ponuda bude točna već u prvom
+            javljanju.
+          </p>
         </div>
-        <p class="subtitle">Ili ispunite obrazac pa ćemo mi kontaktirati Vas, u najkraćem mogućem roku.</p>
-        <form @submit.prevent="submitForm" class="contact-form">
-  
-          <div class="form-section">
-            <h2>Osobni podaci</h2>
-  
-            <div class="form-group">
-              <label for="ime">Ime *</label>
-              <input
-                id="ime"
-                v-model="form.ime"
-                type="text"
-                :class="{ 'error': errors.ime }"
-                @blur="validateName"
-              />
-              <span v-if="errors.ime" class="error-message">{{ errors.ime }}</span>
+
+        <div class="contact-grid">
+          <aside class="contact-aside">
+            <div class="card contact-aside__card">
+              <h2>Radije razgovor?</h2>
+              <ContactInfo show-facebook />
             </div>
-  
-            <div class="form-row">
-              <div class="form-group flex-1">
-                <label for="email">E-mail adresa *</label>
-                <input
-                  id="email"
-                  v-model="form.email"
-                  type="email"
-                  :class="{ 'error': errors.email }"
-                  placeholder="vas.email@primjer.com"
-                  @blur="validateEmail"
-                />
-                <span v-if="errors.email" class="error-message">{{ errors.email }}</span>
+            <div class="contact-aside__help">
+              <h2>Što nam pomaže za točnu ponudu</h2>
+              <ul>
+                <li v-for="item in helpItems" :key="item">
+                  <AppIcon name="check" :size="18" :stroke-width="2.5" />
+                  {{ item }}
+                </li>
+              </ul>
+            </div>
+          </aside>
+
+          <form class="card contact-form" novalidate @submit.prevent="submitForm">
+            <fieldset class="form-section">
+              <legend>
+                <span class="form-section__number">1</span>
+                <span class="form-section__title">Vaši podaci</span>
+              </legend>
+              <div class="form-section__fields">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="ime">Ime i prezime <span class="required">*</span></label>
+                    <input
+                      id="ime"
+                      v-model="form.ime"
+                      type="text"
+                      autocomplete="name"
+                      :class="{ error: errors.ime }"
+                      @blur="validateName"
+                    />
+                    <span v-if="errors.ime" class="error-message">{{ errors.ime }}</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="telefon">Broj telefona <span class="required">*</span></label>
+                    <input
+                      id="telefon"
+                      v-model="form.telefon"
+                      type="tel"
+                      autocomplete="tel"
+                      :class="{ error: errors.telefon }"
+                      placeholder="+385 XX XXX XXXX"
+                      @blur="validatePhone"
+                    />
+                    <span v-if="errors.telefon" class="error-message">{{ errors.telefon }}</span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="email">E-mail adresa <span class="required">*</span></label>
+                  <input
+                    id="email"
+                    v-model="form.email"
+                    type="email"
+                    autocomplete="email"
+                    :class="{ error: errors.email }"
+                    placeholder="vas.email@primjer.com"
+                    @blur="validateEmail"
+                  />
+                  <span v-if="errors.email" class="error-message">{{ errors.email }}</span>
+                </div>
+
+                <label class="pill pill--check">
+                  <input id="trebamR1Racun" v-model="form.trebamR1Racun" type="checkbox" />
+                  Trebam R1 račun (na firmu)
+                </label>
+
+                <div v-if="form.trebamR1Racun" class="company-fields">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="nazivFirme">Naziv firme <span class="required">*</span></label>
+                      <input
+                        id="nazivFirme"
+                        v-model="form.nazivFirme"
+                        type="text"
+                        :class="{ error: errors.nazivFirme }"
+                        @blur="validateCompanyName"
+                      />
+                      <span v-if="errors.nazivFirme" class="error-message">{{
+                        errors.nazivFirme
+                      }}</span>
+                    </div>
+                    <div class="form-group">
+                      <label for="oibFirme">OIB firme <span class="required">*</span></label>
+                      <input
+                        id="oibFirme"
+                        v-model="form.oibFirme"
+                        type="text"
+                        inputmode="numeric"
+                        :class="{ error: errors.oibFirme }"
+                        placeholder="11 znamenki"
+                        maxlength="11"
+                        @blur="validateCompanyOIB"
+                      />
+                      <span v-if="errors.oibFirme" class="error-message">{{
+                        errors.oibFirme
+                      }}</span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="adresaFirme">Adresa firme</label>
+                    <input id="adresaFirme" v-model="form.adresaFirme" type="text" />
+                  </div>
+                </div>
               </div>
-  
-              <div class="form-group flex-1">
-                <label for="telefon">Broj telefona *</label>
-                <input
-                  id="telefon"
-                  v-model="form.telefon"
-                  type="tel"
-                  :class="{ 'error': errors.telefon }"
-                  placeholder="+385 XX XXX XXXX"
-                  @blur="validatePhone"
-                />
-                <span v-if="errors.telefon" class="error-message">{{ errors.telefon }}</span>
-            </div>
-          </div>
+            </fieldset>
 
-          <div class="form-group checkbox-group">
-            <label class="checkbox-label">
-              <input
-                id="trebamR1Racun"
-                v-model="form.trebamR1Racun"
-                type="checkbox"
-              />
-              <span class="checkmark"></span>
-              Trebam R1 račun
-            </label>
-          </div>
+            <fieldset class="form-section">
+              <legend>
+                <span class="form-section__number">2</span>
+                <span class="form-section__title">Detalji prijevoza</span>
+              </legend>
+              <div class="form-section__fields">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="datum">Željeni datum</label>
+                    <input id="datum" v-model="form.datum" type="date" />
+                  </div>
+                  <div class="form-group">
+                    <label for="vrijeme">Vrijeme</label>
+                    <input id="vrijeme" v-model="form.vrijeme" type="time" />
+                  </div>
+                </div>
 
-          <div v-if="form.trebamR1Racun" class="company-fields">
-            <div class="form-row">
-              <div class="form-group flex-1">
-                <label for="nazivFirme">Naziv firme *</label>
-                <input
-                  id="nazivFirme"
-                  v-model="form.nazivFirme"
-                  type="text"
-                  :class="{ 'error': errors.nazivFirme }"
-                  @blur="validateCompanyName"
-                />
-                <span v-if="errors.nazivFirme" class="error-message">{{ errors.nazivFirme }}</span>
+                <div class="form-row form-row--address">
+                  <div class="form-group">
+                    <label for="lokacijaPreuzimanja">Adresa preuzimanja</label>
+                    <input
+                      id="lokacijaPreuzimanja"
+                      v-model="form.lokacijaPreuzimanja"
+                      type="text"
+                      placeholder="Ulica i broj, grad"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <span class="form-label">Ima lift?</span>
+                    <div class="pill-group">
+                      <label class="pill">
+                        <input
+                          v-model="form.liftPreuzimanja"
+                          type="radio"
+                          value="da"
+                          name="liftPreuzimanja"
+                        />
+                        Da
+                      </label>
+                      <label class="pill">
+                        <input
+                          v-model="form.liftPreuzimanja"
+                          type="radio"
+                          value="ne"
+                          name="liftPreuzimanja"
+                        />
+                        Ne
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row form-row--address">
+                  <div class="form-group">
+                    <label for="lokacijaIsporuke">Adresa isporuke</label>
+                    <input
+                      id="lokacijaIsporuke"
+                      v-model="form.lokacijaIsporuke"
+                      type="text"
+                      placeholder="Ulica i broj, grad"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <span class="form-label">Ima lift?</span>
+                    <div class="pill-group">
+                      <label class="pill">
+                        <input
+                          v-model="form.liftIsporuke"
+                          type="radio"
+                          value="da"
+                          name="liftIsporuke"
+                        />
+                        Da
+                      </label>
+                      <label class="pill">
+                        <input
+                          v-model="form.liftIsporuke"
+                          type="radio"
+                          value="ne"
+                          name="liftIsporuke"
+                        />
+                        Ne
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="popisStvari">Popis stvari s dimenzijama</label>
+                  <textarea
+                    id="popisStvari"
+                    v-model="form.popisStvari"
+                    rows="4"
+                    placeholder="npr. kauč 200×90×80 cm, ormar 200×60×50 cm, 10 kutija"
+                  ></textarea>
+                </div>
               </div>
+            </fieldset>
 
-              <div class="form-group flex-1">
-                <label for="oibFirme">OIB firme *</label>
-                <input
-                  id="oibFirme"
-                  v-model="form.oibFirme"
-                  type="text"
-                  :class="{ 'error': errors.oibFirme }"
-                  placeholder="11 znamenki"
-                  maxlength="11"
-                  @blur="validateCompanyOIB"
-                />
-                <span v-if="errors.oibFirme" class="error-message">{{ errors.oibFirme }}</span>
+            <fieldset class="form-section">
+              <legend>
+                <span class="form-section__number">3</span>
+                <span class="form-section__title">Plaćanje i napomene</span>
+              </legend>
+              <div class="form-section__fields">
+                <div class="form-group">
+                  <span class="form-label">Način plaćanja <span class="required">*</span></span>
+                  <div class="pill-group">
+                    <label class="pill">
+                      <input
+                        v-model="form.placanje"
+                        type="radio"
+                        value="gotovina"
+                        name="placanje"
+                        @change="validatePayment"
+                      />
+                      Gotovina
+                    </label>
+                    <label class="pill">
+                      <input
+                        v-model="form.placanje"
+                        type="radio"
+                        value="internet-bankarstvo"
+                        name="placanje"
+                        @change="validatePayment"
+                      />
+                      Internet bankarstvo
+                    </label>
+                  </div>
+                  <span v-if="errors.placanje" class="error-message">{{ errors.placanje }}</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="komentar">Dodatne informacije</label>
+                  <textarea
+                    id="komentar"
+                    v-model="form.komentar"
+                    rows="3"
+                    placeholder="Posebni zahtjevi, pitanja, napomene o pristupu zgradi"
+                  ></textarea>
+                </div>
               </div>
-            </div>
+            </fieldset>
 
-            <div class="form-group">
-              <label for="adresaFirme">Adresa firme</label>
-              <input
-                id="adresaFirme"
-                v-model="form.adresaFirme"
-                type="text"
-                :class="{ 'error': errors.adresaFirme }"
-              />
-              <span v-if="errors.adresaFirme" class="error-message">{{ errors.adresaFirme }}</span>
+            <div class="form-actions">
+              <ButtonPrimary type="submit" button-class="submit-btn" :disabled="isSubmitting">
+                <span v-if="isSubmitting">Šalje se...</span>
+                <span v-else>Pošalji upit</span>
+              </ButtonPrimary>
+              <p class="form-actions__note">
+                Odgovaramo u najkraćem roku. Podatke koristimo samo za izradu ponude. Polja označena
+                sa <span class="required">*</span> su obvezna.
+              </p>
+              <div v-if="submitError" class="submit-error" role="alert">{{ submitError }}</div>
             </div>
-          </div>
+          </form>
         </div>
-  
-          <div class="form-section">
-            <h2>Detalji prijevoza</h2>
-  
-            <div class="form-group">
-              <label for="datumVrijeme">Datum i vrijeme</label>
-              <input
-                id="datumVrijeme"
-                v-model="form.datumVrijeme"
-                type="datetime-local"
-                :class="{ 'error': errors.datumVrijeme }"
-              />
-              <span v-if="errors.datumVrijeme" class="error-message">{{ errors.datumVrijeme }}</span>
-            </div>
-  
-            <div class="form-row">
-              <div class="form-group flex-1">
-                <label for="lokacijaPreuzimanja">Lokacija preuzimanja</label>
-                <input
-                  id="lokacijaPreuzimanja"
-                  v-model="form.lokacijaPreuzimanja"
-                  type="text"
-                  :class="{ 'error': errors.lokacijaPreuzimanja }"
-                />
-                <span v-if="errors.lokacijaPreuzimanja" class="error-message">{{ errors.lokacijaPreuzimanja }}</span>
-              </div>
-
-              <div class="form-group">
-                <label for="liftPreuzimanja-da">Ima lift?</label>
-                <div class="radio-group">
-                  <div class="radio-option">
-                    <input
-                      id="liftPreuzimanja-da"
-                      v-model="form.liftPreuzimanja"
-                      type="radio"
-                      value="da"
-                      name="liftPreuzimanja"
-                    />
-                    <label for="liftPreuzimanja-da" class="radio-text">Da</label>
-                  </div>
-                  <div class="radio-option">
-                    <input
-                      id="liftPreuzimanja-ne"
-                      v-model="form.liftPreuzimanja"
-                      type="radio"
-                      value="ne"
-                      name="liftPreuzimanja"
-                    />
-                    <label for="liftPreuzimanja-ne" class="radio-text">Ne</label>
-                  </div>
-                </div>
-                <span v-if="errors.liftPreuzimanja" class="error-message">{{ errors.liftPreuzimanja }}</span>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group flex-1">
-                <label for="lokacijaIsporuke">Lokacija isporuke</label>
-                <input
-                  id="lokacijaIsporuke"
-                  v-model="form.lokacijaIsporuke"
-                  type="text"
-                  :class="{ 'error': errors.lokacijaIsporuke }"
-                />
-                <span v-if="errors.lokacijaIsporuke" class="error-message">{{ errors.lokacijaIsporuke }}</span>
-              </div>
-
-              <div class="form-group">
-                <label for="liftIsporuke-da">Ima lift?</label>
-                <div class="radio-group">
-                  <div class="radio-option">
-                    <input
-                      id="liftIsporuke-da"
-                      v-model="form.liftIsporuke"
-                      type="radio"
-                      value="da"
-                      name="liftIsporuke"
-                    />
-                    <label for="liftIsporuke-da" class="radio-text">Da</label>
-                  </div>
-                  <div class="radio-option">
-                    <input
-                      id="liftIsporuke-ne"
-                      v-model="form.liftIsporuke"
-                      type="radio"
-                      value="ne"
-                      name="liftIsporuke"
-                    />
-                    <label for="liftIsporuke-ne" class="radio-text">Ne</label>
-                  </div>
-                </div>
-                <span v-if="errors.liftIsporuke" class="error-message">{{ errors.liftIsporuke }}</span>
-              </div>
-            </div>
-  
-            <div class="form-group">
-              <label for="popisStvari">Popis stvari s dimenzijama</label>
-              <textarea
-                id="popisStvari"
-                v-model="form.popisStvari"
-                :class="{ 'error': errors.popisStvari }"
-                placeholder="Npr: Sofa 200x90x80cm, stol 120x80x75cm, 3 stolice..."
-                rows="4"
-              ></textarea>
-              <span v-if="errors.popisStvari" class="error-message">{{ errors.popisStvari }}</span>
-            </div>
-  
-            <div class="form-group">
-              <label for="placanje-gotovina">Plaćanje *</label>
-              <div class="radio-group">
-                <div class="radio-option">
-                  <input
-                    id="placanje-gotovina"
-                    v-model="form.placanje"
-                    type="radio"
-                    value="gotovina"
-                    name="placanje"
-                    @change="validatePayment"
-                  />
-                  <label for="placanje-gotovina" class="radio-text">Gotovina</label>
-                </div>
-                <div class="radio-option">
-                  <input
-                    id="placanje-internet"
-                    v-model="form.placanje"
-                    type="radio"
-                    value="internet-bankarstvo"
-                    name="placanje"
-                    @change="validatePayment"
-                  />
-                  <label for="placanje-internet" class="radio-text">Internet bankarstvo</label>
-                </div>
-              </div>
-              <span v-if="errors.placanje" class="error-message">{{ errors.placanje }}</span>
-            </div>
-  
-            <div class="form-group">
-              <label for="komentar">Dodatne informacije</label>
-              <textarea
-                id="komentar"
-                v-model="form.komentar"
-                placeholder="Dodatne informacije, posebni zahtjevi ili pitanja..."
-                rows="3"
-              ></textarea>
-            </div>
-          </div>
-  
-  
-          <div class="form-actions">
-            <ButtonPrimary
-              button-class="submit-btn"
-              :disabled="isSubmitting"
-            >
-              <span v-if="isSubmitting">Šalje se...</span>
-              <span v-else>Pošaljite upit</span>
-            </ButtonPrimary>
-          </div>
-  
-          <div v-if="submitMessage" class="success-message">
-            {{ submitMessage }}
-          </div>
-          <div v-if="submitError" class="error-message">
-            {{ submitError }}
-          </div>
-        </form>
       </template>
     </div>
   </div>
 </template>
 
 <style scoped>
-.contact-view {
-  min-height: 100vh;
-  padding: 4rem 2rem;
-  background: linear-gradient(135deg, #001a44 0%, #1a365d 50%, #2c5282 100%);
-  background-size: 400% 400%;
-  animation: gradientShift 12s ease-in-out infinite;
+.contact-view__inner {
+  padding-top: 32px;
+  padding-bottom: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  padding: 3rem;
+.contact-view__heading {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 820px;
 }
 
-.back-button {
-  background: transparent;
-  border: none;
-  color: var(--primary-color, #ef4444);
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 0.5rem 0;
-  margin-bottom: 1rem;
-  transition: color 0.3s ease;
+.contact-view__heading h1 {
+  font-size: clamp(40px, 4.6vw, 68px);
+  line-height: 0.98;
+}
+
+.contact-view__heading .lead {
+  font-size: 18px;
+  max-width: 640px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.contact-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: calc(var(--header-height) + 24px);
+}
+
+.contact-aside__card {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contact-aside__card h2 {
+  font-size: 28px;
+}
+
+.contact-aside__help {
+  background: var(--tint);
+  border-radius: var(--radius-md);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.contact-aside__help h2 {
+  font-size: 22px;
+}
+
+.contact-aside__help ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 15px;
+}
+
+.contact-aside__help li {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 10px;
 }
 
-.back-button:hover {
-  color: var(--text-color, #333);
-}
-
-h1 {
-  text-align: center;
-  color: var(--text-color, #333);
-  margin-bottom: 0.5rem;
-  font-size: 2.5rem;
-}
-
-.contact-info-wrapper {
-  background: var(--light-bg, #f9f9f9);
-  border-radius: 8px;
-  padding: 2rem;
-  margin: 2rem 0;
-  border: 1px solid #e1e5e9;
-}
-
-.subtitle {
-  text-align: center;
-  color: #666;
-  margin-bottom: 3rem;
-  font-size: 1.1rem;
+.contact-aside__help svg {
+  color: var(--accent);
 }
 
 .contact-form {
+  padding: 40px;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 40px;
 }
 
 .form-section {
-  border-bottom: 1px solid #eee;
-  padding-bottom: 2rem;
+  border: 0;
+  min-width: 0;
 }
 
-.form-section:last-of-type {
-  border-bottom: none;
+.form-section legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
-.form-section h2 {
-  color: var(--primary-color, #ef4444);
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-  font-weight: 600;
+.form-section__number {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.form-section__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.form-section__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 .form-row {
-  display: flex;
-  column-gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  gap: 18px;
 }
 
-.form-group.flex-1 {
-  flex: 1;
+.form-row--address {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem;
+  gap: 6px;
 }
 
-.form-group label {
+.form-group label,
+.form-label {
+  font-size: 14px;
   font-weight: 600;
-  color: var(--text-color, #333);
-  margin-bottom: 0.5rem;
 }
 
-.form-group input,
-.form-group textarea {
-  padding: 0.75rem 1rem;
-  border: 2px solid #e1e5e9;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-  background: white;
+.required {
+  color: var(--accent);
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: var(--primary-color, #ef4444);
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-}
-
-.form-group input.error,
-.form-group textarea.error {
-  border-color: #ef4444;
-}
-
-.radio-group {
+.pill-group {
   display: flex;
-  gap: 2rem;
-  margin-top: 0.5rem;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.radio-option {
-  display: flex;
+.pill {
+  display: inline-flex;
   align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 16px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
   cursor: pointer;
-}
-
-.radio-option input[type="radio"] {
-  margin-right: 0.5rem;
-  width: 18px;
-  height: 18px;
-  accent-color: var(--primary-color, #ef4444);
-}
-
-label.radio-text {
-  font-size: 1rem;
-  color: var(--text-color, #333);
-  cursor: pointer;
-  margin: 0;
-}
-
-.checkbox-label {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  font-size: 1rem;
   font-weight: 500;
-  color: var(--text-color, #333);
-  margin-bottom: 0;
+  font-size: 16px;
 }
 
-.checkbox-label input[type="checkbox"] {
-  margin-right: 0.75rem;
-  width: 18px;
-  height: 18px;
-  accent-color: var(--primary-color, #ef4444);
-  cursor: pointer;
+.pill:hover {
+  border-color: var(--ink);
+}
+
+.pill:has(input:checked) {
+  border-color: var(--ink);
+  background: var(--tint-2);
+}
+
+.pill--check {
+  align-self: flex-start;
 }
 
 .company-fields {
-  background: #f8f9fa;
-  padding: 1.5rem;
-  border-radius: 8px;
-  border: 1px solid #e1e5e9;
-  margin-top: 1rem;
+  border: 1.5px dashed var(--line-strong);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: #f9fafc;
 }
 
-.company-fields .form-group {
-  margin-bottom: 1.5rem;
-}
-
-.company-fields .form-group:last-child {
-  margin-bottom: 0;
+input.error,
+textarea.error {
+  border-color: var(--accent);
 }
 
 .error-message {
-  color: #ef4444;
+  color: var(--accent);
   font-size: 0.875rem;
-  margin-top: 0.25rem;
-}
-
-.success-message {
-  background: #d1fae5;
-  color: #065f46;
-  padding: 1rem;
-  border-radius: 8px;
-  border: 1px solid #a7f3d0;
-  text-align: center;
-  font-weight: 500;
-}
-
-.thank-you-message {
-  background: #d1fae5;
-  color: #065f46;
-  padding: 3rem;
-  border-radius: 12px;
-  border: 2px solid #a7f3d0;
-  text-align: center;
-  margin: 2rem 0;
-}
-
-.thank-you-content h2 {
-  color: #065f46;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
-.thank-you-content p {
-  color: #065f46;
-  font-size: 1.2rem;
-  margin: 0;
-  font-weight: 500;
 }
 
 .form-actions {
   display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-actions :deep(.submit-btn) {
+  width: 100%;
+  height: 56px;
+  font-size: 17px;
+}
+
+.form-actions__note {
+  font-size: 14px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.submit-error {
+  background: #fbe9eb;
+  color: var(--accent-dark);
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  font-weight: 500;
+}
+
+.thank-you {
+  padding: 56px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.thank-you__icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: var(--tint);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
   justify-content: center;
-  padding-top: 1rem;
 }
 
-.submit-btn {
-  min-width: 200px;
+.thank-you h1 {
+  font-size: 40px;
 }
 
-.submit-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none !important;
+.thank-you p {
+  color: var(--muted);
+  font-size: 18px;
 }
 
-@media (max-width: 768px) {
-  .contact-view {
-    padding: 2rem 1rem;
+@media (max-width: 860px) {
+  .contact-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .container {
-    padding: 2rem;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  .form-section h2 {
-    font-size: 1.3rem;
+  .contact-aside {
+    position: static;
   }
 }
 
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: 1.5rem;
+@media (max-width: 760px) {
+  .contact-view__inner {
+    padding-bottom: 64px;
   }
 
   .contact-form {
-    gap: 1.5rem;
+    padding: 24px 16px;
+    gap: 32px;
   }
 
-  .form-section {
-    padding-bottom: 1.5rem;
-  }
-
-  .form-row {
-    flex-direction: column;
+  .form-row--address {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 </style>
