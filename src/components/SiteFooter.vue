@@ -11,6 +11,7 @@ const serviceLinks = [
   { to: '/kombi-dostava', label: 'Dostava' },
   { to: '/odvoz-otpada', label: 'Odvoz otpada' },
   { to: '/specijalni-prijevoz', label: 'Specijalni prijevoz' },
+  { to: '/cjenik', label: 'Cjenik' },
 ]
 
 const moreLinks = [

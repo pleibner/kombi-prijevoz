@@ -135,6 +135,7 @@ const trackPhone = () => trackingService.trackClick('header_phone_click')
   text-decoration: none;
   font-weight: 500;
   font-size: 15px;
+  white-space: nowrap;
   color: var(--ink);
   padding: 6px 0;
   border-bottom: 2px solid transparent;
@@ -215,7 +216,8 @@ const trackPhone = () => trackingService.trackClick('header_phone_click')
   margin-top: 12px;
 }
 
-@media (max-width: 1000px) {
+/* Below this width the six nav links no longer fit on one line. */
+@media (max-width: 1140px) {
   .site-nav,
   .site-header__phone {
     display: none;

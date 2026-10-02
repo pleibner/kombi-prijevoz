@@ -32,6 +32,11 @@ import { formatPrice, priceAnchors, pricingNotes } from '@/data/pricing'
           {{ note }}
         </li>
       </ul>
+
+      <RouterLink to="/cjenik" class="pricing__more">
+        Pogledajte cijeli cjenik
+        <AppIcon name="arrow-right" :size="18" :stroke-width="2" />
+      </RouterLink>
     </div>
   </section>
 </template>
@@ -101,5 +106,15 @@ import { formatPrice, priceAnchors, pricingNotes } from '@/data/pricing'
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.pricing__more {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--accent);
 }
 </style>

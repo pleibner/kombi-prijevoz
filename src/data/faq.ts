@@ -1,3 +1,5 @@
+import { site } from './site'
+
 export interface FaqItem {
   question: string
   answer: string
@@ -7,7 +9,7 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Koliko unaprijed trebam rezervirati termin?',
     answer:
-      'Što prije, to bolje, posebno za vikende. Za hitne situacije nazovite nas: ako smo slobodni, dolazimo isti dan.',
+      'Što prije, to bolje, posebno za vikende. Za hitne situacije nazovite nas u bilo koje doba dana: ako smo slobodni, dolazimo isti dan.',
   },
   {
     question: 'Što ako zgrada nema lift?',
@@ -17,17 +19,16 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Kako se plaća?',
     answer:
-      'Gotovinom ili internet bankarstvom. Ako trebate R1 račun, u obrazac upišite podatke firme.',
+      'Gotovinom ili internet bankarstvom (bankovnom uplatom). Kartice ne primamo. Ako trebate R1 račun, u obrazac upišite podatke firme.',
   },
   {
-    question: 'Radite li vikendom?',
+    question: 'Radite li vikendom i praznicima?',
     answer:
-      'Radimo svaki dan u tjednu, od 08 do 20 sati. Vikend termini se brzo popune, pa ih dogovorite ranije.',
+      'Da. Radimo 0–24, svaki dan u tjednu, uključujući vikende, praznike i noćne termine. Vikend termini se brzo popune, pa ih dogovorite ranije.',
   },
   {
     question: 'Vozite li i izvan Zagreba?',
-    answer:
-      'Da. Najčešće radimo unutar 50 km od Zagreba, ali po dogovoru vozimo po cijeloj Hrvatskoj.',
+    answer: `Da. Najčešće radimo unutar ${site.serviceRadiusKm} km od Zagreba, ali po dogovoru vozimo po cijeloj Hrvatskoj.`,
   },
   {
     question: 'Što trebam pripremiti za ponudu?',

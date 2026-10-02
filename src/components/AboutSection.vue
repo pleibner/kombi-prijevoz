@@ -3,12 +3,13 @@ import AppIcon from '@/components/AppIcon.vue'
 import StreetGridBackground from '@/components/StreetGridBackground.vue'
 import VanIllustration from '@/components/VanIllustration.vue'
 import type { IconName } from '@/data/icons'
+import { site } from '@/data/site'
 
 const reasons: { icon: IconName; title: string; text: string }[] = [
   {
     icon: 'users',
     title: 'Profesionalizam i iskustvo',
-    text: 'Više od 20 godina u prijevozu, selidbama i dostavi. Svakom zadatku pristupamo s punom pažnjom.',
+    text: `Više od ${site.yearsExperience} godina u prijevozu, selidbama i dostavi. Svakom zadatku pristupamo s punom pažnjom.`,
   },
   {
     icon: 'shield',
@@ -24,7 +25,7 @@ const reasons: { icon: IconName; title: string; text: string }[] = [
 
 const stats = [
   { value: '1000+', label: 'zadovoljnih klijenata' },
-  { value: '20+', label: 'godina iskustva' },
+  { value: `${site.yearsExperience}+`, label: 'godina iskustva' },
   { value: '365', label: 'dana u godini' },
 ]
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <ServiceLayout title="Povoljan kombi prijevoz">
+  <ServiceLayout>
     <div class="content">
       <p>
         Nakon više od tri desetljeća iskustva u prijevozničkom sektoru, razvili smo jedinstveni
@@ -9,10 +9,13 @@
       </p>
 
       <p>
-        Zbog toga smo odbacili rigidne cjenike koji ne uzimaju u obzir specifičnosti vašeg tereta,
-        udaljenost, vrijeme izvršenja i posebne zahtjeve. Naš pristup je transparentan i
-        prilagodljiv: temelji se na stvarnim troškovima i optimizaciji resursa, što nam omogućava da
-        ponudimo najpovoljnije cijene bez kompromisa na kvaliteti usluge.
+        Naše polazne cijene su javne: kombi s vozačem {{ formatAnchorPrice(prices.vanWithDriver) }},
+        dodatni radnik {{ formatPrice(extraWorkerPerHour) }} po satu, selidba garsonijere ili
+        jednosobnog stana {{ formatAnchorPrice(prices.flatMove) }}, a odvoz manje količine glomaznog
+        otpada {{ formatAnchorPrice(prices.bulkyWaste) }}. Izvan Zagreba naplaćujemo
+        {{ formatPrice(pricePerKmOutsideZagreb) }} po kilometru. Konačnu cijenu potvrđujemo prije
+        termina, prema udaljenosti, količini stvari, katu i liftu te hitnosti. Sve cijene su u
+        <RouterLink to="/cjenik">cjeniku</RouterLink>.
       </p>
 
       <p>
@@ -38,38 +41,18 @@
 </template>
 
 <script setup lang="ts">
-import { useHead } from '@unhead/vue'
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServicesSection from '@/components/ServicesSection.vue'
+import {
+  extraWorkerPerHour,
+  formatAnchorPrice,
+  formatPrice,
+  pricePerKmOutsideZagreb,
+  prices,
+} from '@/data/pricing'
 import { onMounted } from 'vue'
 
 onMounted(() => {
   window.scrollTo(0, 0)
-})
-
-useHead({
-  title: 'Povoljan kombi prijevoz - Jeftini transport Zagreb',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Najpovoljniji kombi prijevoz u Zagrebu. Kvalitetne usluge transporta po najnižim cijenama.',
-    },
-    {
-      property: 'og:title',
-      content: 'Povoljan kombi prijevoz - Jeftini transport Zagreb',
-    },
-    {
-      property: 'og:description',
-      content:
-        'Najpovoljniji kombi prijevoz u Zagrebu. Kvalitetne usluge transporta po najnižim cijenama.',
-    },
-  ],
-  link: [
-    {
-      rel: 'canonical',
-      href: 'https://kombi-transport.com/povoljan-kombi-prijevoz',
-    },
-  ],
 })
 </script>

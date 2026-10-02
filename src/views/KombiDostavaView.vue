@@ -1,5 +1,5 @@
 <template>
-  <ServiceLayout title="Kombi dostava">
+  <ServiceLayout>
     <div class="content">
       <p>
         U današnjem užurbanom životu, vrijeme je najvrjednija valuta. Ako vašoj narudžbi treba
@@ -51,38 +51,11 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useHead } from '@unhead/vue'
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServiceCard from '@/components/ServiceCard.vue'
 import CardGrid from '@/components/CardGrid.vue'
 
 onMounted(() => {
   window.scrollTo(0, 0)
-})
-
-useHead({
-  title: 'Kombi dostava - Brza dostava paketa Zagreb',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Profesionalna kombi dostava u Zagrebu. Pouzdana dostava paketa, robe i materijala na vrijeme.',
-    },
-    {
-      property: 'og:title',
-      content: 'Kombi dostava - Brza dostava paketa Zagreb',
-    },
-    {
-      property: 'og:description',
-      content:
-        'Profesionalna kombi dostava u Zagrebu. Pouzdana dostava paketa, robe i materijala na vrijeme.',
-    },
-  ],
-  link: [
-    {
-      rel: 'canonical',
-      href: 'https://kombi-transport.com/kombi-dostava',
-    },
-  ],
 })
 </script>

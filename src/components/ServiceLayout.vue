@@ -1,20 +1,37 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import AppIcon from '@/components/AppIcon.vue'
 import ContactInfo from '@/components/ContactInfo.vue'
 import CtaBand from '@/components/CtaBand.vue'
+import { useJsonLd } from '@/composables/useJsonLd'
+import { usePageMeta } from '@/composables/usePageMeta'
+import { findServicePage } from '@/data/services'
 import { site } from '@/data/site'
+import { breadcrumbSchema, serviceSchema } from '@/utils/schema'
 import { trackingService } from '@/utils/tracking'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
-    title: string
+    /** Defaults to the service name for routes listed in data/services. */
+    title?: string
     eyebrow?: string
   }>(),
   { eyebrow: 'Usluga' },
 )
 
 const router = useRouter()
+
+// Service pages take their heading, head tags and structured data from data/services.
+// Other pages using this layout (price list, 404) set their own.
+const service = findServicePage(useRoute().path)
+const heading = computed(() => props.title ?? service?.name ?? '')
+
+if (service) {
+  usePageMeta({ title: service.title, description: service.description })
+  useJsonLd('ld-service', serviceSchema(service.name, service.description, service.path))
+  useJsonLd('ld-breadcrumb', breadcrumbSchema(service.name, service.path))
+}
 
 const navigateToContact = () => {
   trackingService.trackClick('service_layout_contact_button_click', {
@@ -33,10 +50,10 @@ const trackPhone = () => trackingService.trackClick('service_layout_phone_click'
         <nav class="breadcrumb" aria-label="Putanja">
           <RouterLink to="/">Početna</RouterLink>
           <span aria-hidden="true">/</span>
-          <strong>{{ title }}</strong>
+          <strong>{{ heading }}</strong>
         </nav>
         <p class="eyebrow">{{ eyebrow }}</p>
-        <h1 class="page-hero__title">{{ title }}</h1>
+        <h1 class="page-hero__title">{{ heading }}</h1>
         <div class="page-hero__actions">
           <button type="button" class="btn btn-primary" @click="navigateToContact">
             Zatraži ponudu

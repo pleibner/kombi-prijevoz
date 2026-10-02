@@ -1,5 +1,5 @@
 <template>
-  <ServiceLayout title="Odvoz šute">
+  <ServiceLayout>
     <div class="content">
       <p>
         Renovacija ili gradnja stvara velike količine građevinskog otpada koji može brzo postati
@@ -34,37 +34,10 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useHead } from '@unhead/vue'
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServicesSection from '@/components/ServicesSection.vue'
 
 onMounted(() => {
   window.scrollTo(0, 0)
-})
-
-useHead({
-  title: 'Odvoz šute - Odvoz građevinskog otpada Zagreb',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Profesionalni odvoz šute i građevinskog otpada u Zagrebu. Brzo i efikasno odvozimo beton, cigle i drugi građevinski materijal.',
-    },
-    {
-      property: 'og:title',
-      content: 'Odvoz šute - Odvoz građevinskog otpada Zagreb',
-    },
-    {
-      property: 'og:description',
-      content:
-        'Profesionalni odvoz šute i građevinskog otpada u Zagrebu. Brzo i efikasno odvozimo beton, cigle i drugi građevinski materijal.',
-    },
-  ],
-  link: [
-    {
-      rel: 'canonical',
-      href: 'https://kombi-transport.com/odvoz-sute',
-    },
-  ],
 })
 </script>

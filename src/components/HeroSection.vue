@@ -48,12 +48,12 @@ const trackWhatsApp = () => trackingService.trackClick('hero_whatsapp_click')
       <div class="hero__copy">
         <p class="hero__badge">
           <AppIcon name="clock" :size="16" :stroke-width="2" />
-          Radimo 7 dana u tjednu, 08 do 20 h. Zagreb i okolica.
+          Radimo {{ site.hoursShort }}, i praznicima. Zagreb i okolica.
         </p>
         <h1 class="hero__title">Selidbe, dostava i prijevoz kombijem po Zagrebu.</h1>
         <p class="hero__lead">
-          Više od 20 godina nosimo, vozimo i dostavljamo. Jasna cijena unaprijed, bez skrivenih
-          troškova, i ekipa koja na vaše stvari pazi kao na svoje.
+          Više od {{ site.yearsExperience }} godina nosimo, vozimo i dostavljamo. Jasna cijena
+          unaprijed, bez skrivenih troškova, i ekipa koja na vaše stvari pazi kao na svoje.
         </p>
         <div class="hero__actions">
           <RouterLink to="/kontakt" class="btn btn-primary" @click="trackQuote">
@@ -65,7 +65,10 @@ const trackWhatsApp = () => trackingService.trackClick('hero_whatsapp_click')
           </a>
         </div>
         <ul class="hero__facts">
-          <li><AppIcon name="check" :size="18" :stroke-width="2.5" />20+ godina iskustva</li>
+          <li>
+            <AppIcon name="check" :size="18" :stroke-width="2.5" />{{ site.yearsExperience }}+
+            godina iskustva
+          </li>
           <li>
             <AppIcon name="check" :size="18" :stroke-width="2.5" />1000+ zadovoljnih klijenata
           </li>
