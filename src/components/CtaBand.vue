@@ -30,7 +30,7 @@ const trackPhone = () => trackingService.trackClick('cta_band_phone_click')
 <template>
   <section class="section--tight">
     <div class="container">
-      <div class="cta-band">
+      <div v-reveal class="cta-band">
         <div class="cta-band__copy">
           <h2>{{ title }}</h2>
           <p>{{ text }}</p>

@@ -58,6 +58,14 @@ defineProps<{
   font-size: 15px;
 }
 
+.service-card__more svg {
+  transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.service-card:hover .service-card__more svg {
+  transform: translateX(4px);
+}
+
 @media (max-width: 760px) {
   .service-card {
     padding: 22px;

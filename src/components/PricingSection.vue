@@ -9,13 +9,19 @@ import { formatPrice, priceAnchors, pricingNotes } from '@/data/pricing'
     <div class="container pricing">
       <SectionHeading
         id="pricing-heading"
+        v-reveal
         eyebrow="Cijene"
         title="Jasna cijena prije nego krenemo."
         lead="Konačnu cijenu potvrđujemo prije termina. Na nju utječu udaljenost, količina stvari, kat i lift te hitnost."
       />
 
       <ul class="pricing__grid">
-        <li v-for="anchor in priceAnchors" :key="anchor.title" class="card pricing__card">
+        <li
+          v-for="(anchor, index) in priceAnchors"
+          :key="anchor.title"
+          v-reveal="index * 100"
+          class="card pricing__card"
+        >
           <h3>{{ anchor.title }}</h3>
           <p class="pricing__price">
             <span class="pricing__from">od</span>
@@ -26,7 +32,7 @@ import { formatPrice, priceAnchors, pricingNotes } from '@/data/pricing'
         </li>
       </ul>
 
-      <ul class="pricing__notes">
+      <ul v-reveal class="pricing__notes">
         <li v-for="note in pricingNotes" :key="note">
           <AppIcon name="check" :size="18" :stroke-width="2" />
           {{ note }}
