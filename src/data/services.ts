@@ -233,11 +233,11 @@ export const servicePages: ServicePage[] = [
     description:
       'Specijalni prijevoz u Zagrebu: klaviri i glomazni predmeti koji ne prolaze stubištem, uz podizanje dizalicom kroz prozor. Cijena po ponudi, procjena je besplatna.',
     summary:
-      'Prevozimo klavire i glomazne predmete koji ne prolaze stubištem ili kroz vrata, a po potrebi ih podižemo i spuštamo dizalicom kroz prozor. Među klavirima koje smo prevezli je i klavir glazbenika Dražena Žerića iz grupe Crvena jabuka. Cijenu dajemo po ponudi, nakon besplatne procjene.',
+      'Prevozimo klavire i glomazne predmete koji ne prolaze stubištem ili kroz vrata, a po potrebi ih podižemo i spuštamo dizalicom kroz prozor. Prevozili smo i klavire poznatih hrvatskih glazbenika. Cijenu dajemo po ponudi, nakon besplatne procjene.',
     facts: [
       {
         label: 'Klaviri',
-        value: 'Prevozimo klavire, među ostalima i klavir Dražena Žerića iz grupe Crvena jabuka',
+        value: 'Prevozimo klavire, među ostalima i za poznate hrvatske glazbenike',
       },
       { label: 'Dizalica', value: 'Podizanje i spuštanje predmeta kroz prozor' },
       { label: 'Cijena', value: 'Po ponudi, procjena je besplatna' },
@@ -248,7 +248,7 @@ export const servicePages: ServicePage[] = [
       {
         question: 'Prevozite li klavire?',
         answer:
-          'Da. Prevozimo klavire, a među njima je bio i klavir glazbenika Dražena Žerića iz grupe Crvena jabuka. Cijenu dajemo po ponudi, ovisno o klaviru, katu i pristupu.',
+          'Da. Prevozimo klavire, među ostalima i za poznate hrvatske glazbenike. Cijenu dajemo po ponudi, ovisno o klaviru, katu i pristupu.',
       },
       {
         question: 'Možete li unijeti namještaj kroz prozor?',
