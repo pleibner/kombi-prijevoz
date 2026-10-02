@@ -1,193 +1,198 @@
-<template>
-  <div class="service-layout">
-    <header class="service-header">
-      <div class="header-background"></div>
-      <div class="header-content">
-        <div class="header-navigation">
-          <router-link to="/" class="home-link">
-            <span class="home-icon">⌂</span>
-          </router-link>
-        <ButtonPrimary
-          button-class="contact-btn"
-          @click="navigateToContact"
-        >
-          Kontakt
-        </ButtonPrimary>
-        </div>
-        <div class="header-title">
-          <h1 class="service-title" :class="{ 'animate-title': animateTitle }">{{ title }}</h1>
-        </div>
-      </div>
-    </header>
-
-    <main class="service-content">
-      <slot></slot>
-    </main>
-
-    <footer class="service-footer">
-      <slot name="footer"></slot>
-    </footer>
-
-    <ContactSection />
-  </div>
-</template>
-
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import ButtonPrimary from '@/components/ButtonPrimary.vue'
-import ContactSection from '@/components/ContactSection.vue'
+import AppIcon from '@/components/AppIcon.vue'
+import ContactInfo from '@/components/ContactInfo.vue'
+import CtaBand from '@/components/CtaBand.vue'
+import { site } from '@/data/site'
 import { trackingService } from '@/utils/tracking'
 
-defineProps<{
-  title: string
-  animateTitle?: boolean
-}>()
+withDefaults(
+  defineProps<{
+    title: string
+    eyebrow?: string
+  }>(),
+  { eyebrow: 'Usluga' },
+)
 
 const router = useRouter()
 
 const navigateToContact = () => {
   trackingService.trackClick('service_layout_contact_button_click', {
-    page: router.currentRoute.value.name || router.currentRoute.value.path
+    page: router.currentRoute.value.name || router.currentRoute.value.path,
   })
   router.push('/kontakt')
 }
+
+const trackPhone = () => trackingService.trackClick('service_layout_phone_click')
 </script>
 
+<template>
+  <div class="service-page">
+    <header class="page-hero">
+      <div class="container page-hero__inner">
+        <nav class="breadcrumb" aria-label="Putanja">
+          <RouterLink to="/">Početna</RouterLink>
+          <span aria-hidden="true">/</span>
+          <strong>{{ title }}</strong>
+        </nav>
+        <p class="eyebrow">{{ eyebrow }}</p>
+        <h1 class="page-hero__title">{{ title }}</h1>
+        <div class="page-hero__actions">
+          <button type="button" class="btn btn-primary" @click="navigateToContact">
+            Zatraži ponudu
+          </button>
+          <a :href="site.phoneHref" class="btn btn-secondary" @click="trackPhone">
+            <AppIcon name="phone" :size="18" :stroke-width="2" />
+            {{ site.phoneDisplay }}
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container service-body">
+      <div class="prose">
+        <slot></slot>
+      </div>
+      <aside class="service-aside">
+        <div class="card service-aside__card">
+          <h2>Dogovorite termin</h2>
+          <ContactInfo />
+          <button type="button" class="btn btn-primary btn-block" @click="navigateToContact">
+            Pošalji upit
+          </button>
+          <p class="service-aside__note">Odgovaramo u najkraćem roku. Procjena je besplatna.</p>
+        </div>
+      </aside>
+    </div>
+
+    <section v-if="$slots.footer" class="service-related">
+      <div class="container">
+        <slot name="footer"></slot>
+      </div>
+    </section>
+
+    <CtaBand />
+  </div>
+</template>
+
 <style scoped>
-.service-layout {
-  min-height: 100vh;
+.page-hero {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+.page-hero__inner {
+  padding-top: 32px;
+  padding-bottom: 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.page-hero__inner .eyebrow {
+  margin-top: 12px;
+}
+
+.page-hero__title {
+  font-size: clamp(44px, 5vw, 76px);
+  line-height: 0.98;
+  max-width: 900px;
+}
+
+.page-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.service-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 56px;
+  align-items: start;
+  padding-top: 64px;
+  padding-bottom: 80px;
+}
+
+.prose {
+  max-width: 720px;
   display: flex;
   flex-direction: column;
 }
 
-.service-header {
-  position: relative;
-  color: white;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+.prose :deep(p) {
+  font-size: 18px;
+  line-height: 1.65;
+  color: #374151;
+  margin-bottom: 20px;
 }
 
-.header-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, #001a44 0%, #1a365d 50%, #2c5282 100%);
-  background-size: 400% 400%;
-  animation: gradientShift 12s ease-in-out infinite;
+.prose :deep(p:first-child) {
+  font-size: 22px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--ink);
 }
 
-.header-content {
-  position: relative;
-  z-index: 1;
-  padding: 2rem;
+.prose :deep(p:last-child) {
+  margin-bottom: 0;
+}
+
+.service-aside {
+  position: sticky;
+  top: calc(var(--header-height) + 24px);
+}
+
+.service-aside__card {
+  padding: 28px;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  max-width: 1000px;
-  margin: 0 auto;
+  gap: 20px;
 }
 
-.header-navigation {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.service-aside__card h2 {
+  font-size: 30px;
 }
 
-.header-title {
-  text-align: left;
+.service-aside__note {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
 }
 
-.service-title::first-letter {
-  color: #ef4444;
-  font-weight: 900;
+.service-related {
+  padding: 0 0 96px;
 }
 
-
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-.home-link {
-  text-decoration: none;
-  color: white;
-  transition: transform 0.3s ease;
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-.home-link:hover {
-  transform: scale(1.1);
-}
-
-.home-icon {
-  font-size: 3.5rem;
-  color: #ef4444;
-  line-height: 1;
-  transform: scale(1.2);
-}
-
-.service-title {
-  font-size: clamp(2.5rem, 6vw, 4rem);
-  font-weight: 900;
-  margin: 0;
-  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-}
-
-.service-title.animate-title {
-  animation: titleFadeIn 1s ease-out;
-}
-
-@keyframes titleFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
+@media (max-width: 960px) {
+  .service-body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+    padding-top: 48px;
+    padding-bottom: 64px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .service-aside {
+    position: static;
+  }
+
+  .service-related {
+    padding-bottom: 64px;
   }
 }
 
-
-.service-content {
-  background: white;
-  flex: 1;
-  padding: 4rem 2rem;
-  max-width: 1000px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.service-footer {
-  background-color: var(--light-bg);
-  padding: 4rem 2rem;
-}
-
-@media (max-width: 768px) {
-  .header-content {
-    padding: 1.5rem;
+@media (max-width: 760px) {
+  .page-hero__actions .btn {
+    flex: 1 1 auto;
   }
 
-  .service-title {
-    font-size: clamp(2rem, 7vw, 3rem);
-    word-wrap: break-word;
-    hyphens: auto;
+  .prose :deep(p) {
+    font-size: 17px;
   }
 
-  .home-icon {
-    font-size: 2.5rem;
-  }
-
-  .service-content {
-    padding: 2rem 1rem;
-  }
-
-  .service-footer {
-    padding: 2rem 1rem;
+  .prose :deep(p:first-child) {
+    font-size: 20px;
   }
 }
 </style>

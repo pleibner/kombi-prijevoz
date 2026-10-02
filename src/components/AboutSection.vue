@@ -1,35 +1,66 @@
 <script setup lang="ts">
+import AppIcon from '@/components/AppIcon.vue'
+import StreetGridBackground from '@/components/StreetGridBackground.vue'
+import VanIllustration from '@/components/VanIllustration.vue'
+import type { IconName } from '@/data/icons'
+
+const reasons: { icon: IconName; title: string; text: string }[] = [
+  {
+    icon: 'users',
+    title: 'Profesionalizam i iskustvo',
+    text: 'Više od 20 godina u prijevozu, selidbama i dostavi. Svakom zadatku pristupamo s punom pažnjom.',
+  },
+  {
+    icon: 'shield',
+    title: 'Briga i sigurnost',
+    text: 'Kvalitetna ambalaža i moderne metode osiguranja. Svaki komad namještaja, paket ili dokument putuje zaštićen.',
+  },
+  {
+    icon: 'tag',
+    title: 'Dostupne cijene',
+    text: 'Kvalitetna usluga ne mora biti skupa. Konkurentne cijene, transparentno i bez skrivenih troškova.',
+  },
+]
+
+const stats = [
+  { value: '1000+', label: 'zadovoljnih klijenata' },
+  { value: '20+', label: 'godina iskustva' },
+  { value: '365', label: 'dana u godini' },
+]
 </script>
 
 <template>
-  <section class="about fade-in-section">
-    <div class="container">
-      <h2>Zašto odabrati nas?</h2>
-      <div class="about-content">
-        <div class="about-text">
-          <h3>Profesionalizam i iskustvo</h3>
-          <p>S više od 20 godina iskustva u prijevozu robe, selidbama i dostavi, izgradili smo reputaciju pouzdanog partnera. Naš tim stručnih radnika svakom zadatku pristupa s maksimalnom profesionalnošću.</p>
+  <section class="section--tight" aria-labelledby="about-heading">
+    <div class="container about">
+      <div class="about__visual">
+        <StreetGridBackground tone="dark" :opacity="0.1" />
+        <VanIllustration class="about__van" />
+      </div>
 
-          <h3>Briga i sigurnost</h3>
-          <p>Razumijemo koliko su vaše stvari važne. Zato svaki paket, komad namještaja ili dokument tretiramo s posebnom pažnjom. Koristimo kvalitetnu ambalažu i moderne metode osiguranja kako bismo osigurali siguran transport.</p>
+      <div class="about__content">
+        <div class="about__heading">
+          <p class="eyebrow">Zašto Kombi Transport</p>
+          <h2 id="about-heading" class="section-title">
+            Ekipa kojoj možete prepustiti i ono najteže.
+          </h2>
+        </div>
 
-          <h3>Dostupne cijene</h3>
-          <p>Vjerujemo da kvalitetne usluge ne moraju biti skupe. Nudimo konkurentne cijene bez kompromisa u kvaliteti. Transparentno cjenovno oblikovanje bez skrivenih troškova.</p>
-        </div>
-        <div class="about-stats">
-          <div class="stat">
-            <span class="stat-number">1000+</span>
-            <span class="stat-label">zadovoljnih klijenata</span>
-          </div>
-          <div class="stat">
-            <span class="stat-number">20+</span>
-            <span class="stat-label">godina iskustva</span>
-          </div>
-          <div class="stat">
-            <span class="stat-number">365</span>
-            <span class="stat-label">dana u godini</span>
-          </div>
-        </div>
+        <ul class="about__reasons">
+          <li v-for="reason in reasons" :key="reason.title">
+            <span class="about__icon"><AppIcon :name="reason.icon" :size="22" /></span>
+            <span class="about__reason">
+              <strong>{{ reason.title }}</strong>
+              <span>{{ reason.text }}</span>
+            </span>
+          </li>
+        </ul>
+
+        <ul class="about__stats">
+          <li v-for="stat in stats" :key="stat.label">
+            <span class="about__stat-value">{{ stat.value }}</span>
+            <span class="about__stat-label">{{ stat.label }}</span>
+          </li>
+        </ul>
       </div>
     </div>
   </section>
@@ -37,108 +68,115 @@
 
 <style scoped>
 .about {
-  padding: 6rem 2rem;
-  background-color: white;
-}
-
-.about h2 {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
-  color: var(--text-color);
-}
-
-.about-content {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 4rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 56px;
   align-items: center;
 }
 
-.about-text h3 {
-  color: var(--primary-color);
-  margin: 2rem 0 1rem 0;
-  font-size: 1.3rem;
+.about__visual {
+  position: relative;
+  overflow: hidden;
+  background: var(--tint);
+  border-radius: var(--radius-lg);
+  min-height: 440px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 48px 32px 36px;
 }
 
-.about-text h3:first-child {
-  margin-top: 0;
+.about__van {
+  position: relative;
+  max-width: 520px;
 }
 
-.about-text p {
-  margin-bottom: 1.5rem;
-  line-height: 1.8;
-  color: #555;
-}
-
-.about-stats {
+.about__content {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 32px;
 }
 
-.stat {
-  text-align: center;
-  padding: 2rem;
-  background: var(--light-bg);
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+.about__heading {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.stat:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+.about__reasons {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
 
-.stat-number {
-  display: block;
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: var(--primary-color);
-  margin-bottom: 0.5rem;
+.about__reasons li {
+  display: flex;
+  gap: 16px;
 }
 
-.stat-label {
-  color: #666;
-  font-size: 1.1rem;
+.about__icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@media (max-width: 768px) {
+.about__reason {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.about__reason strong {
+  font-size: 18px;
+}
+
+.about__reason span {
+  color: var(--muted);
+}
+
+.about__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
+  gap: 16px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.about__stats li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 16px;
+}
+
+.about__stat-value {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 1;
+}
+
+.about__stat-label {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+@media (max-width: 860px) {
   .about {
-    padding: 4rem 1rem;
-    background-color: white;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
   }
 
-  .about h2 {
-    font-size: 2rem;
-  }
-
-  .about-content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .about-text h3 {
-    font-size: 1.2rem;
-  }
-
-  .about-stats {
-    gap: 1.5rem;
-  }
-
-  .stat {
-    padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  }
-
-  .stat:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-  }
-
-  .stat-number {
-    font-size: 2rem;
+  .about__visual {
+    min-height: 0;
+    padding: 32px 20px 24px;
   }
 }
 </style>

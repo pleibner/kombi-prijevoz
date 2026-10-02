@@ -1,107 +1,66 @@
-<template>
-  <router-link :to="to" class="service-card-link">
-    <div class="service-card">
-      <div class="card-icon">{{ icon }}</div>
-      <h3 class="card-title">{{ title }}</h3>
-      <p class="card-description">{{ description }}</p>
-      <div class="card-arrow">→</div>
-    </div>
-  </router-link>
-</template>
-
 <script setup lang="ts">
+import AppIcon from '@/components/AppIcon.vue'
+import type { IconName } from '@/data/icons'
+
 defineProps<{
   to: string
-  icon: string
+  icon: IconName
   title: string
   description: string
 }>()
 </script>
 
+<template>
+  <RouterLink :to="to" class="card service-card">
+    <span class="icon-box"><AppIcon :name="icon" /></span>
+    <h3 class="service-card__title">{{ title }}</h3>
+    <p class="service-card__description">{{ description }}</p>
+    <span class="service-card__more">
+      Saznajte više
+      <AppIcon name="arrow-right" :size="18" :stroke-width="2" />
+    </span>
+  </RouterLink>
+</template>
+
 <style scoped>
-.service-card-link {
-  text-decoration: none;
-  transition: transform 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.service-card-link:hover {
-  transform: translateY(-5px);
-}
-
 .service-card {
-  background: white;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  position: relative;
-  overflow: hidden;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  gap: 14px;
+  padding: 28px;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color 0.15s,
+    transform 0.15s;
 }
 
 .service-card:hover {
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  border-color: var(--ink);
+  transform: translateY(-2px);
 }
 
-.card-icon {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  display: block;
+.service-card__title {
+  font-size: 28px;
 }
 
-.card-title {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--text-color, #333);
-  margin-bottom: 0.5rem;
+.service-card__description {
+  color: var(--muted);
+  flex-grow: 1;
 }
 
-.card-description {
-  color: #666;
-  line-height: 1.6;
-  margin: 0;
-  font-size: 1rem;
-  flex: 1;
+.service-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 15px;
 }
 
-.card-arrow {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  font-size: 1.5rem;
-  color: #ef4444;
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  transform: translateX(-10px);
-}
-
-.service-card-link:hover .card-arrow {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-@media (max-width: 768px) {
+@media (max-width: 760px) {
   .service-card {
-    padding: 1.5rem;
-  }
-
-  .card-title {
-    font-size: 1.2rem;
-  }
-
-  .card-description {
-    font-size: 0.95rem;
-  }
-
-  .card-arrow {
-    display: none;
+    padding: 22px;
   }
 }
 </style>

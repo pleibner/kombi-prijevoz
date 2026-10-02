@@ -1,129 +1,131 @@
 <script setup lang="ts">
+import AppIcon from '@/components/AppIcon.vue'
+import { site } from '@/data/site'
 import { trackingService } from '@/utils/tracking'
 
-const trackWhatsAppClick = () => {
-  trackingService.trackClick('whatsapp_button_click')
-}
+withDefaults(
+  defineProps<{
+    variant?: 'light' | 'dark'
+    showFacebook?: boolean
+  }>(),
+  { variant: 'light', showFacebook: false },
+)
 
-const trackPhoneFocus = () => {
-  trackingService.trackClick('phone_number_focus')
-}
-
-const trackFacebookClick = () => {
-  trackingService.trackClick('facebook_button_click')
-}
+const trackPhone = () => trackingService.trackClick('phone_number_click')
+const trackWhatsApp = () => trackingService.trackClick('whatsapp_button_click')
+const trackFacebook = () => trackingService.trackClick('facebook_button_click')
 </script>
 
 <template>
-  <div class="contact-info">
-    <div class="contact-item">
-      <span class="contact-icon">📞</span>
-      <input
-        type="text"
-        value="+385 92 137 2554"
-        readonly
-        class="phone-input"
-        @focus="trackPhoneFocus"
-      />
-    </div>
-    <div class="contact-item">
-      <a href="https://wa.me/385989156061" target="_blank" rel="noopener noreferrer" class="contact-link whatsapp-link" @click="trackWhatsAppClick">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-     alt="WhatsApp" width="24" height="24">
-      </a>
-    </div>
-    <div class="contact-item">
-      <a href="https://www.facebook.com/share/1CT2LKegvb/" target="_blank" rel="noopener noreferrer" class="contact-link facebook-link" @click="trackFacebookClick">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
-     alt="Facebook" width="24" height="24">
-      </a>
-    </div>
-    <div class="contact-item">
-      <span class="contact-icon">📍</span>
-      <span>Trg Ivana Kukuljevića 5, Zagreb</span>
-    </div>
-  </div>
+  <ul class="contact-info" :class="`contact-info--${variant}`">
+    <li>
+      <AppIcon name="phone" :size="20" :stroke-width="2" class="contact-info__icon" />
+      <span>
+        <a :href="site.phoneHref" class="contact-info__primary" @click="trackPhone">{{
+          site.phoneDisplay
+        }}</a>
+        <small>poziv, {{ site.hoursShort }}</small>
+      </span>
+    </li>
+    <li>
+      <AppIcon name="whatsapp" :size="20" class="contact-info__icon" />
+      <span>
+        <a
+          :href="site.whatsappHref"
+          class="contact-info__primary"
+          target="_blank"
+          rel="noopener noreferrer"
+          @click="trackWhatsApp"
+        >
+          WhatsApp
+        </a>
+        <small>pošaljite poruku</small>
+      </span>
+    </li>
+    <li v-if="showFacebook">
+      <AppIcon name="facebook" :size="20" class="contact-info__icon" />
+      <span>
+        <a
+          :href="site.facebookHref"
+          class="contact-info__primary"
+          target="_blank"
+          rel="noopener noreferrer"
+          @click="trackFacebook"
+        >
+          Facebook
+        </a>
+        <small>pratite nas</small>
+      </span>
+    </li>
+    <li>
+      <AppIcon name="pin" :size="20" :stroke-width="2" class="contact-info__icon" />
+      <span>
+        {{ site.street }}, {{ site.city }}
+        <RouterLink to="/kako-do-nas" class="contact-info__link">Kako do nas</RouterLink>
+      </span>
+    </li>
+    <li>
+      <AppIcon name="clock" :size="20" :stroke-width="2" class="contact-info__icon" />
+      <span>{{ site.hours }}</span>
+    </li>
+  </ul>
 </template>
 
 <style scoped>
 .contact-info {
   display: flex;
-  justify-content: center;
-  gap: 3rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 16px;
 }
 
-.contact-item {
+.contact-info li {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.1rem;
-  color: #555;
+  gap: 12px;
+  align-items: flex-start;
 }
 
-.contact-icon {
-  font-size: 1.3rem;
+.contact-info li > span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
-.phone-input {
-  border: none;
-  background: transparent;
-  font-size: 1.1rem;
-  color: #555;
-  font-family: inherit;
-  outline: none;
-  cursor: text;
-  padding: 0;
-  margin: 0;
-  width: auto;
-  min-width: 120px;
+.contact-info__icon {
+  margin-top: 2px;
+  color: var(--accent);
 }
 
-.phone-input:focus {
-  background: rgba(239, 68, 68, 0.1);
-  border-radius: 4px;
-  padding: 2px 4px;
-  margin: -2px -4px;
-}
-
-.contact-link {
-  color: var(--primary-color);
-  text-decoration: none;
+.contact-info__primary {
   font-weight: 600;
-  transition: color 0.3s ease;
+  text-decoration: none;
 }
 
-.contact-link:hover {
-  color: var(--accent-color);
-  text-decoration: underline;
+.contact-info__primary:hover,
+.contact-info__link:hover {
+  color: var(--accent);
 }
 
-.whatsapp-link img {
-  width: 32px;
-  height: 32px;
-  transition: opacity 0.3s ease;
+.contact-info small {
+  font-size: 14px;
+  color: var(--muted);
 }
 
-.facebook-link img {
-  width: 24px;
-  height: 24px;
-  transition: opacity 0.3s ease;
+.contact-info__link {
+  font-size: 14px;
+  color: var(--accent);
 }
 
-.whatsapp-link:hover img,
-.facebook-link:hover img {
-  opacity: 0.8;
+.contact-info--dark {
+  color: #fff;
 }
 
-@media (max-width: 768px) {
-  .contact-info {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
-  }
+.contact-info--dark .contact-info__icon,
+.contact-info--dark .contact-info__link {
+  color: var(--signal);
+}
 
-  .contact-link {
-    font-size: 1rem;
-  }
+.contact-info--dark small {
+  color: var(--on-dark-muted);
 }
 </style>
