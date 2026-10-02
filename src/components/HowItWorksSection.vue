@@ -19,12 +19,17 @@ const steps = [
   <section class="section--tight" aria-labelledby="how-heading">
     <div class="container">
       <div class="card how">
-        <div class="how__heading">
+        <div v-reveal class="how__heading">
           <p class="eyebrow">Kako funkcionira</p>
           <h2 id="how-heading" class="section-title">Tri koraka do obavljenog posla.</h2>
         </div>
         <ol class="how__steps">
-          <li v-for="(step, index) in steps" :key="step.title" class="how__step">
+          <li
+            v-for="(step, index) in steps"
+            :key="step.title"
+            v-reveal="index * 120"
+            class="how__step"
+          >
             <span class="how__number">0{{ index + 1 }}</span>
             <h3>{{ step.title }}</h3>
             <p>{{ step.text }}</p>

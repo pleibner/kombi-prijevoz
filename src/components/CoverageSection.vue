@@ -6,7 +6,7 @@ import { serviceAreas } from '@/data/site'
 <template>
   <section class="coverage" aria-labelledby="coverage-heading">
     <div class="container coverage__inner">
-      <div class="coverage__copy">
+      <div v-reveal class="coverage__copy">
         <div class="coverage__heading">
           <p class="eyebrow coverage__eyebrow">Područje rada</p>
           <h2 id="coverage-heading" class="section-title">
@@ -22,7 +22,7 @@ import { serviceAreas } from '@/data/site'
         </ul>
       </div>
 
-      <div class="coverage__card">
+      <div v-reveal="120" class="coverage__card">
         <h3>Kontakt i radno vrijeme</h3>
         <ContactInfo variant="dark" />
       </div>

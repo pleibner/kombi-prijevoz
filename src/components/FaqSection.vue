@@ -6,13 +6,18 @@ import { faqItems } from '@/data/faq'
 <template>
   <section class="section" aria-labelledby="faq-heading">
     <div class="container faq">
-      <div class="faq__heading">
+      <div v-reveal class="faq__heading">
         <p class="eyebrow">Česta pitanja</p>
         <h2 id="faq-heading" class="section-title">Ono što nas najčešće pitate.</h2>
       </div>
 
       <div class="faq__grid">
-        <details v-for="item in faqItems" :key="item.question" class="faq__item">
+        <details
+          v-for="(item, index) in faqItems"
+          :key="item.question"
+          v-reveal="index * 60"
+          class="faq__item"
+        >
           <summary>
             <h3>{{ item.question }}</h3>
             <AppIcon name="chevron-down" :size="20" :stroke-width="2" class="faq__chevron" />
@@ -80,5 +85,20 @@ import { faqItems } from '@/data/faq'
   padding-top: 10px;
   color: var(--muted);
   max-width: 60ch;
+}
+
+.faq__item[open] p {
+  animation: faq-open 0.3s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes faq-open {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

@@ -30,7 +30,7 @@ const testimonials = [
 <template>
   <section class="section--tight" aria-labelledby="testimonials-heading">
     <div class="container testimonials">
-      <div class="testimonials__heading">
+      <div v-reveal class="testimonials__heading">
         <p class="eyebrow">Iskustva klijenata</p>
         <h2 id="testimonials-heading" class="section-title">
           Što kažu oni koji su se već selili s nama.
@@ -38,7 +38,12 @@ const testimonials = [
       </div>
 
       <div class="testimonials__grid">
-        <figure v-for="item in testimonials" :key="item.name" class="card testimonial">
+        <figure
+          v-for="(item, index) in testimonials"
+          :key="item.name"
+          v-reveal="index * 90"
+          class="card testimonial"
+        >
           <span aria-hidden="true" class="testimonial__mark">“</span>
           <blockquote>{{ item.quote }}</blockquote>
           <figcaption>

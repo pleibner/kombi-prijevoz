@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import AppIcon from '@/components/AppIcon.vue'
 import StreetGridBackground from '@/components/StreetGridBackground.vue'
 import VanIllustration from '@/components/VanIllustration.vue'
@@ -23,22 +24,87 @@ const reasons: { icon: IconName; title: string; text: string }[] = [
 ]
 
 const stats = [
-  { value: '1000+', label: 'zadovoljnih klijenata' },
-  { value: '20+', label: 'godina iskustva' },
-  { value: '365', label: 'dana u godini' },
+  { value: 1000, suffix: '+', label: 'zadovoljnih klijenata' },
+  { value: 20, suffix: '+', label: 'godina iskustva' },
+  { value: 365, suffix: '', label: 'dana u godini' },
 ]
+
+// Rendered values: final numbers on the server and without JS, counted up on screen.
+const shown = ref(stats.map((stat) => stat.value))
+const vanState = ref<'static' | 'pending' | 'driving'>('static')
+const visualEl = ref<HTMLElement | null>(null)
+const statsEl = ref<HTMLElement | null>(null)
+
+let observers: IntersectionObserver[] = []
+let frame = 0
+
+const countUp = () => {
+  const duration = 1400
+  const start = performance.now()
+  const tick = (now: number) => {
+    const t = Math.min(1, (now - start) / duration)
+    const eased = 1 - Math.pow(1 - t, 3)
+    shown.value = stats.map((stat) => Math.round(stat.value * eased))
+    if (t < 1) frame = requestAnimationFrame(tick)
+  }
+  frame = requestAnimationFrame(tick)
+}
+
+onMounted(() => {
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (reduced || !('IntersectionObserver' in window)) return
+
+  const belowFold = (el: HTMLElement | null) =>
+    !!el && el.getBoundingClientRect().top > window.innerHeight
+
+  if (belowFold(visualEl.value)) {
+    vanState.value = 'pending'
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          vanState.value = 'driving'
+          io.disconnect()
+        }
+      },
+      { threshold: 0.35 },
+    )
+    io.observe(visualEl.value as HTMLElement)
+    observers.push(io)
+  }
+
+  if (belowFold(statsEl.value)) {
+    shown.value = stats.map(() => 0)
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          countUp()
+          io.disconnect()
+        }
+      },
+      { threshold: 0.5 },
+    )
+    io.observe(statsEl.value as HTMLElement)
+    observers.push(io)
+  }
+})
+
+onBeforeUnmount(() => {
+  observers.forEach((io) => io.disconnect())
+  observers = []
+  cancelAnimationFrame(frame)
+})
 </script>
 
 <template>
   <section class="section--tight" aria-labelledby="about-heading">
     <div class="container about">
-      <div class="about__visual">
+      <div ref="visualEl" class="about__visual">
         <StreetGridBackground tone="dark" :opacity="0.1" />
-        <VanIllustration class="about__van" />
+        <VanIllustration class="about__van" :state="vanState" />
       </div>
 
       <div class="about__content">
-        <div class="about__heading">
+        <div v-reveal class="about__heading">
           <p class="eyebrow">Zašto Kombi Transport</p>
           <h2 id="about-heading" class="section-title">
             Ekipa kojoj možete prepustiti i ono najteže.
@@ -46,7 +112,7 @@ const stats = [
         </div>
 
         <ul class="about__reasons">
-          <li v-for="reason in reasons" :key="reason.title">
+          <li v-for="(reason, index) in reasons" :key="reason.title" v-reveal="index * 110">
             <span class="about__icon"><AppIcon :name="reason.icon" :size="22" /></span>
             <span class="about__reason">
               <strong>{{ reason.title }}</strong>
@@ -55,9 +121,9 @@ const stats = [
           </li>
         </ul>
 
-        <ul class="about__stats">
-          <li v-for="stat in stats" :key="stat.label">
-            <span class="about__stat-value">{{ stat.value }}</span>
+        <ul ref="statsEl" class="about__stats">
+          <li v-for="(stat, index) in stats" :key="stat.label">
+            <span class="about__stat-value">{{ shown[index] }}{{ stat.suffix }}</span>
             <span class="about__stat-label">{{ stat.label }}</span>
           </li>
         </ul>
@@ -161,6 +227,7 @@ const stats = [
   font-weight: 800;
   font-size: 48px;
   line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
 .about__stat-label {
