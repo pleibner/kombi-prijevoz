@@ -13,14 +13,14 @@
       </p>
 
       <p>
-        Fleksibilnost je naša snaga – dostupni smo kad god vam zatreba. Radimo vikendom, praznicima
-        i izvan uobičajenog radnog vremena, prilagođavajući se vašem rasporedu.
+        Fleksibilnost je naša snaga. Radimo svaki dan od 8 do 20 h, uključujući vikende i praznike,
+        a hitne dostave obavljamo 0–24, bez nadoplate.
       </p>
 
       <p>
-        Posebno smo ponosni na našu sposobnost dostave u manje pristupačne dijelove grada. Dok
-        obična vozila nemaju dozvolu pristupa u centar, mi koristimo specijalizirana vozila koja
-        mogu stići do svake adrese, osiguravajući da vaša pošiljka stigne bez problema.
+        Posebno smo ponosni na našu sposobnost dostave u manje pristupačne dijelove grada. Imamo
+        dozvolu za ulaz u pješačku zonu, pa dostavljamo i na adrese u samom centru Zagreba, kamo
+        obična dostavna vozila ne smiju ući.
       </p>
     </div>
 

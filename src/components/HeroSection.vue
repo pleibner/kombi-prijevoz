@@ -48,7 +48,7 @@ const trackWhatsApp = () => trackingService.trackClick('hero_whatsapp_click')
       <div class="hero__copy">
         <p class="hero__badge">
           <AppIcon name="clock" :size="16" :stroke-width="2" />
-          Radimo {{ site.hoursShort }}, i praznicima. Zagreb i okolica.
+          Radimo {{ site.hoursShort }}, {{ site.urgentShort }}. Zagreb i okolica.
         </p>
         <h1 class="hero__title">Selidbe, dostava i prijevoz kombijem po Zagrebu.</h1>
         <p class="hero__lead">

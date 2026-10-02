@@ -9,7 +9,7 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Koliko unaprijed trebam rezervirati termin?',
     answer:
-      'Što prije, to bolje, posebno za vikende. Za hitne situacije nazovite nas u bilo koje doba dana: ako smo slobodni, dolazimo isti dan.',
+      'Što prije, to bolje, posebno za vikende. Za hitne situacije nazovite nas u bilo koje doba dana: ako imamo slobodan kombi, u Zagrebu stižemo u roku od sat vremena.',
   },
   {
     question: 'Što ako zgrada nema lift?',
@@ -24,7 +24,7 @@ export const faqItems: FaqItem[] = [
   {
     question: 'Radite li vikendom i praznicima?',
     answer:
-      'Da. Radimo 0–24, svaki dan u tjednu, uključujući vikende, praznike i noćne termine. Vikend termini se brzo popune, pa ih dogovorite ranije.',
+      'Da. Radimo svaki dan od 8 do 20 h, uključujući vikende i praznike, a hitne prijevoze i selidbe obavljamo 0–24, bez nadoplate. Vikend termini se brzo popune, pa ih dogovorite ranije.',
   },
   {
     question: 'Vozite li i izvan Zagreba?',

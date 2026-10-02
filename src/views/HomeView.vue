@@ -18,7 +18,7 @@ import { faqSchema } from '@/utils/schema'
 
 usePageMeta({
   title: 'Kombi Transport - Profesionalne usluge prijevoza Zagreb',
-  description: `${site.description} Radimo ${site.hoursShort}, i praznicima. Kombi s vozačem ${formatAnchorPrice(prices.vanWithDriver)}, selidba stana ${formatAnchorPrice(prices.flatMove)}.`,
+  description: `${site.description} Radimo ${site.hoursShort}, ${site.urgentShort}. Kombi s vozačem ${formatAnchorPrice(prices.vanWithDriver)}, selidba stana ${formatAnchorPrice(prices.flatMove)}.`,
 })
 useJsonLd('ld-faq', faqSchema(faqItems))
 

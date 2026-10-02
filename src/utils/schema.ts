@@ -1,5 +1,6 @@
 import type { FaqItem } from '@/data/faq'
 import { priceAnchors } from '@/data/pricing'
+import type { ServicePage } from '@/data/services'
 import { serviceAreas, site } from '@/data/site'
 
 /** Builders for the schema.org JSON-LD blocks rendered into each page's head. */
@@ -14,6 +15,8 @@ const geoCoordinates = {
   latitude: site.geo.latitude,
   longitude: site.geo.longitude,
 }
+
+const everyDay = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 const areaServed = [
   ...serviceAreas,
@@ -39,7 +42,7 @@ export const businessSchema = {
       '@type': 'MovingCompany',
       '@id': businessId,
       name: site.name,
-      description: site.description,
+      description: `${site.description} Imamo ${site.fleet} s ${site.cargoVolume} tovarnog prostora.`,
       url: `${site.url}/`,
       logo: `${site.url}/favicon.png`,
       image: `${site.url}/og-image.png`,
@@ -54,9 +57,21 @@ export const businessSchema = {
       geo: geoCoordinates,
       openingHoursSpecification: {
         '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-        opens: '00:00',
-        closes: '23:59',
+        dayOfWeek: everyDay,
+        ...site.openingHours,
+      },
+      // Urgent jobs are taken around the clock, holidays included.
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'hitni prijevoz i selidbe',
+        telephone: site.phoneE164,
+        availableLanguage: 'hr',
+        hoursAvailable: {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: everyDay,
+          opens: '00:00',
+          closes: '23:59',
+        },
       },
       areaServed,
       paymentAccepted: 'Cash, Bank transfer',
@@ -81,15 +96,26 @@ export const businessSchema = {
   ],
 }
 
-export const serviceSchema = (name: string, description: string, path: string) => ({
+export const serviceSchema = ({ name, summary, path, price }: ServicePage) => ({
   '@context': 'https://schema.org',
   '@type': 'Service',
   '@id': `${pageUrl(path)}#service`,
   name,
-  description,
+  description: summary,
   url: pageUrl(path),
   provider: { '@id': businessId },
   areaServed,
+  ...(price && {
+    offers: {
+      '@type': 'Offer',
+      priceSpecification: {
+        '@type': price.unitCode ? 'UnitPriceSpecification' : 'PriceSpecification',
+        [price.isMinimum ? 'minPrice' : 'price']: price.amount,
+        priceCurrency: 'EUR',
+        ...(price.unitCode && { unitCode: price.unitCode }),
+      },
+    },
+  }),
 })
 
 export const breadcrumbSchema = (name: string, path: string) => ({

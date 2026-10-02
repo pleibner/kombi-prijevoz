@@ -9,13 +9,9 @@
       </p>
 
       <p>
-        Naše polazne cijene su javne: kombi s vozačem {{ formatAnchorPrice(prices.vanWithDriver) }},
-        dodatni radnik {{ formatPrice(extraWorkerPerHour) }} po satu, selidba garsonijere ili
-        jednosobnog stana {{ formatAnchorPrice(prices.flatMove) }}, a odvoz manje količine glomaznog
-        otpada {{ formatAnchorPrice(prices.bulkyWaste) }}. Izvan Zagreba naplaćujemo
-        {{ formatPrice(pricePerKmOutsideZagreb) }} po kilometru. Konačnu cijenu potvrđujemo prije
-        termina, prema udaljenosti, količini stvari, katu i liftu te hitnosti. Sve cijene su u
-        <RouterLink to="/cjenik">cjeniku</RouterLink>.
+        Polazne cijene su javne i nalaze se u <RouterLink to="/cjenik">cjeniku</RouterLink>. Konačnu
+        cijenu potvrđujemo prije termina, prema udaljenosti, količini stvari, katu i liftu te
+        hitnosti.
       </p>
 
       <p>
@@ -43,13 +39,6 @@
 <script setup lang="ts">
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServicesSection from '@/components/ServicesSection.vue'
-import {
-  extraWorkerPerHour,
-  formatAnchorPrice,
-  formatPrice,
-  pricePerKmOutsideZagreb,
-  prices,
-} from '@/data/pricing'
 import { onMounted } from 'vue'
 
 onMounted(() => {

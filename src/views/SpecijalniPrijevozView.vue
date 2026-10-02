@@ -8,10 +8,9 @@
       </p>
 
       <p>
-        Zamislite koncertni klavir koji se pažljivo izvlači kroz prozor višekatnice uz pomoć
-        specijalizirane dizalice, ili vrijedne umjetnine neprocjenjive vrijednosti koje zahtijevaju
-        klimatski kontrolirane uvjete transporta. Naši stručnjaci su uspješno izveli prijevoz sefova
-        težine preko tone, glomaznih industrijskih strojeva i osjetljivih medicinskih aparata.
+        Zamislite klavir koji se pažljivo izvlači kroz prozor višekatnice uz pomoć dizalice. Kada
+        klavir, kauč ili ormar ne prolazi stubištem ili kroz vrata, podižemo ga i spuštamo dizalicom
+        kroz prozor, kako bismo izbjegli oštećenja stubišta, zidova i samog predmeta.
       </p>
 
       <p>

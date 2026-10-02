@@ -15,7 +15,7 @@ const reasons: { icon: IconName; title: string; text: string }[] = [
   {
     icon: 'shield',
     title: 'Briga i sigurnost',
-    text: 'Kvalitetna ambalaža i moderne metode osiguranja. Svaki komad namještaja, paket ili dokument putuje zaštićen.',
+    text: 'Kvalitetna ambalaža i pažljivo učvršćivanje tereta. Svaki komad namještaja, paket ili dokument putuje zaštićen.',
   },
   {
     icon: 'tag',

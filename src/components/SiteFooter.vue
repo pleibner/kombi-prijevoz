@@ -38,7 +38,7 @@ const trackPhone = () => trackingService.trackClick('footer_phone_click')
             >Kombi <span class="site-footer__accent">Transport</span></span
           >
           <p>Profesionalni kombi prijevoz, selidbe, dostava i odvoz otpada u Zagrebu i okolici.</p>
-          <p>Radimo {{ site.hoursShort }}</p>
+          <p>Radimo {{ site.hoursShort }}, {{ site.urgentShort }}</p>
         </div>
 
         <nav class="site-footer__col" aria-label="Usluge">

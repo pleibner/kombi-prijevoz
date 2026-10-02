@@ -19,9 +19,8 @@
       </p>
 
       <p>
-        Nakon odvoza, stari namještaj zbrinjavamo na odgovoran način. Dio koji se može reciklirati
-        ili donirati – prosljeđujemo dalje. Ostatak odvozimo na ovlaštena odlagališta. Vi dobivate
-        čist prostor, a mi brinemo o ostatku.
+        Nakon odvoza, stari namještaj zbrinjavamo na odgovoran način: sve što odvezemo predajemo u
+        reciklažno dvorište. Vi dobivate čist prostor, a mi brinemo o ostatku.
       </p>
     </div>
 

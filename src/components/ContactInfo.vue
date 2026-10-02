@@ -24,7 +24,7 @@ const trackFacebook = () => trackingService.trackClick('facebook_button_click')
         <a :href="site.phoneHref" class="contact-info__primary" @click="trackPhone">{{
           site.phoneDisplay
         }}</a>
-        <small>poziv, {{ site.hoursShort }}</small>
+        <small>poziv, {{ site.hoursShort }}, {{ site.urgentShort }}</small>
       </span>
     </li>
     <li>

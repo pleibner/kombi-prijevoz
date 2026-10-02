@@ -16,7 +16,7 @@
       <p>
         Bez obzira na količinu – bilo da se radi o manjoj renovaciji kupaonice ili velikim
         građevinskim radovima – imamo kapacitet i opremu za odvoz. Dolazimo na lokaciju, utovarujemo
-        šutu i odvozimo je na ovlašteno odlagalište.
+        šutu i odvozimo je u reciklažno dvorište.
       </p>
 
       <p>

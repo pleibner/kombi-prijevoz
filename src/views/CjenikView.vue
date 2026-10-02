@@ -2,10 +2,11 @@
   <ServiceLayout title="Cjenik kombi prijevoza i selidbi" eyebrow="Cijene">
     <div class="content">
       <p>
-        Kombi s vozačem stoji {{ formatAnchorPrice(prices.vanWithDriver) }}, selidba garsonijere ili
-        jednosobnog stana unutar Zagreba {{ formatAnchorPrice(prices.flatMove) }}, a odvoz manje
-        količine glomaznog otpada {{ formatAnchorPrice(prices.bulkyWaste) }}. Radimo
-        {{ site.hoursShort }}, i praznicima, a procjena je besplatna.
+        Kombi s vozačem stoji {{ formatAnchorPrice(prices.vanWithDriver) }} (minimalno 1 sat, bez
+        naplate dolaska), selidba garsonijere ili jednosobnog stana unutar Zagreba
+        {{ formatAnchorPrice(prices.flatMove) }}, a odvoz do 1 m³ glomaznog otpada
+        {{ formatAnchorPrice(prices.bulkyWaste) }}. Radimo {{ site.hoursShort }}, a hitne prijevoze
+        obavljamo 0–24 bez nadoplate. Procjena je besplatna.
       </p>
 
       <h2>Cijene usluga</h2>
@@ -18,15 +19,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="anchor in priceAnchors" :key="anchor.title">
+          <tr v-for="item in priceList" :key="item.title">
             <th scope="row">
-              <RouterLink :to="anchor.path">{{ anchor.title }}</RouterLink>
+              <RouterLink v-if="item.path" :to="item.path">{{ item.title }}</RouterLink>
+              <template v-else>{{ item.title }}</template>
             </th>
-            <td class="price-table__price">{{ formatAnchorPrice(anchor) }}</td>
-            <td>{{ anchor.description }}</td>
-          </tr>
-          <tr v-for="item in extraPrices" :key="item.title">
-            <th scope="row">{{ item.title }}</th>
             <td class="price-table__price">{{ item.price }}</td>
             <td>{{ item.description }}</td>
           </tr>
@@ -67,14 +64,17 @@ import { useJsonLd } from '@/composables/useJsonLd'
 import { usePageMeta } from '@/composables/usePageMeta'
 import type { FaqItem } from '@/data/faq'
 import {
-  extraPrices,
+  bulkyWastePerExtraM3,
   extraWorkerPerHour,
   formatAnchorPrice,
   formatPrice,
-  priceAnchors,
+  largeMoveFrom,
+  priceList,
   pricePerKmOutsideZagreb,
   prices,
   pricingNotes,
+  rubblePerM3,
+  twoRoomMoveFrom,
 } from '@/data/pricing'
 import { site } from '@/data/site'
 import { breadcrumbSchema, faqSchema } from '@/utils/schema'
@@ -82,25 +82,34 @@ import { breadcrumbSchema, faqSchema } from '@/utils/schema'
 const priceFaq: FaqItem[] = [
   {
     question: 'Koliko košta kombi prijevoz u Zagrebu?',
-    answer: `Kombi s vozačem stoji ${formatAnchorPrice(prices.vanWithDriver)}. Cijena uključuje kombi, gorivo po Zagrebu i vozača koji pomaže pri utovaru i istovaru. Dodatni radnik stoji ${formatPrice(extraWorkerPerHour)} po satu.`,
+    answer: `Kombi s vozačem stoji ${formatAnchorPrice(prices.vanWithDriver)}, uz minimalno 1 sat i bez naplate dolaska. Cijena uključuje kombi, gorivo po Zagrebu i vozača koji pomaže pri utovaru i istovaru. Dodatni radnik stoji ${formatPrice(extraWorkerPerHour)} po satu.`,
   },
   {
-    question: 'Koliko košta selidba garsonijere ili jednosobnog stana?',
-    answer: `Selidba garsonijere ili jednosobnog stana unutar Zagreba stoji ${formatAnchorPrice(prices.flatMove)}. Cijena uključuje kombi i dva radnika, nošenje i prijevoz.`,
+    question: 'Koliko košta selidba stana u Zagrebu?',
+    answer: `Selidba garsonijere ili jednosobnog stana stoji ${formatAnchorPrice(prices.flatMove)}, dvosobnog stana od ${formatPrice(twoRoomMoveFrom)}, a trosobnog stana ili kuće od ${formatPrice(largeMoveFrom)}. Cijena uključuje kombi, radnike, nošenje i prijevoz unutar Zagreba.`,
   },
   {
     question: 'Koliko košta odvoz glomaznog otpada?',
-    answer: `Odvoz manje količine glomaznog otpada, poput kauča, ormara ili bijele tehnike, stoji ${formatAnchorPrice(prices.bulkyWaste)} s utovarom i odvozom na odlagalište. Veće količine naplaćujemo po ponudi.`,
+    answer: `Odvoz do 1 m³ glomaznog otpada, otprilike jednog kauča ili ormara, stoji ${formatAnchorPrice(prices.bulkyWaste)}, a svaki dodatni m³ ${formatPrice(bulkyWastePerExtraM3)}. Cijena uključuje utovar i odvoz u reciklažno dvorište.`,
+  },
+  {
+    question: 'Koliko košta odvoz šute?',
+    answer: `Odvoz šute stoji ${formatPrice(rubblePerM3)} po m³, s utovarom i odvozom u reciklažno dvorište.`,
   },
   {
     question: 'Koliko košta prijevoz izvan Zagreba?',
-    answer: `Za vožnju izvan Zagreba naplaćujemo ${formatPrice(pricePerKmOutsideZagreb)} po kilometru. Najčešće vozimo unutar ${site.serviceRadiusKm} km od Zagreba, a po dogovoru po cijeloj Hrvatskoj.`,
+    answer: `Vožnju izvan Zagreba naplaćujemo ${formatPrice(pricePerKmOutsideZagreb)} po kilometru, a utovar i istovar po satnoj cijeni. Najčešće vozimo unutar ${site.serviceRadiusKm} km od Zagreba, a po dogovoru po cijeloj Hrvatskoj.`,
+  },
+  {
+    question: 'Jesu li noćni i blagdanski termini skuplji?',
+    answer:
+      'Ne. Hitne prijevoze obavljamo 0–24, i praznicima, po istim cijenama kao i redovne. U Zagrebu stižemo u roku od sat vremena ako imamo slobodan kombi.',
   },
 ]
 
 usePageMeta({
   title: 'Cjenik kombi prijevoza i selidbi u Zagrebu',
-  description: `Cjenik kombi prijevoza u Zagrebu: kombi s vozačem ${formatAnchorPrice(prices.vanWithDriver)}, selidba stana ${formatAnchorPrice(prices.flatMove)}, odvoz glomaznog otpada ${formatAnchorPrice(prices.bulkyWaste)}. Procjena je besplatna.`,
+  description: `Cjenik kombi prijevoza u Zagrebu: kombi s vozačem ${formatAnchorPrice(prices.vanWithDriver)}, selidba stana ${formatAnchorPrice(prices.flatMove)}, odvoz glomaznog otpada ${formatAnchorPrice(prices.bulkyWaste)}, šuta ${formatPrice(rubblePerM3)} po m³. Bez naplate dolaska.`,
 })
 useJsonLd('ld-breadcrumb', breadcrumbSchema('Cjenik kombi prijevoza i selidbi', '/cjenik'))
 useJsonLd('ld-faq', faqSchema(priceFaq))

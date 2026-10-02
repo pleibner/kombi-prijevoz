@@ -14,8 +14,8 @@
 
       <p>
         Bez obzira radi li se o starom kauču, ormaru, hladnjaku, perilici ili bilo kojem drugom
-        velikom predmetu – mi ćemo ga sigurno iznijeti iz vašeg prostora i odvesti na odgovarajuće
-        odlagalište. Vi se ne morate brinuti ni o čemu.
+        velikom predmetu – mi ćemo ga sigurno iznijeti iz vašeg prostora i odvesti u reciklažno
+        dvorište. Vi se ne morate brinuti ni o čemu.
       </p>
 
       <p>
