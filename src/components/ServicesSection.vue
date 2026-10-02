@@ -63,6 +63,7 @@ const chips = [
       <h2 v-if="compact" id="services-heading" class="services__compact-title">Ostale usluge</h2>
       <SectionHeading
         v-else
+        v-reveal
         id="services-heading"
         eyebrow="Usluge"
         title="Jedan poziv za sve što treba prevesti."
@@ -71,8 +72,9 @@ const chips = [
 
       <CardGrid>
         <ServiceCard
-          v-for="service in services"
+          v-for="(service, index) in services"
           :key="service.to"
+          v-reveal="index * 90"
           :to="service.to"
           :icon="service.icon"
           :title="service.title"
@@ -81,7 +83,7 @@ const chips = [
         <slot></slot>
       </CardGrid>
 
-      <div v-if="!compact" class="services__chips">
+      <div v-if="!compact" v-reveal class="services__chips">
         <span class="services__chips-label">Tražite nešto konkretno?</span>
         <RouterLink v-for="chip in chips" :key="chip.to" :to="chip.to" class="chip">{{
           chip.label

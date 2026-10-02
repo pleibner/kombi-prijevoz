@@ -53,9 +53,19 @@ const trackQuote = () => trackingService.trackClick('mobile_bar_quote_click')
   gap: 6px;
 }
 
+@keyframes bar-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 760px) {
   .mobile-bar {
     display: grid;
+    animation: bar-in 0.5s 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
 }
 </style>

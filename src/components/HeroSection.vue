@@ -42,7 +42,7 @@ const trackWhatsApp = () => trackingService.trackClick('hero_whatsapp_click')
 
 <template>
   <section class="hero">
-    <StreetGridBackground tone="light" :opacity="0.13" />
+    <StreetGridBackground tone="light" :opacity="0.13" vehicles />
 
     <div class="container hero__inner">
       <div class="hero__copy">
@@ -261,6 +261,47 @@ const trackWhatsApp = () => trackingService.trackClick('hero_whatsapp_click')
 
 .quick-quote__note a:hover {
   color: var(--accent);
+}
+
+/* Entrance: copy rises line by line, the quote card follows */
+.hero__badge,
+.hero__title,
+.hero__lead,
+.hero__actions,
+.hero__facts,
+.quick-quote {
+  animation: hero-rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.hero__title {
+  animation-delay: 0.08s;
+}
+
+.hero__lead {
+  animation-delay: 0.18s;
+}
+
+.hero__actions {
+  animation-delay: 0.28s;
+}
+
+.hero__facts {
+  animation-delay: 0.38s;
+}
+
+.quick-quote {
+  animation-delay: 0.3s;
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 860px) {
