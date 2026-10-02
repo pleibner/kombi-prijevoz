@@ -1,20 +1,38 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import AppIcon from '@/components/AppIcon.vue'
 import ContactInfo from '@/components/ContactInfo.vue'
 import CtaBand from '@/components/CtaBand.vue'
+import { useJsonLd } from '@/composables/useJsonLd'
+import { usePageMeta } from '@/composables/usePageMeta'
+import { findServicePage } from '@/data/services'
 import { site } from '@/data/site'
+import { breadcrumbSchema, faqSchema, serviceSchema } from '@/utils/schema'
 import { trackingService } from '@/utils/tracking'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
-    title: string
+    /** Defaults to the service name for routes listed in data/services. */
+    title?: string
     eyebrow?: string
   }>(),
   { eyebrow: 'Usluga' },
 )
 
 const router = useRouter()
+
+// Service pages take their heading, summary, key facts, FAQ, head tags and structured data
+// from data/services. Other pages using this layout (price list, 404) set their own.
+const service = findServicePage(useRoute().path)
+const heading = computed(() => props.title ?? service?.name ?? '')
+
+if (service) {
+  usePageMeta({ title: service.title, description: service.description })
+  useJsonLd('ld-service', serviceSchema(service))
+  useJsonLd('ld-breadcrumb', breadcrumbSchema(service.name, service.path))
+  if (service.faq.length) useJsonLd('ld-faq', faqSchema(service.faq))
+}
 
 const navigateToContact = () => {
   trackingService.trackClick('service_layout_contact_button_click', {
@@ -33,10 +51,10 @@ const trackPhone = () => trackingService.trackClick('service_layout_phone_click'
         <nav class="breadcrumb" aria-label="Putanja">
           <RouterLink to="/">Početna</RouterLink>
           <span aria-hidden="true">/</span>
-          <strong>{{ title }}</strong>
+          <strong>{{ heading }}</strong>
         </nav>
         <p class="eyebrow">{{ eyebrow }}</p>
-        <h1 class="page-hero__title">{{ title }}</h1>
+        <h1 class="page-hero__title">{{ heading }}</h1>
         <div class="page-hero__actions">
           <button type="button" class="btn btn-primary" @click="navigateToContact">
             Zatraži ponudu
@@ -50,8 +68,31 @@ const trackPhone = () => trackingService.trackClick('service_layout_phone_click'
     </header>
 
     <div class="container service-body">
-      <div class="prose">
+      <div class="prose" :class="{ 'prose--service': service }">
+        <template v-if="service">
+          <p class="service-summary">{{ service.summary }}</p>
+          <section class="service-facts" aria-labelledby="service-facts-heading">
+            <h2 id="service-facts-heading">Ukratko</h2>
+            <dl>
+              <div v-for="fact in service.facts" :key="fact.label" class="service-facts__row">
+                <dt>{{ fact.label }}</dt>
+                <dd>{{ fact.value }}</dd>
+              </div>
+            </dl>
+          </section>
+        </template>
         <slot></slot>
+        <section
+          v-if="service?.faq.length"
+          class="service-faq"
+          aria-labelledby="service-faq-heading"
+        >
+          <h2 id="service-faq-heading">Česta pitanja</h2>
+          <div v-for="item in service.faq" :key="item.question" class="service-faq__item">
+            <h3>{{ item.question }}</h3>
+            <p>{{ item.answer }}</p>
+          </div>
+        </section>
       </div>
       <aside class="service-aside">
         <div class="card service-aside__card">
@@ -128,7 +169,9 @@ const trackPhone = () => trackingService.trackClick('service_layout_phone_click'
   margin-bottom: 20px;
 }
 
-.prose :deep(p:first-child) {
+/* The opening paragraph: the service summary, or the first paragraph on other pages. */
+.prose:not(.prose--service) :deep(p:first-child),
+.prose .service-summary {
   font-size: 22px;
   line-height: 1.5;
   font-weight: 600;
@@ -137,6 +180,60 @@ const trackPhone = () => trackingService.trackClick('service_layout_phone_click'
 
 .prose :deep(p:last-child) {
   margin-bottom: 0;
+}
+
+.service-facts {
+  margin: 4px 0 32px;
+  padding: 24px 28px;
+  border-radius: var(--radius-md);
+  background: var(--tint-2);
+}
+
+.service-facts h2 {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.service-facts__row {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 16px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+  font-size: 16px;
+}
+
+.service-facts__row:first-child {
+  border-top: 0;
+}
+
+.service-facts dt {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.service-facts dd {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.service-faq {
+  margin-top: 32px;
+}
+
+.service-faq h2 {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.service-faq__item {
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+
+.service-faq__item h3 {
+  font-size: 24px;
+  margin-bottom: 8px;
 }
 
 .service-aside {
@@ -191,8 +288,18 @@ const trackPhone = () => trackingService.trackClick('service_layout_phone_click'
     font-size: 17px;
   }
 
-  .prose :deep(p:first-child) {
+  .prose:not(.prose--service) :deep(p:first-child),
+  .prose .service-summary {
     font-size: 20px;
+  }
+
+  .service-facts {
+    padding: 20px;
+  }
+
+  .service-facts__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
   }
 }
 </style>

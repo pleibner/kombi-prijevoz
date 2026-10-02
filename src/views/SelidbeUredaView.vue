@@ -1,5 +1,5 @@
 <template>
-  <ServiceLayout title="Selidbe ureda">
+  <ServiceLayout>
     <div class="content">
       <p>
         Poslovanje se mijenja, a s njim i prostorni zahtjevi vaše tvrtke. Bilo da se vaša firma širi
@@ -37,37 +37,10 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useHead } from '@unhead/vue'
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServicesSection from '@/components/ServicesSection.vue'
 
 onMounted(() => {
   window.scrollTo(0, 0)
-})
-
-useHead({
-  title: 'Selidbe ureda - Poslovne selidbe Zagreb',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Selidbe ureda i poslovnih prostora s kombijem. Efikasne poslovne selidbe u Zagrebu.',
-    },
-    {
-      property: 'og:title',
-      content: 'Selidbe ureda - Poslovne selidbe Zagreb',
-    },
-    {
-      property: 'og:description',
-      content:
-        'Selidbe ureda i poslovnih prostora s kombijem. Efikasne poslovne selidbe u Zagrebu.',
-    },
-  ],
-  link: [
-    {
-      rel: 'canonical',
-      href: 'https://kombi-transport.com/selidbe-ureda',
-    },
-  ],
 })
 </script>

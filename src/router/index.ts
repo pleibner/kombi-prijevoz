@@ -1,6 +1,7 @@
 import { createRouter, createMemoryHistory, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ContactView from '../views/ContactView.vue'
+import CjenikView from '../views/CjenikView.vue'
 import KombiPrijevozView from '../views/KombiPrijevozView.vue'
 import KombiPrijevozZagrebView from '../views/KombiPrijevozZagrebView.vue'
 import KombiSelidbeView from '../views/KombiSelidbeView.vue'
@@ -34,6 +35,11 @@ const router = createRouter({
       path: '/kontakt',
       name: 'kontakt',
       component: ContactView,
+    },
+    {
+      path: '/cjenik',
+      name: 'cjenik',
+      component: CjenikView,
     },
     {
       path: '/kombi-prijevoz',

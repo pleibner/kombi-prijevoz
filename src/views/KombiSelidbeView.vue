@@ -1,5 +1,5 @@
 <template>
-  <ServiceLayout title="Kombi selidbe">
+  <ServiceLayout>
     <div class="content">
       <p>
         Selidba je važna prekretnica u životu – bilo da se radi o obiteljskoj selidbi u novi dom ili
@@ -53,38 +53,11 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useHead } from '@unhead/vue'
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServiceCard from '@/components/ServiceCard.vue'
 import CardGrid from '@/components/CardGrid.vue'
 
 onMounted(() => {
   window.scrollTo(0, 0)
-})
-
-useHead({
-  title: 'Kombi selidbe - Profesionalne usluge selidbe Zagreb',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Kompletne usluge selidbe s kombijem u Zagrebu. Sigurno i efikasno premještanje vašeg namještaja i stvari.',
-    },
-    {
-      property: 'og:title',
-      content: 'Kombi selidbe - Profesionalne usluge selidbe Zagreb',
-    },
-    {
-      property: 'og:description',
-      content:
-        'Kompletne usluge selidbe s kombijem u Zagrebu. Sigurno i efikasno premještanje vašeg namještaja i stvari.',
-    },
-  ],
-  link: [
-    {
-      rel: 'canonical',
-      href: 'https://kombi-transport.com/kombi-selidbe',
-    },
-  ],
 })
 </script>

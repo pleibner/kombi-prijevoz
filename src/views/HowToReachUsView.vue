@@ -1,25 +1,17 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useHead } from '@unhead/vue'
+import { useJsonLd } from '@/composables/useJsonLd'
+import { usePageMeta } from '@/composables/usePageMeta'
+import { breadcrumbSchema } from '@/utils/schema'
 import ContactInfo from '@/components/ContactInfo.vue'
 import CtaBand from '@/components/CtaBand.vue'
 
-useHead({
+usePageMeta({
   title: 'Kako do nas? - Kombi Transport Zagreb',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Pronađite nas na adresi Trg Ivana Kukuljevića 5, Zagreb. Pogledajte kartu i upute kako doći do nas.',
-    },
-  ],
-  link: [
-    {
-      rel: 'canonical',
-      href: 'https://kombi-transport.com/kako-do-nas',
-    },
-  ],
+  description:
+    'Pronađite nas na adresi Trg Ivana Kukuljevića 5, Zagreb. Pogledajte kartu i upute kako doći do nas.',
 })
+useJsonLd('ld-breadcrumb', breadcrumbSchema('Kako do nas', '/kako-do-nas'))
 
 onMounted(() => {
   window.scrollTo(0, 0)
@@ -43,7 +35,7 @@ onMounted(() => {
       <div class="how-to-reach-us__grid">
         <div class="card how-to-reach-us__card">
           <h2>Naša lokacija</h2>
-          <ContactInfo show-facebook />
+          <ContactInfo show-facebook show-google />
         </div>
         <div class="how-to-reach-us__map">
           <iframe

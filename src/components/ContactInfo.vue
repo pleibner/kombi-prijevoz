@@ -7,13 +7,16 @@ withDefaults(
   defineProps<{
     variant?: 'light' | 'dark'
     showFacebook?: boolean
+    showGoogle?: boolean
   }>(),
-  { variant: 'light', showFacebook: false },
+  { variant: 'light', showFacebook: false, showGoogle: false },
 )
 
 const trackPhone = () => trackingService.trackClick('phone_number_click')
 const trackWhatsApp = () => trackingService.trackClick('whatsapp_button_click')
 const trackFacebook = () => trackingService.trackClick('facebook_button_click')
+const trackEmail = () => trackingService.trackClick('email_click')
+const trackGoogle = () => trackingService.trackClick('google_profile_click')
 </script>
 
 <template>
@@ -24,7 +27,7 @@ const trackFacebook = () => trackingService.trackClick('facebook_button_click')
         <a :href="site.phoneHref" class="contact-info__primary" @click="trackPhone">{{
           site.phoneDisplay
         }}</a>
-        <small>poziv, {{ site.hoursShort }}</small>
+        <small>poziv, {{ site.hoursShort }}, {{ site.urgentShort }}</small>
       </span>
     </li>
     <li>
@@ -42,6 +45,15 @@ const trackFacebook = () => trackingService.trackClick('facebook_button_click')
         <small>pošaljite poruku</small>
       </span>
     </li>
+    <li>
+      <AppIcon name="mail" :size="20" :stroke-width="2" class="contact-info__icon" />
+      <span>
+        <a :href="`mailto:${site.email}`" class="contact-info__primary" @click="trackEmail">{{
+          site.email
+        }}</a>
+        <small>e-mail</small>
+      </span>
+    </li>
     <li v-if="showFacebook">
       <AppIcon name="facebook" :size="20" class="contact-info__icon" />
       <span>
@@ -55,6 +67,21 @@ const trackFacebook = () => trackingService.trackClick('facebook_button_click')
           Facebook
         </a>
         <small>pratite nas</small>
+      </span>
+    </li>
+    <li v-if="showGoogle">
+      <AppIcon name="star" :size="20" :stroke-width="2" class="contact-info__icon" />
+      <span>
+        <a
+          :href="site.googleProfileHref"
+          class="contact-info__primary"
+          target="_blank"
+          rel="noopener noreferrer"
+          @click="trackGoogle"
+        >
+          Google
+        </a>
+        <small>ocijenite nas</small>
       </span>
     </li>
     <li>

@@ -1,38 +1,21 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
-import { useHead } from '@unhead/vue'
+import { useJsonLd } from '@/composables/useJsonLd'
+import { usePageMeta } from '@/composables/usePageMeta'
+import { breadcrumbSchema } from '@/utils/schema'
 import emailjs from '@emailjs/browser'
 import AppIcon from '@/components/AppIcon.vue'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
 import ContactInfo from '@/components/ContactInfo.vue'
 import { trackingService } from '@/utils/tracking'
 
-useHead({
+usePageMeta({
   title: 'Kontakt - Kombi Transport Zagreb',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Kontaktirajte Kombi Transport za besplatnu procjenu prijevoza, selidbi i dostave. Zagreb i okolno područje.',
-    },
-    {
-      property: 'og:title',
-      content: 'Kontakt - Kombi Transport Zagreb',
-    },
-    {
-      property: 'og:description',
-      content:
-        'Kontaktirajte Kombi Transport za besplatnu procjenu prijevoza, selidbi i dostave. Zagreb i okolno područje.',
-    },
-  ],
-  link: [
-    {
-      rel: 'canonical',
-      href: 'https://kombi-transport.com/kontakt',
-    },
-  ],
+  description:
+    'Kontaktirajte Kombi Transport za besplatnu procjenu prijevoza, selidbi i dostave. Zagreb i okolno područje.',
 })
+useJsonLd('ld-breadcrumb', breadcrumbSchema('Zatraži ponudu', '/kontakt'))
 
 const route = useRoute()
 
@@ -269,7 +252,7 @@ const submitForm = async () => {
           <aside class="contact-aside">
             <div class="card contact-aside__card">
               <h2>Radije razgovor?</h2>
-              <ContactInfo show-facebook />
+              <ContactInfo show-facebook show-google />
             </div>
             <div class="contact-aside__help">
               <h2>Što nam pomaže za točnu ponudu</h2>

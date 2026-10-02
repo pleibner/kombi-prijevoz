@@ -28,6 +28,8 @@ export type IconName =
   | 'hard-hat'
   | 'search'
   | 'calendar'
+  | 'mail'
+  | 'star'
 
 export interface IconDef {
   paths: string[]
@@ -182,6 +184,17 @@ export const icons: Record<IconName, IconDef> = {
       'M16 2v4',
       'M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
       'M3 10h18',
+    ],
+  },
+  mail: {
+    paths: [
+      'M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
+      'm22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7',
+    ],
+  },
+  star: {
+    paths: [
+      'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z',
     ],
   },
 }

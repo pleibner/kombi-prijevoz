@@ -1,5 +1,5 @@
 <template>
-  <ServiceLayout title="Odvoz starog namještaja">
+  <ServiceLayout>
     <div class="content">
       <p>
         Kupili ste novi namještaj i ne znate što sa starim? Renovirate prostor i trebate se riješiti
@@ -19,9 +19,8 @@
       </p>
 
       <p>
-        Nakon odvoza, stari namještaj zbrinjavamo na odgovoran način. Dio koji se može reciklirati
-        ili donirati – prosljeđujemo dalje. Ostatak odvozimo na ovlaštena odlagališta. Vi dobivate
-        čist prostor, a mi brinemo o ostatku.
+        Nakon odvoza, stari namještaj zbrinjavamo na odgovoran način: sve što odvezemo predajemo u
+        reciklažno dvorište. Vi dobivate čist prostor, a mi brinemo o ostatku.
       </p>
     </div>
 
@@ -33,37 +32,10 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useHead } from '@unhead/vue'
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServicesSection from '@/components/ServicesSection.vue'
 
 onMounted(() => {
   window.scrollTo(0, 0)
-})
-
-useHead({
-  title: 'Odvoz starog namještaja - Profesionalna usluga Zagreb',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Odvoz starog namještaja u Zagrebu. Brzo i sigurno odvozimo stari namještaj iz stana, kuće ili ureda.',
-    },
-    {
-      property: 'og:title',
-      content: 'Odvoz starog namještaja - Profesionalna usluga Zagreb',
-    },
-    {
-      property: 'og:description',
-      content:
-        'Odvoz starog namještaja u Zagrebu. Brzo i sigurno odvozimo stari namještaj iz stana, kuće ili ureda.',
-    },
-  ],
-  link: [
-    {
-      rel: 'canonical',
-      href: 'https://kombi-transport.com/odvoz-starog-namjestaja',
-    },
-  ],
 })
 </script>

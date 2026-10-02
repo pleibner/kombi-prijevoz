@@ -1,5 +1,5 @@
 <template>
-  <ServiceLayout title="Specijalni prijevoz">
+  <ServiceLayout>
     <div class="content">
       <p>
         U našoj dugogodišnjoj praksi specijaliziranog prijevoza, susreli smo se s izazovima koji
@@ -8,10 +8,9 @@
       </p>
 
       <p>
-        Zamislite koncertni klavir koji se pažljivo izvlači kroz prozor višekatnice uz pomoć
-        specijalizirane dizalice, ili vrijedne umjetnine neprocjenjive vrijednosti koje zahtijevaju
-        klimatski kontrolirane uvjete transporta. Naši stručnjaci su uspješno izveli prijevoz sefova
-        težine preko tone, glomaznih industrijskih strojeva i osjetljivih medicinskih aparata.
+        Zamislite klavir koji se pažljivo izvlači kroz prozor višekatnice uz pomoć dizalice. Kada
+        klavir, kauč ili ormar ne prolazi stubištem ili kroz vrata, podižemo ga i spuštamo dizalicom
+        kroz prozor, kako bismo izbjegli oštećenja stubišta, zidova i samog predmeta.
       </p>
 
       <p>
@@ -37,38 +36,11 @@
 </template>
 
 <script setup lang="ts">
-import { useHead } from '@unhead/vue'
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServicesSection from '@/components/ServicesSection.vue'
 import { onMounted } from 'vue'
 
 onMounted(() => {
   window.scrollTo(0, 0)
-})
-
-useHead({
-  title: 'Specijalni prijevoz - Transport posebnih tereta',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Specijalizirani prijevoz posebnih tereta i robe. Profesionalne usluge transporta u Zagrebu.',
-    },
-    {
-      property: 'og:title',
-      content: 'Specijalni prijevoz - Transport posebnih tereta',
-    },
-    {
-      property: 'og:description',
-      content:
-        'Specijalizirani prijevoz posebnih tereta i robe. Profesionalne usluge transporta u Zagrebu.',
-    },
-  ],
-  link: [
-    {
-      rel: 'canonical',
-      href: 'https://kombi-transport.com/specijalni-prijevoz',
-    },
-  ],
 })
 </script>

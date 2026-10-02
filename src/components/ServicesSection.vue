@@ -24,7 +24,7 @@ const services: { to: string; icon: IconName; title: string; description: string
     icon: 'home',
     title: 'Selidbe',
     description:
-      'Selidbe stanova, kuća i ureda od vrata do vrata. Nosimo, osiguravamo i brinemo o svakom detalju.',
+      'Selidbe stanova, kuća i ureda od vrata do vrata. Nosimo, pakiramo i brinemo o svakom detalju.',
   },
   {
     to: '/kombi-dostava',

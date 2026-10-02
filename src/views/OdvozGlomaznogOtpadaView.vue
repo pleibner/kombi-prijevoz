@@ -1,5 +1,5 @@
 <template>
-  <ServiceLayout title="Odvoz glomaznog otpada">
+  <ServiceLayout>
     <div class="content">
       <p>
         Stari namještaj, dotrajali kućanski aparati ili drugi veliki predmeti zauzimaju prostor u
@@ -14,8 +14,8 @@
 
       <p>
         Bez obzira radi li se o starom kauču, ormaru, hladnjaku, perilici ili bilo kojem drugom
-        velikom predmetu – mi ćemo ga sigurno iznijeti iz vašeg prostora i odvesti na odgovarajuće
-        odlagalište. Vi se ne morate brinuti ni o čemu.
+        velikom predmetu – mi ćemo ga sigurno iznijeti iz vašeg prostora i odvesti u reciklažno
+        dvorište. Vi se ne morate brinuti ni o čemu.
       </p>
 
       <p>
@@ -33,37 +33,10 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useHead } from '@unhead/vue'
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServicesSection from '@/components/ServicesSection.vue'
 
 onMounted(() => {
   window.scrollTo(0, 0)
-})
-
-useHead({
-  title: 'Odvoz glomaznog otpada - Brzo i pouzdano Zagreb',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Profesionalni odvoz glomaznog otpada u Zagrebu. Brzo odvozimo stari namještaj, aparate i druge velike predmete.',
-    },
-    {
-      property: 'og:title',
-      content: 'Odvoz glomaznog otpada - Brzo i pouzdano Zagreb',
-    },
-    {
-      property: 'og:description',
-      content:
-        'Profesionalni odvoz glomaznog otpada u Zagrebu. Brzo odvozimo stari namještaj, aparate i druge velike predmete.',
-    },
-  ],
-  link: [
-    {
-      rel: 'canonical',
-      href: 'https://kombi-transport.com/odvoz-glomaznog-otpada',
-    },
-  ],
 })
 </script>

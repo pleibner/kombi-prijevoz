@@ -1,5 +1,5 @@
 <template>
-  <ServiceLayout title="Odvoz otpada">
+  <ServiceLayout>
     <div class="content">
       <p>
         Bilo da renovirate kuću, mijenjate namještaj ili se jednostavno želite riješiti starog
@@ -53,38 +53,11 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useHead } from '@unhead/vue'
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServiceCard from '@/components/ServiceCard.vue'
 import CardGrid from '@/components/CardGrid.vue'
 
 onMounted(() => {
   window.scrollTo(0, 0)
-})
-
-useHead({
-  title: 'Odvoz otpada - Profesionalne usluge odvoza Zagreb',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Profesionalni odvoz otpada u Zagrebu. Brzo i pouzdano odvozimo glomazni otpad, stari namještaj i šutu.',
-    },
-    {
-      property: 'og:title',
-      content: 'Odvoz otpada - Profesionalne usluge odvoza Zagreb',
-    },
-    {
-      property: 'og:description',
-      content:
-        'Profesionalni odvoz otpada u Zagrebu. Brzo i pouzdano odvozimo glomazni otpad, stari namještaj i šutu.',
-    },
-  ],
-  link: [
-    {
-      rel: 'canonical',
-      href: 'https://kombi-transport.com/odvoz-otpada',
-    },
-  ],
 })
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <ServiceLayout title="Dostava bijele tehnike">
+  <ServiceLayout>
     <div class="content">
       <p>
         Kupnja bijele tehnike trebala bi biti jednostavna i bez stresa. Zamislite da ste kupili
@@ -37,37 +37,10 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useHead } from '@unhead/vue'
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServicesSection from '@/components/ServicesSection.vue'
 
 onMounted(() => {
   window.scrollTo(0, 0)
-})
-
-useHead({
-  title: 'Dostava bijele tehnike - Transport uređaja',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Profesionalna dostava bijele tehnike u Zagrebu. Siguran transport kućanskih aparata.',
-    },
-    {
-      property: 'og:title',
-      content: 'Dostava bijele tehnike - Transport uređaja',
-    },
-    {
-      property: 'og:description',
-      content:
-        'Profesionalna dostava bijele tehnike u Zagrebu. Siguran transport kućanskih aparata.',
-    },
-  ],
-  link: [
-    {
-      rel: 'canonical',
-      href: 'https://kombi-transport.com/dostava-bijele-tehnike',
-    },
-  ],
 })
 </script>

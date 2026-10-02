@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useHead } from '@unhead/vue'
+import { usePageMeta } from '@/composables/usePageMeta'
 import AppIcon from '@/components/AppIcon.vue'
 import ServiceLayout from '@/components/ServiceLayout.vue'
 import ServicesSection from '@/components/ServicesSection.vue'
@@ -31,19 +31,11 @@ onMounted(() => {
   window.scrollTo(0, 0)
 })
 
-useHead({
-  title: '404 - Stranica nije pronađena | Kombi Transport',
-  meta: [
-    {
-      name: 'description',
-      content:
-        'Stranica koju tražite nije pronađena. Vratite se na početnu stranicu Kombi Transport za profesionalne usluge prijevoza.',
-    },
-    {
-      name: 'robots',
-      content: 'noindex, nofollow',
-    },
-  ],
+usePageMeta({
+  title: '404 - Stranica nije pronađena',
+  description:
+    'Stranica koju tražite nije pronađena. Vratite se na početnu stranicu Kombi Transport za profesionalne usluge prijevoza.',
+  noindex: true,
 })
 </script>
 
