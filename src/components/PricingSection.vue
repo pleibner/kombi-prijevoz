@@ -39,7 +39,7 @@ import { formatPrice, priceAnchors, pricingNotes } from '@/data/pricing'
         </li>
       </ul>
 
-      <RouterLink to="/cjenik" class="pricing__more">
+      <RouterLink v-reveal to="/cjenik" class="pricing__more">
         Pogledajte cijeli cjenik
         <AppIcon name="arrow-right" :size="18" :stroke-width="2" />
       </RouterLink>
