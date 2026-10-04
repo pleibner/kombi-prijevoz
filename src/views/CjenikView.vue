@@ -4,10 +4,10 @@
       <p>
         Kombi s vozačem stoji {{ formatAnchorPrice(prices.vanWithDriver) }} (minimalno 1 sat, bez
         naplate dolaska), a selidba s ekipom
-        {{ formatNetPrice(crewRates[0].perHour, 'po satu') }} za kombi i
-        {{ crewRates[0].workers }} radnika. Selidba garsonijere ili jednosobnog stana stoji
-        {{ formatAnchorPrice(prices.flatMove) }}, a odvoz do 1 m³ glomaznog otpada
-        {{ formatAnchorPrice(prices.bulkyWaste) }}. Hitne prijevoze obavljamo 0–24 bez nadoplate.
+        {{ formatNetPrice(crewRates[0].perHour, 'po satu') }} za {{ crewRates[0].crew }}. Selidba
+        garsonijere ili jednosobnog stana stoji {{ formatAnchorPrice(prices.flatMove) }}, a odvoz do
+        1 m³ glomaznog otpada {{ formatAnchorPrice(prices.bulkyWaste) }}. Hitne prijevoze obavljamo
+        0–24 bez nadoplate.
       </p>
 
       <h2>Cijene usluga</h2>
@@ -84,7 +84,7 @@ import {
   pricePerKmOutsideZagreb,
   prices,
   pricingNotes,
-  rubblePerM3,
+  rubblePerBag,
   twoRoomMoveFrom,
   vatNote,
 } from '@/data/pricing'
@@ -100,7 +100,7 @@ const priceFaq: FaqItem[] = [
   },
   {
     question: 'Koliko košta selidba po satu?',
-    answer: `Selidbe naplaćujemo po satu prema veličini ekipe: ${crewRatesText} po satu.`,
+    answer: `Selidbe naplaćujemo po satu prema veličini ekipe: ${crewRatesText}.`,
   },
   {
     question: 'Koliko košta selidba stana u Zagrebu?',
@@ -112,7 +112,7 @@ const priceFaq: FaqItem[] = [
   },
   {
     question: 'Koliko košta odvoz šute?',
-    answer: `Odvoz šute stoji ${formatNetPrice(rubblePerM3, 'po m³')}, s utovarom i odvozom u reciklažno dvorište.`,
+    answer: `Odvoz šute stoji od ${formatNetPrice(rubblePerBag, 'po vreći')}, s utovarom i odvozom u reciklažno dvorište.`,
   },
   {
     question: 'Koliko košta prijevoz izvan Zagreba?',
@@ -127,7 +127,7 @@ const priceFaq: FaqItem[] = [
 
 usePageMeta({
   title: 'Cjenik kombi prijevoza i selidbi u Zagrebu',
-  description: `Cjenik kombi prijevoza u Zagrebu: kombi s vozačem od ${formatPrice(van.from)}/h, kombi i ${crewRates[0].workers} radnika ${formatPrice(crewRates[0].perHour)}/h, glomazni otpad od ${formatPrice(prices.bulkyWaste.from)}, šuta ${formatPrice(rubblePerM3)}/m³. Cijene su bez PDV-a.`,
+  description: `Cjenik kombi prijevoza u Zagrebu: kombi s vozačem od ${formatPrice(van.from)}/h, ${crewRates[0].crew} ${formatPrice(crewRates[0].perHour)}/h, glomazni otpad od ${formatPrice(prices.bulkyWaste.from)}, šuta od ${formatPrice(rubblePerBag)} po vreći. Cijene su bez PDV-a.`,
 })
 useJsonLd('ld-breadcrumb', breadcrumbSchema('Cjenik kombi prijevoza i selidbi', '/cjenik'))
 useJsonLd('ld-faq', faqSchema(priceFaq))

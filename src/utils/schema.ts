@@ -98,16 +98,17 @@ export const businessSchema = {
             ...(anchor.unitCode && { unitCode: anchor.unitCode }),
           },
         })),
-        ...crewRates.map((crew) => ({
+        ...crewRates.map((rate) => ({
           '@type': 'Offer',
           itemOffered: {
             '@type': 'Service',
-            name: `Selidba: kombi i ${crew.workers} radnika`,
+            name: `Selidba: ${rate.crew}`,
+            description: rate.description,
             url: pageUrl('/kombi-selidbe'),
           },
           priceSpecification: {
             '@type': 'UnitPriceSpecification',
-            price: crew.perHour,
+            price: rate.perHour,
             priceCurrency: 'EUR',
             valueAddedTaxIncluded: false,
             unitCode: 'HUR',

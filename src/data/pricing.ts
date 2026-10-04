@@ -43,29 +43,40 @@ export const formatAnchorPrice = (anchor: PriceAnchor) =>
 /** Helper added to a van-with-driver job, for transport and deliveries. */
 export const extraWorker = { firstHour: 25, nextHour: 10 }
 
-/** Moving crews per hour; the driver counts as one of the workers. */
+/** Moving crews, billed per hour. In the two smaller crews the driver is one of the workers. */
 export const crewRates = [
-  { workers: 2, perHour: 100 },
-  { workers: 3, perHour: 150 },
-  { workers: 4, perHour: 200 },
+  {
+    crew: 'kombi i 2 radnika',
+    perHour: 100,
+    description: 'Vozač i pomoćnik nose, utovaruju, prevoze i istovaruju.',
+  },
+  {
+    crew: 'kombi i 3 radnika',
+    perHour: 150,
+    description: 'Vozač i 2 pomoćnika nose, utovaruju, prevoze i istovaruju.',
+  },
+  {
+    crew: 'vozač, nadzor i 4 radnika',
+    perHour: 200,
+    description:
+      'Za veće selidbe: vozač, nadzor selidbe i 4 radnika koji nose, utovaruju i istovaruju.',
+  },
 ] as const
 
 export const pricePerKmOutsideZagreb = 0.9
 export const twoRoomMoveFrom = 200
 export const largeMoveFrom = 300
 export const bulkyWastePerExtraM3 = 40
-export const rubblePerM3 = 60
+/** Rubble is priced per bag only, never per m³. */
+export const rubblePerBag = 10
 
 /** "25 € za prvi sat i 10 € za svaki sljedeći sat" */
 export const extraWorkerText = `${formatNetPrice(extraWorker.firstHour)} za prvi sat i ${formatNetPrice(extraWorker.nextHour)} za svaki sljedeći sat`
 
-/** "kombi i 2 radnika 100 €, 3 radnika 150 €, 4 radnika 200 €" (per hour) */
-export const crewRatesText = `kombi i ${crewRates
-  .map((crew) => `${crew.workers} radnika ${formatNetPrice(crew.perHour)}`)
-  .join(', ')}`
-
-const helpers = (workers: number) =>
-  workers === 2 ? 'Vozač i pomoćnik' : `Vozač i ${workers - 1} pomoćnika`
+/** "kombi i 2 radnika 100 €; kombi i 3 radnika 150 €; vozač, nadzor i 4 radnika 200 €" (per hour) */
+export const crewRatesText = crewRates
+  .map((rate) => `${rate.crew} ${formatNetPrice(rate.perHour)}`)
+  .join('; ')
 
 export const prices = {
   vanWithDriver: {
@@ -107,10 +118,10 @@ export const priceList: PriceItem[] = [
     price: formatNetPrice(extraWorker.firstHour, 'prvi sat'),
     description: `Svaki sljedeći sat ${formatNetPrice(extraWorker.nextHour)}. Pomoć pri nošenju, utovaru i istovaru uz prijevoz robe i dostave.`,
   },
-  ...crewRates.map((crew) => ({
-    title: `Selidba: kombi i ${crew.workers} radnika`,
-    price: formatNetPrice(crew.perHour, 'po satu'),
-    description: `${helpers(crew.workers)} nose, utovaruju, prevoze i istovaruju.`,
+  ...crewRates.map((rate) => ({
+    title: `Selidba: ${rate.crew}`,
+    price: formatNetPrice(rate.perHour, 'po satu'),
+    description: rate.description,
     path: '/kombi-selidbe',
   })),
   {
@@ -152,7 +163,7 @@ export const priceList: PriceItem[] = [
   },
   {
     title: 'Odvoz šute',
-    price: formatNetPrice(rubblePerM3, 'po m³'),
+    price: `od ${formatNetPrice(rubblePerBag, 'po vreći')}`,
     description: 'Utovar i odvoz građevinskog otpada u reciklažno dvorište.',
     path: '/odvoz-sute',
   },

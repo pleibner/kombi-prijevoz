@@ -8,7 +8,7 @@ import {
   largeMoveFrom,
   pricePerKmOutsideZagreb,
   prices,
-  rubblePerM3,
+  rubblePerBag,
   twoRoomMoveFrom,
 } from './pricing'
 import { site } from './site'
@@ -25,7 +25,7 @@ export interface ServiceFact {
 
 export interface ServicePrice {
   amount: number
-  /** UN/CEFACT unit code used in structured data: HUR (hour) or MTQ (cubic metre). */
+  /** UN/CEFACT unit code used in structured data: HUR (hour) or BG (bag). */
   unitCode?: string
   /** True for "od …" (starting from) prices. */
   isMinimum: boolean
@@ -54,7 +54,7 @@ const twoRoomMove = `od ${formatNetPrice(twoRoomMoveFrom)}`
 const largeMove = `od ${formatNetPrice(largeMoveFrom)}`
 const bulkyWaste = formatAnchorPrice(prices.bulkyWaste)
 const extraM3 = formatNetPrice(bulkyWastePerExtraM3)
-const rubble = formatNetPrice(rubblePerM3, 'po m³')
+const rubble = `od ${formatNetPrice(rubblePerBag, 'po vreći')}`
 const perKm = formatNetPrice(pricePerKmOutsideZagreb, 'po km')
 
 const hourlyPrice: ServicePrice = {
@@ -152,7 +152,7 @@ export const servicePages: ServicePage[] = [
     name: 'Kombi selidbe',
     title: 'Kombi selidbe - Profesionalne usluge selidbe Zagreb',
     description: `Kombi selidbe u Zagrebu: garsonijera ${flatMove}, dvosoban stan ${twoRoomMove}, trosoban stan ili kuća ${largeMove}. Rastavljanje i sastavljanje namještaja i pakiranje.`,
-    summary: `Selidba garsonijere ili jednosobnog stana unutar Zagreba stoji ${flatMove}, dvosobnog stana ${twoRoomMove}, a trosobnog stana ili kuće ${largeMove}. Veće selidbe naplaćujemo po satu: ${crewRatesText} po satu. U cijenu ulaze kombi, radnici, nošenje i prijevoz, a po želji rastavljamo i sastavljamo namještaj te pakiramo stvari.`,
+    summary: `Selidba garsonijere ili jednosobnog stana unutar Zagreba stoji ${flatMove}, dvosobnog stana ${twoRoomMove}, a trosobnog stana ili kuće ${largeMove}. Veće selidbe naplaćujemo po satu: ${crewRatesText}. U cijenu ulaze kombi, radnici, nošenje i prijevoz, a po želji rastavljamo i sastavljamo namještaj te pakiramo stvari.`,
     facts: [
       ...movePriceFacts,
       facts.crews,
@@ -166,7 +166,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         question: 'Koliko košta selidba po satu?',
-        answer: `Ovisi o veličini ekipe: ${crewRatesText} po satu. Za manje selidbe vrijede cijene od ${formatNetPrice(prices.flatMove.from)} za garsonijeru ili jednosobni stan.`,
+        answer: `Ovisi o veličini ekipe. Sat rada stoji: ${crewRatesText}. Za manje selidbe vrijede cijene od ${formatNetPrice(prices.flatMove.from)} za garsonijeru ili jednosobni stan.`,
       },
       {
         question: 'Rastavljate li i sastavljate namještaj?',
@@ -446,7 +446,7 @@ export const servicePages: ServicePage[] = [
         label: 'Glomazni otpad',
         value: `${capitalize(bulkyWaste)} do 1 m³, svaki dodatni m³ ${extraM3}`,
       },
-      { label: 'Šuta', value: rubble },
+      { label: 'Šuta', value: capitalize(rubble) },
       { label: 'Uključeno', value: 'Utovar i odvoz' },
       facts.recycling,
       facts.hours,
@@ -521,7 +521,7 @@ export const servicePages: ServicePage[] = [
     description: `Odvoz šute u Zagrebu: ${rubble}, s utovarom i odvozom u reciklažno dvorište. Beton, cigla, keramika i drugi građevinski otpad.`,
     summary: `Odvoz šute i građevinskog otpada u Zagrebu stoji ${rubble}, s utovarom i odvozom u reciklažno dvorište. Odvozimo beton, ciglu, keramiku i drugi otpad od renovacije, svaki dan od 8 do 20 h.`,
     facts: [
-      { label: 'Cijena', value: rubble },
+      { label: 'Cijena', value: capitalize(rubble) },
       { label: 'Uključeno', value: 'Utovar i odvoz' },
       facts.recycling,
       { label: 'Vrste otpada', value: 'Beton, cigla, keramika i drugi građevinski otpad' },
@@ -538,7 +538,7 @@ export const servicePages: ServicePage[] = [
           'Da. Odvozimo šutu od manjih renovacija, poput kupaonice, ali i veće količine građevinskog otpada.',
       },
     ],
-    price: { amount: rubblePerM3, unitCode: 'MTQ', isMinimum: false },
+    price: { amount: rubblePerBag, unitCode: 'BG', isMinimum: true },
   },
 ]
 
