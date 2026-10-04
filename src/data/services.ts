@@ -1,9 +1,11 @@
 import type { FaqItem } from './faq'
 import {
   bulkyWastePerExtraM3,
-  extraWorkerPerHour,
+  crewRatesText,
+  extraWorkerText,
   formatAnchorPrice,
-  formatPrice,
+  formatGrossPrice,
+  formatNetPrice,
   largeMoveFrom,
   pricePerKmOutsideZagreb,
   prices,
@@ -49,13 +51,13 @@ const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1
 
 const vanRate = formatAnchorPrice(prices.vanWithDriver)
 const flatMove = formatAnchorPrice(prices.flatMove)
-const twoRoomMove = `od ${formatPrice(twoRoomMoveFrom)}`
-const largeMove = `od ${formatPrice(largeMoveFrom)}`
+const vanRateWithVat = formatGrossPrice(prices.vanWithDriver.from, prices.vanWithDriver.unit)
+const twoRoomMove = `od ${formatNetPrice(twoRoomMoveFrom)}`
+const largeMove = `od ${formatNetPrice(largeMoveFrom)}`
 const bulkyWaste = formatAnchorPrice(prices.bulkyWaste)
-const extraM3 = formatPrice(bulkyWastePerExtraM3)
-const rubble = formatPrice(rubblePerM3)
-const perKm = formatPrice(pricePerKmOutsideZagreb)
-const extraWorker = formatPrice(extraWorkerPerHour)
+const extraM3 = formatNetPrice(bulkyWastePerExtraM3)
+const rubble = formatNetPrice(rubblePerM3, 'po m³')
+const perKm = formatNetPrice(pricePerKmOutsideZagreb, 'po km')
 
 const hourlyPrice: ServicePrice = {
   amount: prices.vanWithDriver.from,
@@ -70,7 +72,9 @@ const facts = {
     label: 'Cijena',
     value: `Kombi s vozačem ${vanRate}, minimalno 1 sat, bez naplate dolaska`,
   },
-  extraWorker: { label: 'Dodatni radnik', value: `${extraWorker} po satu` },
+  extraWorker: { label: 'Dodatni radnik', value: extraWorkerText },
+  crews: { label: 'Ekipa po satu', value: capitalize(crewRatesText) },
+  vat: { label: 'PDV', value: 'Cijene su bez PDV-a (25 %), PDV se dodaje na račun' },
   hours: { label: 'Radno vrijeme', value: site.hours },
   urgent: {
     label: 'Hitno',
@@ -79,7 +83,7 @@ const facts = {
   fleet: { label: 'Vozila', value: `${site.fleet}, ${site.cargoVolume} tovarnog prostora` },
   area: {
     label: 'Područje',
-    value: `Zagreb i do ${site.serviceRadiusKm} km od grada; izvan Zagreba ${perKm} po km`,
+    value: `Zagreb i do ${site.serviceRadiusKm} km od grada; izvan Zagreba ${perKm}`,
   },
   permit: { label: 'Centar grada', value: 'Imamo dozvolu za ulaz u pješačku zonu' },
   recycling: { label: 'Zbrinjavanje', value: 'Sve odvozimo u reciklažno dvorište' },
@@ -104,11 +108,11 @@ export const servicePages: ServicePage[] = [
     title: 'Kombi prijevoz - Brzi i siguran transport Zagreb',
     description: `Kombi prijevoz robe u Zagrebu i okolici: kombi s vozačem ${vanRate}, minimalno 1 sat, bez naplate dolaska. Svaki dan 08–20 h, hitno 0–24 h.`,
     summary: `Kombi prijevoz robe po Zagrebu i okolici stoji ${vanRate} za kombi s vozačem koji pomaže pri utovaru i istovaru, uz minimalno 1 sat i bez naplate dolaska. Imamo ${site.fleet} s ${site.cargoVolume} tovarnog prostora. Radimo svaki dan od 8 do 20 h, a hitne prijevoze obavljamo 0–24.`,
-    facts: [facts.vanRate, facts.extraWorker, facts.fleet, facts.area, facts.hours],
+    facts: [facts.vanRate, facts.extraWorker, facts.fleet, facts.area, facts.hours, facts.vat],
     faq: [
       {
         question: 'Koliko košta kombi prijevoz u Zagrebu?',
-        answer: `Kombi s vozačem stoji ${vanRate}, uz minimalno 1 sat. Dolazak ne naplaćujemo, a gorivo po Zagrebu je uključeno. Dodatni radnik stoji ${extraWorker} po satu.`,
+        answer: `Kombi s vozačem stoji ${vanRate} (${vanRateWithVat}), uz minimalno 1 sat. Dolazak ne naplaćujemo, a gorivo po Zagrebu je uključeno. Dodatni radnik stoji ${extraWorkerText}.`,
       },
       {
         question: 'Koliko stane u vaš kombi?',
@@ -116,7 +120,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         question: 'Kako naplaćujete prijevoz izvan Zagreba?',
-        answer: `Vožnju izvan Zagreba naplaćujemo ${perKm} po kilometru, a utovar i istovar po satnoj cijeni. Najčešće vozimo do ${site.serviceRadiusKm} km od Zagreba, a po dogovoru po cijeloj Hrvatskoj.`,
+        answer: `Vožnju izvan Zagreba naplaćujemo ${perKm}, a utovar i istovar po satnoj cijeni. Najčešće vozimo do ${site.serviceRadiusKm} km od Zagreba, a po dogovoru po cijeloj Hrvatskoj.`,
       },
     ],
     price: hourlyPrice,
@@ -151,16 +155,22 @@ export const servicePages: ServicePage[] = [
     name: 'Kombi selidbe',
     title: 'Kombi selidbe - Profesionalne usluge selidbe Zagreb',
     description: `Kombi selidbe u Zagrebu: garsonijera ${flatMove}, dvosoban stan ${twoRoomMove}, trosoban stan ili kuća ${largeMove}. Rastavljanje i sastavljanje namještaja i pakiranje.`,
-    summary: `Selidba garsonijere ili jednosobnog stana unutar Zagreba stoji ${flatMove}, dvosobnog stana ${twoRoomMove}, a trosobnog stana ili kuće ${largeMove}. U cijenu ulaze kombi, radnici, nošenje i prijevoz, a po želji rastavljamo i sastavljamo namještaj te pakiramo stvari.`,
+    summary: `Selidba garsonijere ili jednosobnog stana unutar Zagreba stoji ${flatMove}, dvosobnog stana ${twoRoomMove}, a trosobnog stana ili kuće ${largeMove}. Veće selidbe naplaćujemo po satu: ${crewRatesText} po satu. U cijenu ulaze kombi, radnici, nošenje i prijevoz, a po želji rastavljamo i sastavljamo namještaj te pakiramo stvari.`,
     facts: [
       ...movePriceFacts,
+      facts.crews,
       { label: 'Usluge', value: 'Rastavljanje i sastavljanje namještaja, pakiranje' },
       facts.hours,
+      facts.vat,
     ],
     faq: [
       {
         question: 'Koliko košta selidba u Zagrebu?',
         answer: `Selidba garsonijere ili jednosobnog stana unutar Zagreba stoji ${flatMove}, dvosobnog stana ${twoRoomMove}, a trosobnog stana ili kuće ${largeMove}. Konačnu cijenu potvrđujemo prije termina, prema količini stvari, katu i liftu.`,
+      },
+      {
+        question: 'Koliko košta selidba po satu?',
+        answer: `Ovisi o veličini ekipe: ${crewRatesText} po satu. Za manje selidbe vrijede cijene od ${formatNetPrice(prices.flatMove.from)} za garsonijeru ili jednosobni stan.`,
       },
       {
         question: 'Rastavljate li i sastavljate namještaj?',
@@ -205,13 +215,14 @@ export const servicePages: ServicePage[] = [
     name: 'Povoljan kombi prijevoz',
     title: 'Povoljan kombi prijevoz - Jeftini transport Zagreb',
     description: `Povoljan kombi prijevoz u Zagrebu: ${vanRate}, minimalno 1 sat, bez naplate dolaska i bez noćne ili blagdanske nadoplate. Procjena je besplatna.`,
-    summary: `Kombi s vozačem stoji ${vanRate}, a plaćate samo vrijeme rada: minimalno 1 sat, bez naplate dolaska i bez nadoplate za hitne, noćne i blagdanske termine. Dodatni radnik stoji ${extraWorker} po satu, izvan Zagreba naplaćujemo ${perKm} po kilometru, a procjena je besplatna.`,
+    summary: `Kombi s vozačem stoji ${vanRate}, a plaćate samo vrijeme rada: minimalno 1 sat, bez naplate dolaska i bez nadoplate za hitne, noćne i blagdanske termine. Dodatni radnik stoji ${extraWorkerText}, izvan Zagreba naplaćujemo ${perKm}, a procjena je besplatna.`,
     facts: [
       facts.vanRate,
       { label: 'Noću i praznicima', value: 'Bez nadoplate' },
       facts.extraWorker,
       facts.area,
       facts.quote,
+      facts.vat,
     ],
     faq: [
       {
@@ -270,6 +281,7 @@ export const servicePages: ServicePage[] = [
     summary: `Selidbu stana ili kuće u Zagrebu radimo ${flatMove} za garsonijeru ili jednosobni stan (kombi i dva radnika), ${twoRoomMove} za dvosoban te ${largeMove} za trosoban stan ili kuću. Po želji zapakiramo stvari te rastavimo i sastavimo namještaj, a selimo svaki dan od 8 do 20 h.`,
     facts: [
       ...movePriceFacts,
+      facts.crews,
       { label: 'Pakiranje', value: 'Po želji pakiramo vaše stvari' },
       { label: 'Namještaj', value: 'Rastavljanje i sastavljanje' },
       facts.hours,
@@ -301,7 +313,8 @@ export const servicePages: ServicePage[] = [
         value: 'Rastavljanje, pakiranje, prijevoz i sastavljanje radnih mjesta',
       },
       { label: 'Računala i mreža', value: 'Ponovno spajanje na novoj adresi' },
-      { label: 'Cijena', value: 'Po ponudi, procjena je besplatna' },
+      { label: 'Cijena', value: 'Po satu prema veličini ekipe ili po ponudi' },
+      facts.crews,
       facts.payment,
       facts.hours,
     ],
@@ -336,6 +349,10 @@ export const servicePages: ServicePage[] = [
       {
         label: 'Cijena',
         value: `Selidba garsonijere ${flatMove}, kombi s vozačem ${vanRate}`,
+      },
+      {
+        label: 'Ekipa po satu',
+        value: capitalize(crewRatesText),
       },
     ],
     faq: [
@@ -427,14 +444,14 @@ export const servicePages: ServicePage[] = [
     path: '/odvoz-otpada',
     name: 'Odvoz otpada',
     title: 'Odvoz otpada - Profesionalne usluge odvoza Zagreb',
-    description: `Odvoz otpada u Zagrebu: glomazni otpad ${bulkyWaste} do 1 m³ i ${extraM3} za svaki dodatni m³, šuta ${rubble} po m³. Odvoz u reciklažno dvorište.`,
-    summary: `Odvoz glomaznog otpada u Zagrebu stoji ${bulkyWaste} za do 1 m³, a svaki dodatni m³ ${extraM3}. Odvoz šute stoji ${rubble} po m³. Otpad sami utovarimo i odvezemo u reciklažno dvorište, a hitne odvoze obavljamo 0–24.`,
+    description: `Odvoz otpada u Zagrebu: glomazni otpad ${bulkyWaste} do 1 m³ i ${extraM3} za svaki dodatni m³, šuta ${rubble}. Odvoz u reciklažno dvorište.`,
+    summary: `Odvoz glomaznog otpada u Zagrebu stoji ${bulkyWaste} za do 1 m³, a svaki dodatni m³ ${extraM3}. Odvoz šute stoji ${rubble}. Otpad sami utovarimo i odvezemo u reciklažno dvorište, a hitne odvoze obavljamo 0–24.`,
     facts: [
       {
         label: 'Glomazni otpad',
         value: `${capitalize(bulkyWaste)} do 1 m³, svaki dodatni m³ ${extraM3}`,
       },
-      { label: 'Šuta', value: `${rubble} po m³` },
+      { label: 'Šuta', value: rubble },
       { label: 'Uključeno', value: 'Utovar i odvoz' },
       facts.recycling,
       facts.hours,
@@ -442,7 +459,7 @@ export const servicePages: ServicePage[] = [
     faq: [
       {
         question: 'Koliko košta odvoz otpada?',
-        answer: `Glomazni otpad odvozimo ${bulkyWaste} za do 1 m³, a svaki dodatni m³ stoji ${extraM3}. Odvoz šute stoji ${rubble} po m³, s utovarom i odvozom.`,
+        answer: `Glomazni otpad odvozimo ${bulkyWaste} za do 1 m³, a svaki dodatni m³ stoji ${extraM3}. Odvoz šute stoji ${rubble}, s utovarom i odvozom.`,
       },
       {
         question: 'Gdje završava otpad koji odvezete?',
@@ -506,10 +523,10 @@ export const servicePages: ServicePage[] = [
     path: '/odvoz-sute',
     name: 'Odvoz šute',
     title: 'Odvoz šute - Odvoz građevinskog otpada Zagreb',
-    description: `Odvoz šute u Zagrebu: ${rubble} po m³, s utovarom i odvozom u reciklažno dvorište. Beton, cigla, keramika i drugi građevinski otpad.`,
-    summary: `Odvoz šute i građevinskog otpada u Zagrebu stoji ${rubble} po m³, s utovarom i odvozom u reciklažno dvorište. Odvozimo beton, ciglu, keramiku i drugi otpad od renovacije, svaki dan od 8 do 20 h.`,
+    description: `Odvoz šute u Zagrebu: ${rubble}, s utovarom i odvozom u reciklažno dvorište. Beton, cigla, keramika i drugi građevinski otpad.`,
+    summary: `Odvoz šute i građevinskog otpada u Zagrebu stoji ${rubble}, s utovarom i odvozom u reciklažno dvorište. Odvozimo beton, ciglu, keramiku i drugi otpad od renovacije, svaki dan od 8 do 20 h.`,
     facts: [
-      { label: 'Cijena', value: `${rubble} po m³` },
+      { label: 'Cijena', value: rubble },
       { label: 'Uključeno', value: 'Utovar i odvoz' },
       facts.recycling,
       { label: 'Vrste otpada', value: 'Beton, cigla, keramika i drugi građevinski otpad' },
@@ -518,7 +535,7 @@ export const servicePages: ServicePage[] = [
     faq: [
       {
         question: 'Koliko košta odvoz šute?',
-        answer: `Odvoz šute stoji ${rubble} po m³, s utovarom i odvozom u reciklažno dvorište.`,
+        answer: `Odvoz šute stoji ${rubble} (${formatGrossPrice(rubblePerM3, 'po m³')}), s utovarom i odvozom u reciklažno dvorište.`,
       },
       {
         question: 'Odvozite li šutu nakon renovacije kupaonice?',

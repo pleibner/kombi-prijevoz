@@ -3,10 +3,12 @@
     <div class="content">
       <p>
         Kombi s vozačem stoji {{ formatAnchorPrice(prices.vanWithDriver) }} (minimalno 1 sat, bez
-        naplate dolaska), selidba garsonijere ili jednosobnog stana unutar Zagreba
+        naplate dolaska), a selidba s ekipom
+        {{ formatNetPrice(crewRates[0].perHour, 'po satu') }} za kombi i
+        {{ crewRates[0].workers }} radnika. Selidba garsonijere ili jednosobnog stana stoji
         {{ formatAnchorPrice(prices.flatMove) }}, a odvoz do 1 m³ glomaznog otpada
-        {{ formatAnchorPrice(prices.bulkyWaste) }}. Radimo {{ site.hoursShort }}, a hitne prijevoze
-        obavljamo 0–24 bez nadoplate. Procjena je besplatna.
+        {{ formatAnchorPrice(prices.bulkyWaste) }}. Sve cijene su bez PDV-a (25 %), a hitne
+        prijevoze obavljamo 0–24 bez nadoplate.
       </p>
 
       <h2>Cijene usluga</h2>
@@ -24,7 +26,10 @@
               <RouterLink v-if="item.path" :to="item.path">{{ item.title }}</RouterLink>
               <template v-else>{{ item.title }}</template>
             </th>
-            <td class="price-table__price">{{ item.price }}</td>
+            <td class="price-table__price">
+              {{ item.price }}
+              <small v-if="item.priceWithVat">{{ item.priceWithVat }}</small>
+            </td>
             <td>{{ item.description }}</td>
           </tr>
         </tbody>
@@ -65,8 +70,12 @@ import { usePageMeta } from '@/composables/usePageMeta'
 import type { FaqItem } from '@/data/faq'
 import {
   bulkyWastePerExtraM3,
-  extraWorkerPerHour,
+  crewRates,
+  crewRatesText,
+  extraWorkerText,
   formatAnchorPrice,
+  formatGrossPrice,
+  formatNetPrice,
   formatPrice,
   largeMoveFrom,
   priceList,
@@ -79,26 +88,36 @@ import {
 import { site } from '@/data/site'
 import { breadcrumbSchema, faqSchema } from '@/utils/schema'
 
+const van = prices.vanWithDriver
+
 const priceFaq: FaqItem[] = [
   {
     question: 'Koliko košta kombi prijevoz u Zagrebu?',
-    answer: `Kombi s vozačem stoji ${formatAnchorPrice(prices.vanWithDriver)}, uz minimalno 1 sat i bez naplate dolaska. Cijena uključuje kombi, gorivo po Zagrebu i vozača koji pomaže pri utovaru i istovaru. Dodatni radnik stoji ${formatPrice(extraWorkerPerHour)} po satu.`,
+    answer: `Kombi s vozačem stoji ${formatAnchorPrice(van)} (${formatGrossPrice(van.from, van.unit)}), uz minimalno 1 sat i bez naplate dolaska. Cijena uključuje kombi, gorivo po Zagrebu i vozača koji pomaže pri utovaru i istovaru. Dodatni radnik stoji ${extraWorkerText}.`,
+  },
+  {
+    question: 'Koliko košta selidba po satu?',
+    answer: `Selidbe naplaćujemo po satu prema veličini ekipe: ${crewRatesText} po satu.`,
   },
   {
     question: 'Koliko košta selidba stana u Zagrebu?',
-    answer: `Selidba garsonijere ili jednosobnog stana stoji ${formatAnchorPrice(prices.flatMove)}, dvosobnog stana od ${formatPrice(twoRoomMoveFrom)}, a trosobnog stana ili kuće od ${formatPrice(largeMoveFrom)}. Cijena uključuje kombi, radnike, nošenje i prijevoz unutar Zagreba.`,
+    answer: `Selidba garsonijere ili jednosobnog stana stoji ${formatAnchorPrice(prices.flatMove)}, dvosobnog stana od ${formatNetPrice(twoRoomMoveFrom)}, a trosobnog stana ili kuće od ${formatNetPrice(largeMoveFrom)}. Cijena uključuje kombi, radnike, nošenje i prijevoz unutar Zagreba.`,
   },
   {
     question: 'Koliko košta odvoz glomaznog otpada?',
-    answer: `Odvoz do 1 m³ glomaznog otpada, otprilike jednog kauča ili ormara, stoji ${formatAnchorPrice(prices.bulkyWaste)}, a svaki dodatni m³ ${formatPrice(bulkyWastePerExtraM3)}. Cijena uključuje utovar i odvoz u reciklažno dvorište.`,
+    answer: `Odvoz do 1 m³ glomaznog otpada, otprilike jednog kauča ili ormara, stoji ${formatAnchorPrice(prices.bulkyWaste)}, a svaki dodatni m³ ${formatNetPrice(bulkyWastePerExtraM3)}. Cijena uključuje utovar i odvoz u reciklažno dvorište.`,
   },
   {
     question: 'Koliko košta odvoz šute?',
-    answer: `Odvoz šute stoji ${formatPrice(rubblePerM3)} po m³, s utovarom i odvozom u reciklažno dvorište.`,
+    answer: `Odvoz šute stoji ${formatNetPrice(rubblePerM3, 'po m³')} (${formatGrossPrice(rubblePerM3, 'po m³')}), s utovarom i odvozom u reciklažno dvorište.`,
   },
   {
     question: 'Koliko košta prijevoz izvan Zagreba?',
-    answer: `Vožnju izvan Zagreba naplaćujemo ${formatPrice(pricePerKmOutsideZagreb)} po kilometru, a utovar i istovar po satnoj cijeni. Najčešće vozimo unutar ${site.serviceRadiusKm} km od Zagreba, a po dogovoru po cijeloj Hrvatskoj.`,
+    answer: `Vožnju izvan Zagreba naplaćujemo ${formatNetPrice(pricePerKmOutsideZagreb, 'po kilometru')}, a utovar i istovar po satnoj cijeni. Najčešće vozimo unutar ${site.serviceRadiusKm} km od Zagreba, a po dogovoru po cijeloj Hrvatskoj.`,
+  },
+  {
+    question: 'Jesu li cijene s PDV-om?',
+    answer: `Ne. Sve cijene su bez PDV-a, a PDV od 25 % dodaje se na račun. Na primjer, kombi s vozačem s PDV-om stoji ${formatGrossPrice(van.from, van.unit)}.`,
   },
   {
     question: 'Jesu li noćni i blagdanski termini skuplji?',
@@ -109,7 +128,7 @@ const priceFaq: FaqItem[] = [
 
 usePageMeta({
   title: 'Cjenik kombi prijevoza i selidbi u Zagrebu',
-  description: `Cjenik kombi prijevoza u Zagrebu: kombi s vozačem ${formatAnchorPrice(prices.vanWithDriver)}, selidba stana ${formatAnchorPrice(prices.flatMove)}, odvoz glomaznog otpada ${formatAnchorPrice(prices.bulkyWaste)}, šuta ${formatPrice(rubblePerM3)} po m³. Bez naplate dolaska.`,
+  description: `Cjenik kombi prijevoza u Zagrebu: kombi s vozačem od ${formatPrice(van.from)}/h, kombi i ${crewRates[0].workers} radnika ${formatPrice(crewRates[0].perHour)}/h, glomazni otpad od ${formatPrice(prices.bulkyWaste.from)}, šuta ${formatPrice(rubblePerM3)}/m³. Cijene su bez PDV-a.`,
 })
 useJsonLd('ld-breadcrumb', breadcrumbSchema('Cjenik kombi prijevoza i selidbi', '/cjenik'))
 useJsonLd('ld-faq', faqSchema(priceFaq))
@@ -166,6 +185,14 @@ h3 {
   font-weight: 700;
   white-space: nowrap;
   color: var(--accent);
+}
+
+.price-table__price small {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
 }
 
 .price-notes {

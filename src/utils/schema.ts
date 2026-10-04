@@ -1,5 +1,5 @@
 import type { FaqItem } from '@/data/faq'
-import { priceAnchors } from '@/data/pricing'
+import { crewRates, priceAnchors } from '@/data/pricing'
 import type { ServicePage } from '@/data/services'
 import { serviceAreas, site } from '@/data/site'
 
@@ -81,21 +81,39 @@ export const businessSchema = {
       paymentAccepted: 'Cash, Bank transfer',
       currenciesAccepted: 'EUR',
       priceRange: '€€',
-      makesOffer: priceAnchors.map((anchor) => ({
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: anchor.title,
-          description: anchor.description,
-          url: pageUrl(anchor.path),
-        },
-        priceSpecification: {
-          '@type': anchor.unitCode ? 'UnitPriceSpecification' : 'PriceSpecification',
-          minPrice: anchor.from,
-          priceCurrency: 'EUR',
-          ...(anchor.unitCode && { unitCode: anchor.unitCode }),
-        },
-      })),
+      makesOffer: [
+        ...priceAnchors.map((anchor) => ({
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: anchor.title,
+            description: anchor.description,
+            url: pageUrl(anchor.path),
+          },
+          priceSpecification: {
+            '@type': anchor.unitCode ? 'UnitPriceSpecification' : 'PriceSpecification',
+            minPrice: anchor.from,
+            priceCurrency: 'EUR',
+            valueAddedTaxIncluded: false,
+            ...(anchor.unitCode && { unitCode: anchor.unitCode }),
+          },
+        })),
+        ...crewRates.map((crew) => ({
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: `Selidba: kombi i ${crew.workers} radnika`,
+            url: pageUrl('/kombi-selidbe'),
+          },
+          priceSpecification: {
+            '@type': 'UnitPriceSpecification',
+            price: crew.perHour,
+            priceCurrency: 'EUR',
+            valueAddedTaxIncluded: false,
+            unitCode: 'HUR',
+          },
+        })),
+      ],
     },
   ],
 }
@@ -116,6 +134,7 @@ export const serviceSchema = ({ name, summary, path, price }: ServicePage) => ({
         '@type': price.unitCode ? 'UnitPriceSpecification' : 'PriceSpecification',
         [price.isMinimum ? 'minPrice' : 'price']: price.amount,
         priceCurrency: 'EUR',
+        valueAddedTaxIncluded: false,
         ...(price.unitCode && { unitCode: price.unitCode }),
       },
     },
