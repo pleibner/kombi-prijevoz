@@ -3,11 +3,10 @@
     <div class="content">
       <p>
         Kombi s vozačem stoji {{ formatAnchorPrice(prices.vanWithDriver) }} (minimalno 1 sat, bez
-        naplate dolaska), a selidba s ekipom
-        {{ formatNetPrice(crewRates[0].perHour, 'po satu') }} za {{ crewRates[0].crew }}. Selidba
-        garsonijere ili jednosobnog stana stoji {{ formatAnchorPrice(prices.flatMove) }}, a odvoz do
-        1 m³ glomaznog otpada {{ formatAnchorPrice(prices.bulkyWaste) }}. Hitne prijevoze obavljamo
-        0–24 bez nadoplate.
+        naplate dolaska), a selidbe naplaćujemo po satu, od
+        {{ formatPrice(crewRates[0].perHour) }} za {{ crewRates[0].crew }}. Dostava iz trgovine
+        stoji od {{ formatNetPrice(storeDeliveryFrom) }}, a odvoz do 1 m³ glomaznog otpada
+        {{ formatAnchorPrice(prices.bulkyWaste) }}. Hitne prijevoze obavljamo 0–24 bez nadoplate.
       </p>
 
       <h2>Cijene usluga</h2>
@@ -72,6 +71,7 @@ import { useJsonLd } from '@/composables/useJsonLd'
 import { usePageMeta } from '@/composables/usePageMeta'
 import type { FaqItem } from '@/data/faq'
 import {
+  bedOrWardrobeRemoval,
   bulkyWastePerExtraM3,
   crewRates,
   crewRatesText,
@@ -79,13 +79,13 @@ import {
   formatAnchorPrice,
   formatNetPrice,
   formatPrice,
-  largeMoveFrom,
+  formatPriceRange,
   priceList,
   pricePerKmOutsideZagreb,
   prices,
   pricingNotes,
   rubblePerBag,
-  twoRoomMoveFrom,
+  storeDeliveryFrom,
   vatNote,
 } from '@/data/pricing'
 import { site } from '@/data/site'
@@ -99,16 +99,16 @@ const priceFaq: FaqItem[] = [
     answer: `Kombi s vozačem stoji ${formatAnchorPrice(van)}, uz minimalno 1 sat i bez naplate dolaska. Cijena uključuje kombi, gorivo po Zagrebu i vozača koji pomaže pri utovaru i istovaru. Dodatni radnik stoji ${extraWorkerText}.`,
   },
   {
-    question: 'Koliko košta selidba po satu?',
-    answer: `Selidbe naplaćujemo po satu prema veličini ekipe: ${crewRatesText}.`,
+    question: 'Koliko košta selidba stana u Zagrebu?',
+    answer: `Selidbe naplaćujemo po satu, prema veličini ekipe: ${crewRatesText}. Cijena uključuje kombi, radnike, nošenje i prijevoz unutar Zagreba, a konačnu cijenu potvrđujemo prije termina.`,
   },
   {
-    question: 'Koliko košta selidba stana u Zagrebu?',
-    answer: `Selidba garsonijere ili jednosobnog stana stoji ${formatAnchorPrice(prices.flatMove)}, dvosobnog stana od ${formatNetPrice(twoRoomMoveFrom)}, a trosobnog stana ili kuće od ${formatNetPrice(largeMoveFrom)}. Cijena uključuje kombi, radnike, nošenje i prijevoz unutar Zagreba.`,
+    question: 'Koliko košta dostava iz trgovine?',
+    answer: `Dostava namještaja ili bijele tehnike iz trgovine po Zagrebu stoji od ${formatNetPrice(storeDeliveryFrom)}, s unosom u stan. Po želji sastavljamo namještaj, spajamo uređaje i odvozimo stari komad.`,
   },
   {
     question: 'Koliko košta odvoz glomaznog otpada?',
-    answer: `Odvoz do 1 m³ glomaznog otpada, otprilike jednog kauča ili ormara, stoji ${formatAnchorPrice(prices.bulkyWaste)}, a svaki dodatni m³ ${formatNetPrice(bulkyWastePerExtraM3)}. Cijena uključuje utovar i odvoz u reciklažno dvorište.`,
+    answer: `Odvoz do 1 m³ glomaznog otpada, otprilike jednog kauča ili ormara, stoji ${formatAnchorPrice(prices.bulkyWaste)}, a svaki dodatni m³ ${formatNetPrice(bulkyWastePerExtraM3)}. Krevet ili ormar odvozimo za ${formatPriceRange(bedOrWardrobeRemoval)}, ovisno o težini i katu. Cijena uključuje utovar i odvoz u reciklažno dvorište.`,
   },
   {
     question: 'Koliko košta odvoz šute?',

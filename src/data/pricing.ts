@@ -1,8 +1,9 @@
 /**
  * Prices shown on the homepage, the price list (/cjenik), service pages and in structured data.
  * All prices exclude VAT (PDV); the site says so once, in vatNote (footer and price list).
- * Owner-confirmed rules: 1 hour minimum, no call-out fee, no surcharge for urgent, night or
- * holiday jobs; outside Zagreb driving is billed per km and loading per hour.
+ * Owner-confirmed rules: moves are billed per hour (no fixed move prices), 1 hour minimum, no
+ * call-out fee, no surcharge for urgent, night or holiday jobs; outside Zagreb driving is billed
+ * per km and loading per hour.
  */
 export interface PriceAnchor {
   title: string
@@ -25,12 +26,19 @@ export interface PriceItem {
 
 export const vatNote = 'Sve cijene su bez PDV-a.'
 
-/** "25 €", "0,90 €"; the no-break space keeps the amount and the currency on one line. */
-export const formatPrice = (value: number) =>
-  `${value.toLocaleString('hr-HR', {
+/** "25", "0,90" */
+const formatAmount = (value: number) =>
+  value.toLocaleString('hr-HR', {
     minimumFractionDigits: Number.isInteger(value) ? 0 : 2,
     maximumFractionDigits: 2,
-  })} €`
+  })
+
+/** "25 €", "0,90 €"; the no-break space keeps the amount and the currency on one line. */
+export const formatPrice = (value: number) => `${formatAmount(value)} €`
+
+/** "60–100 €" */
+export const formatPriceRange = ({ from, to }: { from: number; to: number }) =>
+  `${formatAmount(from)}–${formatPrice(to)}`
 
 /** "60 € po m³" (without VAT, see vatNote) */
 export const formatNetPrice = (value: number, unit?: string) =>
@@ -63,10 +71,12 @@ export const crewRates = [
   },
 ] as const
 
-export const pricePerKmOutsideZagreb = 0.9
-export const twoRoomMoveFrom = 200
-export const largeMoveFrom = 300
+export const pricePerKmOutsideZagreb = 1
+/** Delivery from a store (IKEA, Lesnina, Pevex…), a starting price per delivery. */
+export const storeDeliveryFrom = 50
 export const bulkyWastePerExtraM3 = 40
+/** Removal of a bed or a wardrobe, depending on its weight and the floor. */
+export const bedOrWardrobeRemoval = { from: 60, to: 100 }
 /** Rubble is priced per bag only, never per m³. */
 export const rubblePerBag = 10
 
@@ -88,12 +98,13 @@ export const prices = {
       'Kombi, gorivo po Zagrebu i vozač koji pomaže pri utovaru i istovaru. Minimalno 1 sat, bez naplate dolaska.',
     path: '/kombi-prijevoz',
   },
-  flatMove: {
-    title: 'Selidba stana',
-    from: 150,
-    description:
-      'Kombi i dva radnika za garsonijeru ili jednosobni stan unutar Zagreba, s nošenjem i prijevozom.',
-    path: '/selidbe-stanova-i-kuca',
+  move: {
+    title: 'Selidba',
+    from: crewRates[0].perHour,
+    unit: 'po satu',
+    unitCode: 'HUR',
+    description: `Kombi i 2 radnika koji nose, utovaruju, prevoze i istovaruju. Veća ekipa od ${formatNetPrice(crewRates[1].perHour)} po satu.`,
+    path: '/kombi-selidbe',
   },
   bulkyWaste: {
     title: 'Odvoz glomaznog otpada',
@@ -125,28 +136,10 @@ export const priceList: PriceItem[] = [
     path: '/kombi-selidbe',
   })),
   {
-    title: 'Selidba garsonijere ili jednosobnog stana',
-    price: formatAnchorPrice(prices.flatMove),
-    description: 'Kombi i dva radnika unutar Zagreba, s nošenjem i prijevozom.',
-    path: prices.flatMove.path,
-  },
-  {
-    title: 'Selidba dvosobnog stana',
-    price: `od ${formatNetPrice(twoRoomMoveFrom)}`,
-    description: 'Kombi i dva radnika unutar Zagreba, s nošenjem i prijevozom.',
-    path: prices.flatMove.path,
-  },
-  {
-    title: 'Selidba trosobnog stana ili kuće',
-    price: `od ${formatNetPrice(largeMoveFrom)}`,
-    description: 'Kombi i ekipa unutar Zagreba, s nošenjem i prijevozom.',
-    path: prices.flatMove.path,
-  },
-  {
     title: 'Dostava iz trgovine',
-    price: formatAnchorPrice(prices.vanWithDriver),
+    price: `od ${formatNetPrice(storeDeliveryFrom)}`,
     description:
-      'Namještaj i bijela tehnika iz IKEA-e, Lesnine, Pevexa i drugih trgovina, po satnoj cijeni kombija s vozačem: unos u stan, montaža namještaja, spajanje uređaja i odvoz starog komada.',
+      'Namještaj i bijela tehnika iz IKEA-e, Lesnine, Pevexa i drugih trgovina: unos u stan, montaža namještaja, spajanje uređaja i odvoz starog komada.',
     path: '/dostava-namjestaja',
   },
   {
@@ -159,6 +152,12 @@ export const priceList: PriceItem[] = [
     title: 'Svaki dodatni m³ glomaznog otpada',
     price: formatNetPrice(bulkyWastePerExtraM3, 'po m³'),
     description: 'Za veće količine glomaznog otpada i starog namještaja.',
+    path: '/odvoz-starog-namjestaja',
+  },
+  {
+    title: 'Odvoz kreveta ili ormara',
+    price: formatPriceRange(bedOrWardrobeRemoval),
+    description: 'Ovisno o težini i katu, s iznošenjem i odvozom u reciklažno dvorište.',
     path: '/odvoz-starog-namjestaja',
   },
   {
