@@ -30,7 +30,11 @@ export function buildLlmsTxt() {
     '',
     '## Cijene',
     '',
-    ...priceList.map((item) => `- ${item.title}: ${item.price}. ${item.description}`),
+    '- Sve cijene su bez PDV-a (25 %); PDV se dodaje na račun.',
+    ...priceList.map(
+      (item) =>
+        `- ${item.title}: ${item.price}${item.priceWithVat ? ` (${item.priceWithVat})` : ''}. ${item.description}`,
+    ),
     `- Cijeli cjenik: ${absolute('/cjenik')}`,
     '',
     '## Usluge',
