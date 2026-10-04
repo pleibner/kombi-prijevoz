@@ -1,8 +1,9 @@
 /**
  * Prices shown on the homepage, the price list (/cjenik), service pages and in structured data.
  * All prices exclude VAT (PDV); the site says so once, in vatNote (footer and price list).
- * Owner-confirmed rules: 1 hour minimum, no call-out fee, no surcharge for urgent, night or
- * holiday jobs; outside Zagreb driving is billed per km and loading per hour.
+ * Owner-confirmed rules: the driver drives and coordinates but never carries; moves are billed
+ * per hour (no fixed move prices); 1 hour minimum, no call-out fee, no surcharge for urgent, night
+ * or holiday jobs; outside Zagreb driving is billed per km and loading per hour.
  */
 export interface PriceAnchor {
   title: string
@@ -25,12 +26,19 @@ export interface PriceItem {
 
 export const vatNote = 'Sve cijene su bez PDV-a.'
 
-/** "25 €", "0,90 €"; the no-break space keeps the amount and the currency on one line. */
-export const formatPrice = (value: number) =>
-  `${value.toLocaleString('hr-HR', {
+/** "25", "0,90" */
+const formatAmount = (value: number) =>
+  value.toLocaleString('hr-HR', {
     minimumFractionDigits: Number.isInteger(value) ? 0 : 2,
     maximumFractionDigits: 2,
-  })} €`
+  })
+
+/** "25 €", "0,90 €"; the no-break space keeps the amount and the currency on one line. */
+export const formatPrice = (value: number) => `${formatAmount(value)} €`
+
+/** "60–100 €" */
+export const formatPriceRange = ({ from, to }: { from: number; to: number }) =>
+  `${formatAmount(from)}–${formatPrice(to)}`
 
 /** "60 € po m³" (without VAT, see vatNote) */
 export const formatNetPrice = (value: number, unit?: string) =>
@@ -43,29 +51,31 @@ export const formatAnchorPrice = (anchor: PriceAnchor) =>
 /** Helper added to a van-with-driver job, for transport and deliveries. */
 export const extraWorker = { firstHour: 25, nextHour: 10 }
 
-/** Moving crews per hour; the driver counts as one of the workers. */
-export const crewRates = [
-  { workers: 2, perHour: 100 },
-  { workers: 3, perHour: 150 },
-  { workers: 4, perHour: 200 },
-] as const
+/** A moving crew, billed per hour: a van with a driver who coordinates, and workers who carry. */
+const movingCrew = (workers: number, perHour: number) => ({
+  crew: `kombi i ${workers} radnika`,
+  perHour,
+  description: `Vozač koordinira selidbu, a ${workers} radnika nose, utovaruju i istovaruju.`,
+})
 
-export const pricePerKmOutsideZagreb = 0.9
-export const twoRoomMoveFrom = 200
-export const largeMoveFrom = 300
+export const crewRates = [movingCrew(2, 100), movingCrew(3, 150), movingCrew(4, 200)] as const
+
+export const pricePerKmOutsideZagreb = 1
+/** Delivery from a store (IKEA, Lesnina, Pevex…), a starting price per delivery. */
+export const storeDeliveryFrom = 50
 export const bulkyWastePerExtraM3 = 40
-export const rubblePerM3 = 60
+/** Removal of a bed or a wardrobe, depending on its weight and the floor. */
+export const bedOrWardrobeRemoval = { from: 60, to: 100 }
+/** Rubble is priced per bag only, never per m³. */
+export const rubblePerBag = 10
 
 /** "25 € za prvi sat i 10 € za svaki sljedeći sat" */
 export const extraWorkerText = `${formatNetPrice(extraWorker.firstHour)} za prvi sat i ${formatNetPrice(extraWorker.nextHour)} za svaki sljedeći sat`
 
-/** "kombi i 2 radnika 100 €, 3 radnika 150 €, 4 radnika 200 €" (per hour) */
-export const crewRatesText = `kombi i ${crewRates
-  .map((crew) => `${crew.workers} radnika ${formatNetPrice(crew.perHour)}`)
-  .join(', ')}`
-
-const helpers = (workers: number) =>
-  workers === 2 ? 'Vozač i pomoćnik' : `Vozač i ${workers - 1} pomoćnika`
+/** "kombi i 2 radnika 100 €, kombi i 3 radnika 150 €, kombi i 4 radnika 200 €" (per hour) */
+export const crewRatesText = crewRates
+  .map((rate) => `${rate.crew} ${formatNetPrice(rate.perHour)}`)
+  .join(', ')
 
 export const prices = {
   vanWithDriver: {
@@ -74,15 +84,16 @@ export const prices = {
     unit: 'po satu',
     unitCode: 'HUR',
     description:
-      'Kombi, gorivo po Zagrebu i vozač koji pomaže pri utovaru i istovaru. Minimalno 1 sat, bez naplate dolaska.',
+      'Kombi, gorivo po Zagrebu i vozač koji koordinira utovar i istovar. Minimalno 1 sat, bez naplate dolaska.',
     path: '/kombi-prijevoz',
   },
-  flatMove: {
-    title: 'Selidba stana',
-    from: 150,
-    description:
-      'Kombi i dva radnika za garsonijeru ili jednosobni stan unutar Zagreba, s nošenjem i prijevozom.',
-    path: '/selidbe-stanova-i-kuca',
+  move: {
+    title: 'Selidba',
+    from: crewRates[0].perHour,
+    unit: 'po satu',
+    unitCode: 'HUR',
+    description: `${crewRates[0].description} Veća ekipa od ${formatNetPrice(crewRates[1].perHour)} po satu.`,
+    path: '/kombi-selidbe',
   },
   bulkyWaste: {
     title: 'Odvoz glomaznog otpada',
@@ -107,35 +118,17 @@ export const priceList: PriceItem[] = [
     price: formatNetPrice(extraWorker.firstHour, 'prvi sat'),
     description: `Svaki sljedeći sat ${formatNetPrice(extraWorker.nextHour)}. Pomoć pri nošenju, utovaru i istovaru uz prijevoz robe i dostave.`,
   },
-  ...crewRates.map((crew) => ({
-    title: `Selidba: kombi i ${crew.workers} radnika`,
-    price: formatNetPrice(crew.perHour, 'po satu'),
-    description: `${helpers(crew.workers)} nose, utovaruju, prevoze i istovaruju.`,
+  ...crewRates.map((rate) => ({
+    title: `Selidba: ${rate.crew}`,
+    price: formatNetPrice(rate.perHour, 'po satu'),
+    description: rate.description,
     path: '/kombi-selidbe',
   })),
   {
-    title: 'Selidba garsonijere ili jednosobnog stana',
-    price: formatAnchorPrice(prices.flatMove),
-    description: 'Kombi i dva radnika unutar Zagreba, s nošenjem i prijevozom.',
-    path: prices.flatMove.path,
-  },
-  {
-    title: 'Selidba dvosobnog stana',
-    price: `od ${formatNetPrice(twoRoomMoveFrom)}`,
-    description: 'Kombi i dva radnika unutar Zagreba, s nošenjem i prijevozom.',
-    path: prices.flatMove.path,
-  },
-  {
-    title: 'Selidba trosobnog stana ili kuće',
-    price: `od ${formatNetPrice(largeMoveFrom)}`,
-    description: 'Kombi i ekipa unutar Zagreba, s nošenjem i prijevozom.',
-    path: prices.flatMove.path,
-  },
-  {
     title: 'Dostava iz trgovine',
-    price: formatAnchorPrice(prices.vanWithDriver),
+    price: `od ${formatNetPrice(storeDeliveryFrom)}`,
     description:
-      'Namještaj i bijela tehnika iz IKEA-e, Lesnine, Pevexa i drugih trgovina, po satnoj cijeni kombija s vozačem: unos u stan, montaža namještaja, spajanje uređaja i odvoz starog komada.',
+      'Namještaj i bijela tehnika iz IKEA-e, Lesnine, Pevexa i drugih trgovina: unos u stan, montaža namještaja, spajanje uređaja i odvoz starog komada.',
     path: '/dostava-namjestaja',
   },
   {
@@ -151,8 +144,14 @@ export const priceList: PriceItem[] = [
     path: '/odvoz-starog-namjestaja',
   },
   {
+    title: 'Odvoz kreveta ili ormara',
+    price: formatPriceRange(bedOrWardrobeRemoval),
+    description: 'Ovisno o težini i katu, s iznošenjem i odvozom u reciklažno dvorište.',
+    path: '/odvoz-starog-namjestaja',
+  },
+  {
     title: 'Odvoz šute',
-    price: formatNetPrice(rubblePerM3, 'po m³'),
+    price: `od ${formatNetPrice(rubblePerBag, 'po vreći')}`,
     description: 'Utovar i odvoz građevinskog otpada u reciklažno dvorište.',
     path: '/odvoz-sute',
   },
