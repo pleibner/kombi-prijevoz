@@ -79,6 +79,10 @@ const facts = {
   },
   extraWorker: { label: 'Dodatni radnik', value: extraWorkerText },
   crews: { label: 'Ekipa po satu', value: capitalize(crewRatesText) },
+  crewRoles: {
+    label: 'Vozač',
+    value: 'Koordinira selidbu, a radnici nose, utovaruju i istovaruju',
+  },
   storeDelivery: { label: 'Cijena', value: `Dostava iz trgovine ${storeDelivery}` },
   bedOrWardrobe: { label: 'Krevet ili ormar', value: `${bedOrWardrobe}, ovisno o težini i katu` },
   hours: { label: 'Radno vrijeme', value: site.hours },
@@ -104,12 +108,12 @@ export const servicePages: ServicePage[] = [
     name: 'Kombi prijevoz',
     title: 'Kombi prijevoz - Brzi i siguran transport Zagreb',
     description: `Kombi prijevoz robe u Zagrebu i okolici: kombi s vozačem ${vanRate}, minimalno 1 sat, bez naplate dolaska. Svaki dan 08–20 h, hitno 0–24 h.`,
-    summary: `Kombi prijevoz robe po Zagrebu i okolici stoji ${vanRate} za kombi s vozačem koji pomaže pri utovaru i istovaru, uz minimalno 1 sat i bez naplate dolaska. Imamo ${site.fleet} s ${site.cargoVolume} tovarnog prostora. Radimo svaki dan od 8 do 20 h, a hitne prijevoze obavljamo 0–24.`,
+    summary: `Kombi prijevoz robe po Zagrebu i okolici stoji ${vanRate} za kombi s vozačem koji koordinira utovar i istovar, uz minimalno 1 sat i bez naplate dolaska. Za nošenje možete dodati radnika: ${extraWorkerText}. Imamo ${site.fleet} s ${site.cargoVolume} tovarnog prostora. Radimo svaki dan od 8 do 20 h, a hitne prijevoze obavljamo 0–24.`,
     facts: [facts.vanRate, facts.extraWorker, facts.fleet, facts.area, facts.hours],
     faq: [
       {
         question: 'Koliko košta kombi prijevoz u Zagrebu?',
-        answer: `Kombi s vozačem stoji ${vanRate}, uz minimalno 1 sat. Dolazak ne naplaćujemo, a gorivo po Zagrebu je uključeno. Dodatni radnik stoji ${extraWorkerText}.`,
+        answer: `Kombi s vozačem stoji ${vanRate}, uz minimalno 1 sat. Dolazak ne naplaćujemo, a gorivo po Zagrebu je uključeno. Vozač koordinira utovar i istovar, a dodatni radnik za nošenje stoji ${extraWorkerText}.`,
       },
       {
         question: 'Koliko stane u vaš kombi?',
@@ -152,9 +156,10 @@ export const servicePages: ServicePage[] = [
     name: 'Kombi selidbe',
     title: 'Kombi selidbe - Profesionalne usluge selidbe Zagreb',
     description: `Kombi selidbe u Zagrebu po satu: ${crewRatesText}. Rastavljanje i sastavljanje namještaja i pakiranje.`,
-    summary: `Selidbe u Zagrebu naplaćujemo po satu, prema veličini ekipe: ${crewRatesText}. U cijenu ulaze kombi, radnici, nošenje i prijevoz, a po želji rastavljamo i sastavljamo namještaj te pakiramo stvari.`,
+    summary: `Selidbe u Zagrebu naplaćujemo po satu, prema veličini ekipe: ${crewRatesText}. Vozač koordinira selidbu, a radnici nose, utovaruju i istovaruju. Po želji rastavljamo i sastavljamo namještaj te pakiramo stvari.`,
     facts: [
       facts.crews,
+      facts.crewRoles,
       { label: 'Usluge', value: 'Rastavljanje i sastavljanje namještaja, pakiranje' },
       facts.quote,
       facts.hours,
@@ -207,7 +212,7 @@ export const servicePages: ServicePage[] = [
     name: 'Povoljan kombi prijevoz',
     title: 'Povoljan kombi prijevoz - Jeftini transport Zagreb',
     description: `Povoljan kombi prijevoz u Zagrebu: ${vanRate}, minimalno 1 sat, bez naplate dolaska i bez noćne ili blagdanske nadoplate. Procjena je besplatna.`,
-    summary: `Kombi s vozačem stoji ${vanRate}, a plaćate samo vrijeme rada: minimalno 1 sat, bez naplate dolaska i bez nadoplate za hitne, noćne i blagdanske termine. Dodatni radnik stoji ${extraWorkerText}, izvan Zagreba naplaćujemo ${perKm}, a procjena je besplatna.`,
+    summary: `Kombi s vozačem stoji ${vanRate}, a plaćate samo vrijeme rada: minimalno 1 sat, bez naplate dolaska i bez nadoplate za hitne, noćne i blagdanske termine. Dodatni radnik za nošenje stoji ${extraWorkerText}, izvan Zagreba naplaćujemo ${perKm}, a procjena je besplatna.`,
     facts: [
       facts.vanRate,
       { label: 'Noću i praznicima', value: 'Bez nadoplate' },
@@ -272,6 +277,7 @@ export const servicePages: ServicePage[] = [
     summary: `Selidbu stana ili kuće u Zagrebu naplaćujemo po satu, prema veličini ekipe: ${crewRatesText}. Po želji zapakiramo stvari te rastavimo i sastavimo namještaj, a selimo svaki dan od 8 do 20 h.`,
     facts: [
       facts.crews,
+      facts.crewRoles,
       { label: 'Pakiranje', value: 'Po želji pakiramo vaše stvari' },
       { label: 'Namještaj', value: 'Rastavljanje i sastavljanje' },
       facts.quote,
@@ -306,6 +312,7 @@ export const servicePages: ServicePage[] = [
       { label: 'Računala i mreža', value: 'Ponovno spajanje na novoj adresi' },
       { label: 'Cijena', value: 'Po satu prema veličini ekipe ili po ponudi' },
       facts.crews,
+      facts.crewRoles,
       facts.payment,
       facts.hours,
     ],
@@ -341,10 +348,8 @@ export const servicePages: ServicePage[] = [
         label: 'Cijena',
         value: `Selidba ${moveRate}, kombi s vozačem ${vanRate}`,
       },
-      {
-        label: 'Ekipa po satu',
-        value: capitalize(crewRatesText),
-      },
+      facts.crews,
+      facts.crewRoles,
     ],
     faq: [
       {

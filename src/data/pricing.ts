@@ -1,9 +1,9 @@
 /**
  * Prices shown on the homepage, the price list (/cjenik), service pages and in structured data.
  * All prices exclude VAT (PDV); the site says so once, in vatNote (footer and price list).
- * Owner-confirmed rules: moves are billed per hour (no fixed move prices), 1 hour minimum, no
- * call-out fee, no surcharge for urgent, night or holiday jobs; outside Zagreb driving is billed
- * per km and loading per hour.
+ * Owner-confirmed rules: the driver drives and coordinates but never carries; moves are billed
+ * per hour (no fixed move prices); 1 hour minimum, no call-out fee, no surcharge for urgent, night
+ * or holiday jobs; outside Zagreb driving is billed per km and loading per hour.
  */
 export interface PriceAnchor {
   title: string
@@ -51,25 +51,14 @@ export const formatAnchorPrice = (anchor: PriceAnchor) =>
 /** Helper added to a van-with-driver job, for transport and deliveries. */
 export const extraWorker = { firstHour: 25, nextHour: 10 }
 
-/** Moving crews, billed per hour. In the two smaller crews the driver is one of the workers. */
-export const crewRates = [
-  {
-    crew: 'kombi i 2 radnika',
-    perHour: 100,
-    description: 'Vozač i pomoćnik nose, utovaruju, prevoze i istovaruju.',
-  },
-  {
-    crew: 'kombi i 3 radnika',
-    perHour: 150,
-    description: 'Vozač i 2 pomoćnika nose, utovaruju, prevoze i istovaruju.',
-  },
-  {
-    crew: 'vozač, nadzor i 4 radnika',
-    perHour: 200,
-    description:
-      'Za veće selidbe: vozač, nadzor selidbe i 4 radnika koji nose, utovaruju i istovaruju.',
-  },
-] as const
+/** A moving crew, billed per hour: a van with a driver who coordinates, and workers who carry. */
+const movingCrew = (workers: number, perHour: number) => ({
+  crew: `kombi i ${workers} radnika`,
+  perHour,
+  description: `Vozač koordinira selidbu, a ${workers} radnika nose, utovaruju i istovaruju.`,
+})
+
+export const crewRates = [movingCrew(2, 100), movingCrew(3, 150), movingCrew(4, 200)] as const
 
 export const pricePerKmOutsideZagreb = 1
 /** Delivery from a store (IKEA, Lesnina, Pevex…), a starting price per delivery. */
@@ -83,10 +72,10 @@ export const rubblePerBag = 10
 /** "25 € za prvi sat i 10 € za svaki sljedeći sat" */
 export const extraWorkerText = `${formatNetPrice(extraWorker.firstHour)} za prvi sat i ${formatNetPrice(extraWorker.nextHour)} za svaki sljedeći sat`
 
-/** "kombi i 2 radnika 100 €; kombi i 3 radnika 150 €; vozač, nadzor i 4 radnika 200 €" (per hour) */
+/** "kombi i 2 radnika 100 €, kombi i 3 radnika 150 €, kombi i 4 radnika 200 €" (per hour) */
 export const crewRatesText = crewRates
   .map((rate) => `${rate.crew} ${formatNetPrice(rate.perHour)}`)
-  .join('; ')
+  .join(', ')
 
 export const prices = {
   vanWithDriver: {
@@ -95,7 +84,7 @@ export const prices = {
     unit: 'po satu',
     unitCode: 'HUR',
     description:
-      'Kombi, gorivo po Zagrebu i vozač koji pomaže pri utovaru i istovaru. Minimalno 1 sat, bez naplate dolaska.',
+      'Kombi, gorivo po Zagrebu i vozač koji koordinira utovar i istovar. Minimalno 1 sat, bez naplate dolaska.',
     path: '/kombi-prijevoz',
   },
   move: {
@@ -103,7 +92,7 @@ export const prices = {
     from: crewRates[0].perHour,
     unit: 'po satu',
     unitCode: 'HUR',
-    description: `Kombi i 2 radnika koji nose, utovaruju, prevoze i istovaruju. Veća ekipa od ${formatNetPrice(crewRates[1].perHour)} po satu.`,
+    description: `${crewRates[0].description} Veća ekipa od ${formatNetPrice(crewRates[1].perHour)} po satu.`,
     path: '/kombi-selidbe',
   },
   bulkyWaste: {

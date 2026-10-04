@@ -96,11 +96,11 @@ const van = prices.vanWithDriver
 const priceFaq: FaqItem[] = [
   {
     question: 'Koliko košta kombi prijevoz u Zagrebu?',
-    answer: `Kombi s vozačem stoji ${formatAnchorPrice(van)}, uz minimalno 1 sat i bez naplate dolaska. Cijena uključuje kombi, gorivo po Zagrebu i vozača koji pomaže pri utovaru i istovaru. Dodatni radnik stoji ${extraWorkerText}.`,
+    answer: `Kombi s vozačem stoji ${formatAnchorPrice(van)}, uz minimalno 1 sat i bez naplate dolaska. Cijena uključuje kombi, gorivo po Zagrebu i vozača koji koordinira utovar i istovar. Dodatni radnik za nošenje stoji ${extraWorkerText}.`,
   },
   {
     question: 'Koliko košta selidba stana u Zagrebu?',
-    answer: `Selidbe naplaćujemo po satu, prema veličini ekipe: ${crewRatesText}. Cijena uključuje kombi, radnike, nošenje i prijevoz unutar Zagreba, a konačnu cijenu potvrđujemo prije termina.`,
+    answer: `Selidbe unutar Zagreba naplaćujemo po satu, prema veličini ekipe: ${crewRatesText}. Vozač koordinira selidbu, a radnici nose, utovaruju i istovaruju. Konačnu cijenu potvrđujemo prije termina.`,
   },
   {
     question: 'Koliko košta dostava iz trgovine?',
