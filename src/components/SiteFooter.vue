@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppIcon from '@/components/AppIcon.vue'
+import { vatNote } from '@/data/pricing'
 import { site } from '@/data/site'
 import { trackingService } from '@/utils/tracking'
 
@@ -41,6 +42,7 @@ const trackGoogle = () => trackingService.trackClick('footer_google_click')
           >
           <p>Profesionalni kombi prijevoz, selidbe, dostava i odvoz otpada u Zagrebu i okolici.</p>
           <p>Radimo {{ site.hoursShort }}, {{ site.urgentShort }}</p>
+          <p>{{ vatNote }}</p>
         </div>
 
         <nav class="site-footer__col" aria-label="Usluge">

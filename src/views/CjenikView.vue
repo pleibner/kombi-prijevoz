@@ -7,12 +7,16 @@
         {{ formatNetPrice(crewRates[0].perHour, 'po satu') }} za kombi i
         {{ crewRates[0].workers }} radnika. Selidba garsonijere ili jednosobnog stana stoji
         {{ formatAnchorPrice(prices.flatMove) }}, a odvoz do 1 m³ glomaznog otpada
-        {{ formatAnchorPrice(prices.bulkyWaste) }}. Sve cijene su bez PDV-a (25 %), a hitne
-        prijevoze obavljamo 0–24 bez nadoplate.
+        {{ formatAnchorPrice(prices.bulkyWaste) }}. Hitne prijevoze obavljamo 0–24 bez nadoplate.
       </p>
 
       <h2>Cijene usluga</h2>
       <table class="price-table">
+        <caption>
+          {{
+            vatNote
+          }}
+        </caption>
         <thead>
           <tr>
             <th scope="col">Usluga</th>
@@ -28,7 +32,6 @@
             </th>
             <td class="price-table__price">
               {{ item.price }}
-              <small v-if="item.priceWithVat">{{ item.priceWithVat }}</small>
             </td>
             <td>{{ item.description }}</td>
           </tr>
@@ -74,7 +77,6 @@ import {
   crewRatesText,
   extraWorkerText,
   formatAnchorPrice,
-  formatGrossPrice,
   formatNetPrice,
   formatPrice,
   largeMoveFrom,
@@ -84,6 +86,7 @@ import {
   pricingNotes,
   rubblePerM3,
   twoRoomMoveFrom,
+  vatNote,
 } from '@/data/pricing'
 import { site } from '@/data/site'
 import { breadcrumbSchema, faqSchema } from '@/utils/schema'
@@ -93,7 +96,7 @@ const van = prices.vanWithDriver
 const priceFaq: FaqItem[] = [
   {
     question: 'Koliko košta kombi prijevoz u Zagrebu?',
-    answer: `Kombi s vozačem stoji ${formatAnchorPrice(van)} (${formatGrossPrice(van.from, van.unit)}), uz minimalno 1 sat i bez naplate dolaska. Cijena uključuje kombi, gorivo po Zagrebu i vozača koji pomaže pri utovaru i istovaru. Dodatni radnik stoji ${extraWorkerText}.`,
+    answer: `Kombi s vozačem stoji ${formatAnchorPrice(van)}, uz minimalno 1 sat i bez naplate dolaska. Cijena uključuje kombi, gorivo po Zagrebu i vozača koji pomaže pri utovaru i istovaru. Dodatni radnik stoji ${extraWorkerText}.`,
   },
   {
     question: 'Koliko košta selidba po satu?',
@@ -109,15 +112,11 @@ const priceFaq: FaqItem[] = [
   },
   {
     question: 'Koliko košta odvoz šute?',
-    answer: `Odvoz šute stoji ${formatNetPrice(rubblePerM3, 'po m³')} (${formatGrossPrice(rubblePerM3, 'po m³')}), s utovarom i odvozom u reciklažno dvorište.`,
+    answer: `Odvoz šute stoji ${formatNetPrice(rubblePerM3, 'po m³')}, s utovarom i odvozom u reciklažno dvorište.`,
   },
   {
     question: 'Koliko košta prijevoz izvan Zagreba?',
     answer: `Vožnju izvan Zagreba naplaćujemo ${formatNetPrice(pricePerKmOutsideZagreb, 'po kilometru')}, a utovar i istovar po satnoj cijeni. Najčešće vozimo unutar ${site.serviceRadiusKm} km od Zagreba, a po dogovoru po cijeloj Hrvatskoj.`,
-  },
-  {
-    question: 'Jesu li cijene s PDV-om?',
-    answer: `Ne. Sve cijene su bez PDV-a, a PDV od 25 % dodaje se na račun. Na primjer, kombi s vozačem s PDV-om stoji ${formatGrossPrice(van.from, van.unit)}.`,
   },
   {
     question: 'Jesu li noćni i blagdanski termini skuplji?',
@@ -187,11 +186,11 @@ h3 {
   color: var(--accent);
 }
 
-.price-table__price small {
-  display: block;
-  margin-top: 2px;
-  font-size: 13px;
-  font-weight: 500;
+.price-table caption {
+  caption-side: bottom;
+  padding-top: 12px;
+  text-align: left;
+  font-size: 14px;
   color: var(--muted);
 }
 
