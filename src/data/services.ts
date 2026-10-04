@@ -1,7 +1,7 @@
 import type { FaqItem } from './faq'
 import {
   bedOrWardrobeRemoval,
-  bulkyWastePerExtraM3,
+  bulkyWasteExtraItemFrom,
   crewRates,
   crewRatesText,
   extraWorkerText,
@@ -54,7 +54,7 @@ const vanRate = formatAnchorPrice(prices.vanWithDriver)
 const moveRate = formatAnchorPrice(prices.move)
 const storeDelivery = `od ${formatNetPrice(storeDeliveryFrom)}`
 const bulkyWaste = formatAnchorPrice(prices.bulkyWaste)
-const extraM3 = formatNetPrice(bulkyWastePerExtraM3)
+const extraItem = `od ${formatNetPrice(bulkyWasteExtraItemFrom)}`
 const bedOrWardrobe = formatPriceRange(bedOrWardrobeRemoval)
 const rubble = `od ${formatNetPrice(rubblePerBag, 'po vreći')}`
 const perKm = formatNetPrice(pricePerKmOutsideZagreb, 'po km')
@@ -448,12 +448,12 @@ export const servicePages: ServicePage[] = [
     path: '/odvoz-otpada',
     name: 'Odvoz otpada',
     title: 'Odvoz otpada - Profesionalne usluge odvoza Zagreb',
-    description: `Odvoz otpada u Zagrebu: glomazni otpad ${bulkyWaste} do 1 m³ i ${extraM3} za svaki dodatni m³, šuta ${rubble}. Odvoz u reciklažno dvorište.`,
-    summary: `Odvoz glomaznog otpada u Zagrebu stoji ${bulkyWaste} za do 1 m³, a svaki dodatni m³ ${extraM3}. Odvoz šute stoji ${rubble}. Otpad sami utovarimo i odvezemo u reciklažno dvorište, a hitne odvoze obavljamo 0–24.`,
+    description: `Odvoz otpada u Zagrebu: glomazni otpad ${bulkyWaste} do 1 m³ i ${extraItem} za svaki dodatni komad, šuta ${rubble}. Odvoz u reciklažno dvorište.`,
+    summary: `Odvoz glomaznog otpada u Zagrebu stoji ${bulkyWaste} za do 1 m³, a svaki dodatni komad ${extraItem}, ovisno o katu. Odvoz šute stoji ${rubble}. Otpad sami utovarimo i odvezemo u reciklažno dvorište, a hitne odvoze obavljamo 0–24.`,
     facts: [
       {
         label: 'Glomazni otpad',
-        value: `${capitalize(bulkyWaste)} do 1 m³, svaki dodatni m³ ${extraM3}`,
+        value: `${capitalize(bulkyWaste)} do 1 m³, svaki dodatni komad ${extraItem}`,
       },
       facts.bedOrWardrobe,
       { label: 'Šuta', value: capitalize(rubble) },
@@ -464,7 +464,7 @@ export const servicePages: ServicePage[] = [
     faq: [
       {
         question: 'Koliko košta odvoz otpada?',
-        answer: `Glomazni otpad odvozimo ${bulkyWaste} za do 1 m³, a svaki dodatni m³ stoji ${extraM3}. Odvoz šute stoji ${rubble}, s utovarom i odvozom.`,
+        answer: `Glomazni otpad odvozimo ${bulkyWaste} za do 1 m³, a svaki dodatni komad stoji ${extraItem}, ovisno o katu. Odvoz šute stoji ${rubble}, s utovarom i odvozom.`,
       },
       {
         question: 'Gdje završava otpad koji odvezete?',
@@ -477,11 +477,11 @@ export const servicePages: ServicePage[] = [
     path: '/odvoz-glomaznog-otpada',
     name: 'Odvoz glomaznog otpada',
     title: 'Odvoz glomaznog otpada - Brzo i pouzdano Zagreb',
-    description: `Odvoz glomaznog otpada u Zagrebu ${bulkyWaste} za do 1 m³, svaki dodatni m³ ${extraM3}. Iznošenje, utovar i odvoz u reciklažno dvorište, hitno 0–24.`,
-    summary: `Odvoz glomaznog otpada u Zagrebu stoji ${bulkyWaste} za do 1 m³, otprilike jedan kauč ili ormar, a svaki dodatni m³ ${extraM3}. Krevet ili ormar odvozimo za ${bedOrWardrobe}, ovisno o težini i katu. Otpad sami iznesemo i utovarimo, s bilo kojeg kata, i odvezemo u reciklažno dvorište.`,
+    description: `Odvoz glomaznog otpada u Zagrebu ${bulkyWaste} za do 1 m³, svaki dodatni komad ${extraItem}. Iznošenje, utovar i odvoz u reciklažno dvorište, hitno 0–24.`,
+    summary: `Odvoz glomaznog otpada u Zagrebu stoji ${bulkyWaste} za do 1 m³, otprilike jedan kauč ili ormar, a svaki dodatni komad ${extraItem}, ovisno o katu. Krevet ili ormar odvozimo za ${bedOrWardrobe}, ovisno o težini i katu. Otpad sami iznesemo i utovarimo, s bilo kojeg kata, i odvezemo u reciklažno dvorište.`,
     facts: [
       { label: 'Cijena', value: `${capitalize(bulkyWaste)} do 1 m³ (npr. kauč ili ormar)` },
-      { label: 'Dodatni m³', value: extraM3 },
+      { label: 'Dodatni komad', value: `${capitalize(extraItem)}, ovisno o katu` },
       facts.bedOrWardrobe,
       { label: 'Uključeno', value: 'Iznošenje, utovar i odvoz' },
       facts.recycling,
@@ -490,7 +490,7 @@ export const servicePages: ServicePage[] = [
     faq: [
       {
         question: 'Koliko je 1 m³ glomaznog otpada?',
-        answer: `Otprilike jedan kauč ili ormar. Odvoz do 1 m³ stoji ${bulkyWaste}, a svaki dodatni m³ ${extraM3}.`,
+        answer: `Otprilike jedan kauč ili ormar. Odvoz do 1 m³ stoji ${bulkyWaste}, a svaki dodatni komad ${extraItem}, ovisno o katu.`,
       },
       {
         question: 'Moram li sam iznijeti otpad?',
@@ -504,11 +504,11 @@ export const servicePages: ServicePage[] = [
     name: 'Odvoz starog namještaja',
     title: 'Odvoz starog namještaja - Profesionalna usluga Zagreb',
     description: `Odvoz starog namještaja u Zagrebu: krevet ili ormar ${bedOrWardrobe} ovisno o težini i katu, ostali namještaj ${bulkyWaste} za do 1 m³. Iznošenje i odvoz u reciklažno dvorište.`,
-    summary: `Krevet ili ormar odvozimo za ${bedOrWardrobe}, ovisno o težini i katu, a ostali stari namještaj ${bulkyWaste} za do 1 m³ i ${extraM3} za svaki dodatni m³. Namještaj iznosimo iz stana, kuće ili ureda bez obzira na kat i uske prolaze i odvozimo ga u reciklažno dvorište.`,
+    summary: `Krevet ili ormar odvozimo za ${bedOrWardrobe}, ovisno o težini i katu, a ostali stari namještaj ${bulkyWaste} za do 1 m³ i ${extraItem} za svaki dodatni komad. Namještaj iznosimo iz stana, kuće ili ureda bez obzira na kat i uske prolaze i odvozimo ga u reciklažno dvorište.`,
     facts: [
       facts.bedOrWardrobe,
       { label: 'Ostali namještaj', value: `${capitalize(bulkyWaste)} do 1 m³` },
-      { label: 'Dodatni m³', value: extraM3 },
+      { label: 'Dodatni komad', value: `${capitalize(extraItem)}, ovisno o katu` },
       { label: 'Uključeno', value: 'Iznošenje s bilo kojeg kata, utovar i odvoz' },
       facts.recycling,
       facts.hours,

@@ -72,7 +72,7 @@ import { usePageMeta } from '@/composables/usePageMeta'
 import type { FaqItem } from '@/data/faq'
 import {
   bedOrWardrobeRemoval,
-  bulkyWastePerExtraM3,
+  bulkyWasteExtraItemFrom,
   crewRates,
   crewRatesText,
   extraWorkerText,
@@ -108,7 +108,7 @@ const priceFaq: FaqItem[] = [
   },
   {
     question: 'Koliko košta odvoz glomaznog otpada?',
-    answer: `Odvoz do 1 m³ glomaznog otpada, otprilike jednog kauča ili ormara, stoji ${formatAnchorPrice(prices.bulkyWaste)}, a svaki dodatni m³ ${formatNetPrice(bulkyWastePerExtraM3)}. Krevet ili ormar odvozimo za ${formatPriceRange(bedOrWardrobeRemoval)}, ovisno o težini i katu. Cijena uključuje utovar i odvoz u reciklažno dvorište.`,
+    answer: `Odvoz do 1 m³ glomaznog otpada, otprilike jednog kauča ili ormara, stoji ${formatAnchorPrice(prices.bulkyWaste)}, a svaki dodatni komad od ${formatNetPrice(bulkyWasteExtraItemFrom)}, ovisno o katu. Krevet ili ormar odvozimo za ${formatPriceRange(bedOrWardrobeRemoval)}, ovisno o težini i katu. Cijena uključuje utovar i odvoz u reciklažno dvorište.`,
   },
   {
     question: 'Koliko košta odvoz šute?',

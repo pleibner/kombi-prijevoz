@@ -40,7 +40,7 @@ export const formatPrice = (value: number) => `${formatAmount(value)} €`
 export const formatPriceRange = ({ from, to }: { from: number; to: number }) =>
   `${formatAmount(from)}–${formatPrice(to)}`
 
-/** "60 € po m³" (without VAT, see vatNote) */
+/** "10 € po vreći" (without VAT, see vatNote) */
 export const formatNetPrice = (value: number, unit?: string) =>
   [formatPrice(value), unit].filter(Boolean).join(' ')
 
@@ -63,7 +63,8 @@ export const crewRates = [movingCrew(2, 100), movingCrew(3, 150), movingCrew(4, 
 export const pricePerKmOutsideZagreb = 1
 /** Delivery from a store (IKEA, Lesnina, Pevex…), a starting price per delivery. */
 export const storeDeliveryFrom = 50
-export const bulkyWastePerExtraM3 = 40
+/** Each additional bulky item, depending on the floor. */
+export const bulkyWasteExtraItemFrom = 50
 /** Removal of a bed or a wardrobe, depending on its weight and the floor. */
 export const bedOrWardrobeRemoval = { from: 60, to: 100 }
 /** Rubble is priced per bag only, never per m³. */
@@ -98,7 +99,7 @@ export const prices = {
   bulkyWaste: {
     title: 'Odvoz glomaznog otpada',
     from: 60,
-    description: `Do 1 m³ (npr. kauč ili ormar), s utovarom i odvozom u reciklažno dvorište. Svaki dodatni m³ ${formatNetPrice(bulkyWastePerExtraM3)}.`,
+    description: `Do 1 m³ (npr. kauč ili ormar), s utovarom i odvozom u reciklažno dvorište. Svaki dodatni komad od ${formatNetPrice(bulkyWasteExtraItemFrom)}, ovisno o katu.`,
     path: '/odvoz-glomaznog-otpada',
   },
 } satisfies Record<string, PriceAnchor>
@@ -138,9 +139,9 @@ export const priceList: PriceItem[] = [
     path: prices.bulkyWaste.path,
   },
   {
-    title: 'Svaki dodatni m³ glomaznog otpada',
-    price: formatNetPrice(bulkyWastePerExtraM3, 'po m³'),
-    description: 'Za veće količine glomaznog otpada i starog namještaja.',
+    title: 'Svaki dodatni komad glomaznog otpada',
+    price: `od ${formatNetPrice(bulkyWasteExtraItemFrom)}`,
+    description: 'Ovisno o katu, s iznošenjem i odvozom u reciklažno dvorište.',
     path: '/odvoz-starog-namjestaja',
   },
   {
