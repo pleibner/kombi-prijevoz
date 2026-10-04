@@ -26,9 +26,7 @@ import { formatPrice, priceAnchors, pricingNotes } from '@/data/pricing'
           <p class="pricing__price">
             <span class="pricing__from">od</span>
             <span class="pricing__amount">{{ formatPrice(anchor.from) }}</span>
-            <span class="pricing__unit">{{
-              [anchor.unit, '+ PDV'].filter(Boolean).join(' ')
-            }}</span>
+            <span v-if="anchor.unit" class="pricing__unit">{{ anchor.unit }}</span>
           </p>
           <p class="pricing__description">{{ anchor.description }}</p>
         </li>

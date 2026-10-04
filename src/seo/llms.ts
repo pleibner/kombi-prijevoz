@@ -1,6 +1,6 @@
 // Imported by vite.config.ts at build time, so only relative imports (no "@/" alias).
 import { faqItems } from '../data/faq'
-import { priceList } from '../data/pricing'
+import { priceList, vatNote } from '../data/pricing'
 import { servicePages } from '../data/services'
 import { serviceAreas, site } from '../data/site'
 
@@ -30,12 +30,9 @@ export function buildLlmsTxt() {
     '',
     '## Cijene',
     '',
-    '- Sve cijene su bez PDV-a (25 %); PDV se dodaje na račun.',
-    ...priceList.map(
-      (item) =>
-        `- ${item.title}: ${item.price}${item.priceWithVat ? ` (${item.priceWithVat})` : ''}. ${item.description}`,
-    ),
+    ...priceList.map((item) => `- ${item.title}: ${item.price}. ${item.description}`),
     `- Cijeli cjenik: ${absolute('/cjenik')}`,
+    `- ${vatNote}`,
     '',
     '## Usluge',
     '',

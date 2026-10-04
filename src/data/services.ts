@@ -4,7 +4,6 @@ import {
   crewRatesText,
   extraWorkerText,
   formatAnchorPrice,
-  formatGrossPrice,
   formatNetPrice,
   largeMoveFrom,
   pricePerKmOutsideZagreb,
@@ -51,7 +50,6 @@ const capitalize = (text: string) => text.charAt(0).toUpperCase() + text.slice(1
 
 const vanRate = formatAnchorPrice(prices.vanWithDriver)
 const flatMove = formatAnchorPrice(prices.flatMove)
-const vanRateWithVat = formatGrossPrice(prices.vanWithDriver.from, prices.vanWithDriver.unit)
 const twoRoomMove = `od ${formatNetPrice(twoRoomMoveFrom)}`
 const largeMove = `od ${formatNetPrice(largeMoveFrom)}`
 const bulkyWaste = formatAnchorPrice(prices.bulkyWaste)
@@ -74,7 +72,6 @@ const facts = {
   },
   extraWorker: { label: 'Dodatni radnik', value: extraWorkerText },
   crews: { label: 'Ekipa po satu', value: capitalize(crewRatesText) },
-  vat: { label: 'PDV', value: 'Cijene su bez PDV-a (25 %), PDV se dodaje na račun' },
   hours: { label: 'Radno vrijeme', value: site.hours },
   urgent: {
     label: 'Hitno',
@@ -108,11 +105,11 @@ export const servicePages: ServicePage[] = [
     title: 'Kombi prijevoz - Brzi i siguran transport Zagreb',
     description: `Kombi prijevoz robe u Zagrebu i okolici: kombi s vozačem ${vanRate}, minimalno 1 sat, bez naplate dolaska. Svaki dan 08–20 h, hitno 0–24 h.`,
     summary: `Kombi prijevoz robe po Zagrebu i okolici stoji ${vanRate} za kombi s vozačem koji pomaže pri utovaru i istovaru, uz minimalno 1 sat i bez naplate dolaska. Imamo ${site.fleet} s ${site.cargoVolume} tovarnog prostora. Radimo svaki dan od 8 do 20 h, a hitne prijevoze obavljamo 0–24.`,
-    facts: [facts.vanRate, facts.extraWorker, facts.fleet, facts.area, facts.hours, facts.vat],
+    facts: [facts.vanRate, facts.extraWorker, facts.fleet, facts.area, facts.hours],
     faq: [
       {
         question: 'Koliko košta kombi prijevoz u Zagrebu?',
-        answer: `Kombi s vozačem stoji ${vanRate} (${vanRateWithVat}), uz minimalno 1 sat. Dolazak ne naplaćujemo, a gorivo po Zagrebu je uključeno. Dodatni radnik stoji ${extraWorkerText}.`,
+        answer: `Kombi s vozačem stoji ${vanRate}, uz minimalno 1 sat. Dolazak ne naplaćujemo, a gorivo po Zagrebu je uključeno. Dodatni radnik stoji ${extraWorkerText}.`,
       },
       {
         question: 'Koliko stane u vaš kombi?',
@@ -161,7 +158,6 @@ export const servicePages: ServicePage[] = [
       facts.crews,
       { label: 'Usluge', value: 'Rastavljanje i sastavljanje namještaja, pakiranje' },
       facts.hours,
-      facts.vat,
     ],
     faq: [
       {
@@ -222,7 +218,6 @@ export const servicePages: ServicePage[] = [
       facts.extraWorker,
       facts.area,
       facts.quote,
-      facts.vat,
     ],
     faq: [
       {
@@ -535,7 +530,7 @@ export const servicePages: ServicePage[] = [
     faq: [
       {
         question: 'Koliko košta odvoz šute?',
-        answer: `Odvoz šute stoji ${rubble} (${formatGrossPrice(rubblePerM3, 'po m³')}), s utovarom i odvozom u reciklažno dvorište.`,
+        answer: `Odvoz šute stoji ${rubble}, s utovarom i odvozom u reciklažno dvorište.`,
       },
       {
         question: 'Odvozite li šutu nakon renovacije kupaonice?',
