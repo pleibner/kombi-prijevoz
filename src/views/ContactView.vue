@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router'
 import { useJsonLd } from '@/composables/useJsonLd'
 import { usePageMeta } from '@/composables/usePageMeta'
 import { breadcrumbSchema } from '@/utils/schema'
-import emailjs from '@emailjs/browser'
+import emailjs, { EmailJSResponseStatus } from '@emailjs/browser'
 import AppIcon from '@/components/AppIcon.vue'
 import ButtonPrimary from '@/components/ButtonPrimary.vue'
 import ContactInfo from '@/components/ContactInfo.vue'
@@ -161,6 +161,10 @@ const validateForm = () => {
 
 emailjs.init({ publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY })
 
+/** "400 The Public Key is invalid…" from EmailJS, or the string its own checks throw. */
+const errorReason = (error: unknown) =>
+  error instanceof EmailJSResponseStatus ? `${error.status} ${error.text}` : String(error)
+
 const submitForm = async () => {
   if (!validateForm()) {
     return
@@ -216,6 +220,8 @@ const submitForm = async () => {
     trackingService.trackError('contact_form_submit_error', error)
     submitError.value =
       'Došlo je do greške prilikom slanja upita. Molimo pokušajte ponovno ili nas kontaktirajte direktno.'
+    // In development, say why EmailJS refused, e.g. a wrong key or template ID in .env.
+    if (import.meta.env.DEV) submitError.value += ` (${errorReason(error)})`
   } finally {
     isSubmitting.value = false
   }
