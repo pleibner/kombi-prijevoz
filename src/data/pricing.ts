@@ -3,7 +3,8 @@
  * All prices exclude VAT (PDV); the site says so once, in vatNote (footer and price list).
  * Owner-confirmed rules: the driver drives and coordinates but never carries; moves are billed
  * per hour (no fixed move prices); 1 hour minimum, no call-out fee, no surcharge for urgent, night
- * or holiday jobs; outside Zagreb driving is billed per km and loading per hour.
+ * or holiday jobs; outside Zagreb driving is billed per km and loading per hour. Starting ("od")
+ * prices cover short jobs in Zagreb; a longer distance, more items or a higher floor raise them.
  */
 export interface PriceAnchor {
   title: string
@@ -44,7 +45,7 @@ export const formatPriceRange = ({ from, to }: { from: number; to: number }) =>
 export const formatNetPrice = (value: number, unit?: string) =>
   [formatPrice(value), unit].filter(Boolean).join(' ')
 
-/** "od 50 € po satu" */
+/** "od 30 € po satu" */
 export const formatAnchorPrice = (anchor: PriceAnchor) =>
   `od ${formatNetPrice(anchor.from, anchor.unit)}`
 
@@ -62,7 +63,7 @@ export const crewRates = [movingCrew(2, 100), movingCrew(3, 150), movingCrew(4, 
 
 export const pricePerKmOutsideZagreb = 1
 /** Delivery from a store (IKEA, Lesnina, Pevex…), a starting price per delivery. */
-export const storeDeliveryFrom = 50
+export const storeDeliveryFrom = 30
 /** Each additional bulky item, depending on the floor. */
 export const bulkyWasteExtraItemFrom = 50
 /** Removal of a bed or a wardrobe, depending on its weight and the floor. */
@@ -81,11 +82,11 @@ export const crewRatesText = crewRates
 export const prices = {
   vanWithDriver: {
     title: 'Kombi s vozačem',
-    from: 50,
+    from: 30,
     unit: 'po satu',
     unitCode: 'HUR',
     description:
-      'Kombi, gorivo po Zagrebu i vozač koji koordinira utovar i istovar. Minimalno 1 sat, bez naplate dolaska.',
+      'Kombi, gorivo po Zagrebu i vozač koji koordinira utovar i istovar. Minimalno 1 sat, bez naplate dolaska. Cijena raste s udaljenošću.',
     path: '/kombi-prijevoz',
   },
   move: {
@@ -129,7 +130,7 @@ export const priceList: PriceItem[] = [
     title: 'Dostava iz trgovine',
     price: `od ${formatNetPrice(storeDeliveryFrom)}`,
     description:
-      'Namještaj i bijela tehnika iz IKEA-e, Lesnine, Pevexa i drugih trgovina: unos u stan, montaža namještaja, spajanje uređaja i odvoz starog komada.',
+      'Namještaj i bijela tehnika iz IKEA-e, Lesnine, Pevexa i drugih trgovina: unos u stan, montaža namještaja, spajanje uređaja i odvoz starog komada. Cijena raste s udaljenošću, a ovisi i o katu te veličini stvari.',
     path: '/dostava-namjestaja',
   },
   {
