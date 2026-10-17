@@ -6,7 +6,9 @@
         naplate dolaska), a selidbe naplaćujemo po satu, od
         {{ formatPrice(crewRates[0].perHour) }} za {{ crewRates[0].crew }}. Dostava iz trgovine
         stoji od {{ formatNetPrice(storeDeliveryFrom) }}, a odvoz do 1 m³ glomaznog otpada
-        {{ formatAnchorPrice(prices.bulkyWaste) }}. Hitne prijevoze obavljamo 0–24 bez nadoplate.
+        {{ formatAnchorPrice(prices.bulkyWaste) }}. To su početne cijene za kraće vožnje po Zagrebu:
+        veća udaljenost, više stvari ili viši kat bez lifta podižu cijenu. Hitne prijevoze obavljamo
+        0–24 bez nadoplate.
       </p>
 
       <h2>Cijene usluga</h2>
@@ -96,7 +98,7 @@ const van = prices.vanWithDriver
 const priceFaq: FaqItem[] = [
   {
     question: 'Koliko košta kombi prijevoz u Zagrebu?',
-    answer: `Kombi s vozačem stoji ${formatAnchorPrice(van)}, uz minimalno 1 sat i bez naplate dolaska. Cijena uključuje kombi, gorivo po Zagrebu i vozača koji koordinira utovar i istovar. Dodatni radnik za nošenje stoji ${extraWorkerText}.`,
+    answer: `Kombi s vozačem stoji ${formatAnchorPrice(van)}, uz minimalno 1 sat i bez naplate dolaska. Cijena uključuje kombi, gorivo po Zagrebu i vozača koji koordinira utovar i istovar. Dodatni radnik za nošenje stoji ${extraWorkerText}. Početna cijena vrijedi za kraće vožnje po Zagrebu, a veća udaljenost je podiže.`,
   },
   {
     question: 'Koliko košta selidba stana u Zagrebu?',
@@ -104,7 +106,7 @@ const priceFaq: FaqItem[] = [
   },
   {
     question: 'Koliko košta dostava iz trgovine?',
-    answer: `Dostava namještaja ili bijele tehnike iz trgovine po Zagrebu stoji od ${formatNetPrice(storeDeliveryFrom)}, s unosom u stan. Po želji sastavljamo namještaj, spajamo uređaje i odvozimo stari komad.`,
+    answer: `Dostava namještaja ili bijele tehnike iz trgovine po Zagrebu stoji od ${formatNetPrice(storeDeliveryFrom)}, s unosom u stan. Početna cijena vrijedi za kraće relacije, a veća udaljenost od trgovine, viši kat bez lifta ili veći komadi je podižu. Po želji sastavljamo namještaj, spajamo uređaje i odvozimo stari komad.`,
   },
   {
     question: 'Koliko košta odvoz glomaznog otpada?',

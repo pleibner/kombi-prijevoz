@@ -380,7 +380,7 @@ export const servicePages: ServicePage[] = [
     faq: [
       {
         question: 'Koliko košta dostava namještaja iz trgovine?',
-        answer: `Dostava iz trgovine po Zagrebu stoji ${storeDelivery}, s unosom u stan. Konačnu cijenu potvrđujemo prije termina, prema količini stvari, katu i liftu te montaži.`,
+        answer: `Dostava iz trgovine po Zagrebu stoji ${storeDelivery}, s unosom u stan. Konačnu cijenu potvrđujemo prije termina, prema udaljenosti, količini stvari, katu i liftu te montaži.`,
       },
       {
         question: 'Sastavljate li namještaj?',
@@ -409,7 +409,7 @@ export const servicePages: ServicePage[] = [
     faq: [
       {
         question: 'Koliko košta dostava bijele tehnike?',
-        answer: `Dostava iz trgovine po Zagrebu stoji ${storeDelivery}, s unosom u stan. Konačnu cijenu potvrđujemo prije termina, prema katu i liftu te spajanju uređaja.`,
+        answer: `Dostava iz trgovine po Zagrebu stoji ${storeDelivery}, s unosom u stan. Konačnu cijenu potvrđujemo prije termina, prema udaljenosti, katu i liftu te spajanju uređaja.`,
       },
       {
         question: 'Spajate li perilicu rublja ili posuđa?',
