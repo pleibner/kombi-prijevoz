@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, nextTick } from 'vue'
+import { ref, reactive, computed, watch, onMounted, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { useJsonLd } from '@/composables/useJsonLd'
 import { usePageMeta } from '@/composables/usePageMeta'
@@ -46,6 +46,20 @@ const errors = reactive({
   nazivFirme: '',
   oibFirme: '',
 })
+
+/** Required fields in page order, with the element a failed send jumps to. */
+const requiredFields: { key: keyof typeof errors; id: string }[] = [
+  { key: 'ime', id: 'ime' },
+  { key: 'telefon', id: 'telefon' },
+  { key: 'email', id: 'email' },
+  { key: 'nazivFirme', id: 'nazivFirme' },
+  { key: 'oibFirme', id: 'oibFirme' },
+  { key: 'placanje', id: 'placanje-gotovina' },
+]
+
+const invalidFields = computed(() => requiredFields.filter((field) => errors[field.key]))
+// The summary under the send button appears after the first failed send.
+const submitAttempted = ref(false)
 
 const isSubmitting = ref(false)
 const submitError = ref('')
@@ -100,10 +114,11 @@ const validateEmail = () => {
 const validatePhone = () => {
   errors.telefon = ''
   if (form.telefon.trim().length > 0) {
-    const cleaned = form.telefon.trim().replace(/[\s-/]/g, '')
+    // Spaces, dashes, slashes, dots and brackets are fine: "(091) 123-4567", "091/123.4567".
+    const cleaned = form.telefon.trim().replace(/[\s()./-]/g, '')
 
     if (!/^(\+\d{1,4})?\d{6,14}$/.test(cleaned)) {
-      errors.telefon = 'Upišite valjani broj telefona.'
+      errors.telefon = 'Upišite valjani broj telefona, npr. 091 123 4567.'
       return false
     }
   } else {
@@ -159,6 +174,24 @@ const validateForm = () => {
   return isValid
 }
 
+// Unticking "R1 račun" hides the company fields, so their errors go with them.
+watch(
+  () => form.trebamR1Racun,
+  (needsR1) => {
+    if (!needsR1) {
+      errors.nazivFirme = ''
+      errors.oibFirme = ''
+    }
+  },
+)
+
+/** Scroll a field to the middle of the screen and put the cursor in it. */
+const focusField = (id: string) => {
+  const field = document.getElementById(id)
+  field?.scrollIntoView({ block: 'center' })
+  field?.focus({ preventScroll: true })
+}
+
 emailjs.init({ publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY })
 
 /** "400 The Public Key is invalid…" from EmailJS, or the string its own checks throw. */
@@ -167,6 +200,10 @@ const errorReason = (error: unknown) =>
 
 const submitForm = async () => {
   if (!validateForm()) {
+    // On a phone the first error is usually off screen: take the visitor to it.
+    submitAttempted.value = true
+    const [firstInvalid] = invalidFields.value
+    if (firstInvalid) focusField(firstInvalid.id)
     return
   }
 
@@ -287,9 +324,14 @@ const submitForm = async () => {
                       type="text"
                       autocomplete="name"
                       :class="{ error: errors.ime }"
+                      :aria-invalid="!!errors.ime"
+                      :aria-describedby="errors.ime ? 'ime-error' : undefined"
+                      @input="errors.ime && validateName()"
                       @blur="validateName"
                     />
-                    <span v-if="errors.ime" class="error-message">{{ errors.ime }}</span>
+                    <span v-if="errors.ime" id="ime-error" class="error-message">{{
+                      errors.ime
+                    }}</span>
                   </div>
                   <div class="form-group">
                     <label for="telefon">Broj telefona <span class="required">*</span></label>
@@ -299,10 +341,15 @@ const submitForm = async () => {
                       type="tel"
                       autocomplete="tel"
                       :class="{ error: errors.telefon }"
+                      :aria-invalid="!!errors.telefon"
+                      :aria-describedby="errors.telefon ? 'telefon-error' : undefined"
                       placeholder="+385 XX XXX XXXX"
+                      @input="errors.telefon && validatePhone()"
                       @blur="validatePhone"
                     />
-                    <span v-if="errors.telefon" class="error-message">{{ errors.telefon }}</span>
+                    <span v-if="errors.telefon" id="telefon-error" class="error-message">{{
+                      errors.telefon
+                    }}</span>
                   </div>
                 </div>
 
@@ -314,10 +361,15 @@ const submitForm = async () => {
                     type="email"
                     autocomplete="email"
                     :class="{ error: errors.email }"
+                    :aria-invalid="!!errors.email"
+                    :aria-describedby="errors.email ? 'email-error' : undefined"
                     placeholder="vas.email@primjer.com"
+                    @input="errors.email && validateEmail()"
                     @blur="validateEmail"
                   />
-                  <span v-if="errors.email" class="error-message">{{ errors.email }}</span>
+                  <span v-if="errors.email" id="email-error" class="error-message">{{
+                    errors.email
+                  }}</span>
                 </div>
 
                 <label class="pill pill--check">
@@ -334,9 +386,12 @@ const submitForm = async () => {
                         v-model="form.nazivFirme"
                         type="text"
                         :class="{ error: errors.nazivFirme }"
+                        :aria-invalid="!!errors.nazivFirme"
+                        :aria-describedby="errors.nazivFirme ? 'nazivFirme-error' : undefined"
+                        @input="errors.nazivFirme && validateCompanyName()"
                         @blur="validateCompanyName"
                       />
-                      <span v-if="errors.nazivFirme" class="error-message">{{
+                      <span v-if="errors.nazivFirme" id="nazivFirme-error" class="error-message">{{
                         errors.nazivFirme
                       }}</span>
                     </div>
@@ -348,11 +403,14 @@ const submitForm = async () => {
                         type="text"
                         inputmode="numeric"
                         :class="{ error: errors.oibFirme }"
+                        :aria-invalid="!!errors.oibFirme"
+                        :aria-describedby="errors.oibFirme ? 'oibFirme-error' : undefined"
                         placeholder="11 znamenki"
                         maxlength="11"
+                        @input="errors.oibFirme && validateCompanyOIB()"
                         @blur="validateCompanyOIB"
                       />
-                      <span v-if="errors.oibFirme" class="error-message">{{
+                      <span v-if="errors.oibFirme" id="oibFirme-error" class="error-message">{{
                         errors.oibFirme
                       }}</span>
                     </div>
@@ -471,10 +529,19 @@ const submitForm = async () => {
               </legend>
               <div class="form-section__fields">
                 <div class="form-group">
-                  <span class="form-label">Način plaćanja <span class="required">*</span></span>
-                  <div class="pill-group">
+                  <span id="placanje-label" class="form-label"
+                    >Način plaćanja <span class="required">*</span></span
+                  >
+                  <div
+                    class="pill-group"
+                    role="radiogroup"
+                    aria-labelledby="placanje-label"
+                    :aria-invalid="!!errors.placanje"
+                    :aria-describedby="errors.placanje ? 'placanje-error' : undefined"
+                  >
                     <label class="pill">
                       <input
+                        id="placanje-gotovina"
                         v-model="form.placanje"
                         type="radio"
                         value="gotovina"
@@ -494,7 +561,9 @@ const submitForm = async () => {
                       Internet bankarstvo
                     </label>
                   </div>
-                  <span v-if="errors.placanje" class="error-message">{{ errors.placanje }}</span>
+                  <span v-if="errors.placanje" id="placanje-error" class="error-message">{{
+                    errors.placanje
+                  }}</span>
                 </div>
 
                 <div class="form-group">
@@ -514,11 +583,24 @@ const submitForm = async () => {
                 <span v-if="isSubmitting">Šalje se...</span>
                 <span v-else>Pošalji upit</span>
               </ButtonPrimary>
+              <div v-if="submitAttempted && invalidFields.length" class="form-errors" role="alert">
+                <p class="form-errors__title">
+                  Upit nije poslan. Ispravite
+                  {{ invalidFields.length === 1 ? 'označeno polje' : 'označena polja' }}:
+                </p>
+                <ul>
+                  <li v-for="field in invalidFields" :key="field.key">
+                    <a :href="`#${field.id}`" @click.prevent="focusField(field.id)">{{
+                      errors[field.key]
+                    }}</a>
+                  </li>
+                </ul>
+              </div>
+              <div v-if="submitError" class="submit-error" role="alert">{{ submitError }}</div>
               <p class="form-actions__note">
                 Odgovaramo u najkraćem roku. Podatke koristimo samo za izradu ponude. Polja označena
                 sa <span class="required">*</span> su obvezna.
               </p>
-              <div v-if="submitError" class="submit-error" role="alert">{{ submitError }}</div>
             </div>
           </form>
         </div>
@@ -724,7 +806,8 @@ const submitForm = async () => {
 }
 
 input.error,
-textarea.error {
+textarea.error,
+.pill-group[aria-invalid='true'] .pill {
   border-color: var(--accent);
 }
 
@@ -749,6 +832,34 @@ textarea.error {
   font-size: 14px;
   color: var(--muted);
   text-align: center;
+}
+
+.form-errors {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: #fbe9eb;
+  color: var(--accent-dark);
+  font-weight: 500;
+}
+
+.form-errors__title {
+  font-weight: 700;
+}
+
+.form-errors ul {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-errors a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .submit-error {
